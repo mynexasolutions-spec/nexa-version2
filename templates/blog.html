@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+
+{% block title %}Our Blog | Nexa Solutions{% endblock %}
+
+{% block content %}
+<section class="blog-page-hero">
+  <div class="blog-page-hero-inner">
+    <p class="blog-page-eyebrow">Knowledge Hub</p>
+    <h1>Our Blog</h1>
+    <p class="blog-page-sub">Insights, trends, and expert advice on technology</p>
+  </div>
+</section>
+
+<section class="blog-page-wrap">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="blog-page-grid" style="margin-bottom: 0.9rem;">
+        <div class="blog-main-col">
+          {% for category, message in messages %}
+            <div class="blog-side-card" style="border-color: {% if category == 'success' %}rgba(8,120,8,0.25){% else %}rgba(176,40,40,0.25){% endif %};">
+              <p style="margin: 0; color: rgba(0,0,0,0.78);">{{ message }}</p>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <div class="blog-page-grid">
+    <div class="blog-main-col">
+      {% if blog_cards %}
+        {% for post in blog_cards %}
+          <article class="blog-list-card reveal" data-delay="{{ (loop.index0 * 70) % 280 }}">
+            <a class="blog-list-media" href="{{ url_for('blog_detail', slug=post.slug) }}">
+              {% if post.featured_image %}
+                <img src="{{ post.featured_image }}" alt="{{ post.title }}" loading="lazy" />
+              {% else %}
+                <div class="blog-fallback-image">Nexa Blog</div>
+              {% endif %}
+            </a>
+
+            <div class="blog-list-content">
+              <div class="blog-list-meta-row">
+                <span class="blog-list-chip">{{ post.category_name }}</span>
+                <span class="blog-list-dot"></span>
+                <span>{{ post.published_label }}</span>
+                <span class="blog-list-dot"></span>
+                <span>{{ post.read_time }} min read</span>
+              </div>
+
+              <h2>
+                <a href="{{ url_for('blog_detail', slug=post.slug) }}">{{ post.title }}</a>
+              </h2>
+
+              <p class="blog-author">By {{ post.author_name }}</p>
+              <p class="blog-summary">{{ post.summary }}</p>
+
+              <a class="blog-read-link" href="{{ url_for('blog_detail', slug=post.slug) }}">
+                Read article
+                <span aria-hidden="true">→</span>
+              </a>
+            </div>
+          </article>
+        {% endfor %}
+
+        {% if posts.pages > 1 %}
+          <nav class="blog-pagination" aria-label="Blog pagination">
+            {% if posts.has_prev %}
+              <a href="{{ url_for('blog', page=posts.prev_num, q=search_query, category=active_category) }}" class="page-btn">Previous</a>
+            {% else %}
+              <span class="page-btn disabled">Previous</span>
+            {% endif %}
+
+            {% for number in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+              {% if number %}
+                {% if number == posts.page %}
+                  <span class="page-number active">{{ number }}</span>
+                {% else %}
+                  <a class="page-number" href="{{ url_for('blog', page=number, q=search_query, category=active_category) }}">{{ number }}</a>
+                {% endif %}
+              {% else %}
+                <span class="page-ellipsis">…</span>
+              {% endif %}
+            {% endfor %}
+
+            {% if posts.has_next %}
+              <a href="{{ url_for('blog', page=posts.next_num, q=search_query, category=active_category) }}" class="page-btn">Next</a>
+            {% else %}
+              <span class="page-btn disabled">Next</span>
+            {% endif %}
+          </nav>
+        {% endif %}
+      {% else %}
+        <div class="blog-empty-state">
+          <h3>No matching posts found</h3>
+          <p>Try changing your search term or category filter.</p>
+          <a href="{{ url_for('blog') }}" class="blog-empty-reset">Reset filters</a>
+        </div>
+      {% endif %}
+    </div>
+
+    <aside class="blog-side-col">
+      <div class="blog-side-sticky">
+        <section class="blog-side-card">
+          <h3>Search Topic</h3>
+          <form method="get" action="{{ url_for('blog') }}" class="blog-search-form">
+            <input type="text" name="q" value="{{ search_query }}" placeholder="AI, cloud, cybersecurity..." />
+            {% if active_category %}
+              <input type="hidden" name="category" value="{{ active_category }}" />
+            {% endif %}
+            <button type="submit">Search</button>
+          </form>
+        </section>
+
+        <section class="blog-side-card">
+          <h3>Recent Posts</h3>
+          <ul class="side-list">
+            {% for recent in recent_posts %}
+              <li>
+                <a href="{{ url_for('blog_detail', slug=recent.slug) }}">{{ recent.title }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </section>
+
+        <section class="blog-side-card">
+          <h3>Newsletter</h3>
+          <p>Get a weekly digest of practical tech insights.</p>
+          <form method="post" action="{{ url_for('newsletter_subscribe') }}" class="newsletter-form">
+            <input type="email" name="email" placeholder="you@example.com" required />
+            <button type="submit">Subscribe</button>
+          </form>
+        </section>
+
+        <section class="blog-side-card">
+          <h3>Categories</h3>
+          <ul class="categories-list">
+            <li>
+              <a href="{{ url_for('blog', q=search_query) }}" class="{% if not active_category %}active{% endif %}">
+                All Topics
+                <span>{{ posts.total }}</span>
+              </a>
+            </li>
+            {% for category in categories %}
+              <li>
+                <a href="{{ url_for('blog', category=category.id, q=search_query) }}" class="{% if active_category == category.id %}active{% endif %}">
+                  {{ category.name }}
+                  <span>{{ category.count }}</span>
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </section>
+
+        <section class="blog-side-cta">
+          <p class="cta-mini">Need guidance?</p>
+          <h3>Let's build your next digital product.</h3>
+          <a href="{{ url_for('home') }}#contact">Talk to Nexa</a>
+        </section>
+      </div>
+    </aside>
+  </div>
+</section>
+{% endblock %}

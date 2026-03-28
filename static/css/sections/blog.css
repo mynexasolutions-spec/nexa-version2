@@ -1,0 +1,97 @@
+﻿  /* â”€â”€ BLOG â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+  .blog-section {
+    background: var(--black);
+    color: var(--white);
+    padding: 110px 5vw;
+    position: relative;
+    overflow: hidden;
+  }
+  .blog-bg-text {
+    position: absolute;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22vw;
+    color: rgba(255,255,255,0.025);
+    pointer-events: none;
+    user-select: none;
+    bottom: -2vw;
+    left: -1vw;
+    line-height: 1;
+  }
+  .blog-section .sec-header p { color: rgba(255,255,255,0.52); }
+  .blog-section .sec-header h2 { color: var(--white); }
+  .blog-section .sec-eyebrow { color: rgba(255,255,255,0.45); }
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .blog-card {
+    border-radius: 20px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+  .blog-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(255,255,255,0.18);
+  }
+  .blog-img-wrap {
+    overflow: hidden;
+    aspect-ratio: 16/10;
+  }
+  .blog-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+  .blog-card:hover .blog-card-img { transform: scale(1.06); }
+  .blog-card-body { padding: 1.8rem; }
+  .blog-tag {
+    display: inline-block;
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 0.22rem 0.75rem;
+    border-radius: 999px;
+    margin-bottom: 0.9rem;
+  }
+  .blog-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 0.01em;
+    margin-bottom: 0.65rem;
+    line-height: 1.2;
+    color: var(--white);
+  }
+  .blog-card p {
+    color: rgba(255,255,255,0.52);
+    font-size: 0.9rem;
+    line-height: 1.62;
+    margin-bottom: 1.2rem;
+  }
+  .blog-read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: var(--white);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: gap 0.2s ease;
+  }
+  .blog-read-more:hover { gap: 0.75rem; }
+  .blog-read-more svg {
+    width: 15px; height: 15px;
+    stroke: currentColor; fill: none;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  }
+

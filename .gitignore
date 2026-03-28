@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# Environment variables and secrets
+.env
+.env.*
+
+# VSCode and IDE
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Database
+*.sqlite3
+instance/
+
+# Node/npm (if any JS tooling)
+node_modules/
+
+# Compiled static assets
+staticfiles/
+
+# Flask/Migrations
+migrations/
+
+# Test output
+htmlcov/
+.coverage
+
+# Backup files
+*~
+*.bak
+
+# Misc
+*.swp

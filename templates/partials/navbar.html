@@ -1,0 +1,27 @@
+<nav class="navbar" id="navbar">
+  <a href="{{ url_for('home') }}" class="logo">
+    <img src="{{ url_for('static', filename='images/logo/logo.png') }}" alt="Nexa Solutions Logo" style="width:48px;height:48px;object-fit:contain;display:block;" />
+    <span class="logo-name">Nexa Solutions</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="{{ url_for('home') }}#services">Services</a></li>
+    <li><a href="{{ url_for('home') }}#projects">Work</a></li>
+    <li><a href="{{ url_for('blog') }}">Blog</a></li>
+    <li><a href="{{ url_for('home') }}#why-us">About</a></li>
+    <li class="has-dropdown">
+      <a href="#" class="dropdown-toggle">Tools <span class="dropdown-arrow">&#9660;</span></a>
+      <ul class="dropdown-menu">
+        <li><a href="#">AI Agent</a></li>
+        <li><a href="#">Text to Speech</a></li>
+        <li><a href="#">Speech to Text</a></li>
+      </ul>
+    </li>
+    <li><a href="{{ url_for('home') }}#contact">Contact</a></li>
+    <li><a href="{{ url_for('home') }}#contact" class="nav-cta">Get Started</a></li>
+  </ul>
+  <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation" aria-expanded="false">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>

@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.seo_title or post.title }} | Nexa Solutions{% endblock %}
+
+{% block content %}
+<section class="blog-page-hero">
+  <div class="blog-page-hero-inner">
+    <p class="blog-page-eyebrow">{{ post.category.name if post.category else 'General' }}</p>
+    <h1>{{ post.title }}</h1>
+    <p class="blog-page-sub">By {{ post.author_name }}{% if post.published_at %} · {{ post.published_at.strftime('%d %b %Y') }}{% endif %}</p>
+  </div>
+</section>
+
+<section class="blog-page-wrap">
+  <div class="blog-page-grid">
+    <article class="blog-main-col">
+      <div class="blog-list-card visible" style="grid-template-columns: 1fr;">
+        {% if post.featured_image %}
+          <div class="blog-list-media" style="min-height: 320px;">
+            <img src="{{ post.featured_image }}" alt="{{ post.title }}" loading="lazy" />
+          </div>
+        {% endif %}
+        <div class="blog-list-content" style="padding: 1.5rem;">
+          <div class="blog-summary" style="white-space: pre-line;">{{ post.content | safe }}</div>
+        </div>
+      </div>
+    </article>
+
+    <aside class="blog-side-col">
+      <div class="blog-side-sticky">
+        <section class="blog-side-card">
+          <h3>Popular Posts</h3>
+          <ul class="side-list">
+            {% for popular in popular_posts %}
+              <li><a href="{{ url_for('blog_detail', slug=popular.slug) }}">{{ popular.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </section>
+
+        <section class="blog-side-card">
+          <h3>Related Posts</h3>
+          <ul class="side-list">
+            {% for related in related_posts %}
+              <li><a href="{{ url_for('blog_detail', slug=related.slug) }}">{{ related.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </section>
+
+        <section class="blog-side-card">
+          <h3>Categories</h3>
+          <ul class="categories-list">
+            {% for category in categories %}
+              <li>
+                <a href="{{ url_for('blog', q=category.name) }}">
+                  {{ category.name }}
+                  <span>{{ category.post_count }}</span>
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </section>
+      </div>
+    </aside>
+  </div>
+</section>
+{% endblock %}

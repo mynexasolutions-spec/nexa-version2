@@ -1,0 +1,121 @@
+﻿  /* â”€â”€â”€ BRANDS TICKER (imported from new_index) â”€â”€â”€ */
+  .brands-section {
+    background: #fff;
+    padding: 48px 0;
+    border-top: 0;
+    border-bottom: 0;
+    overflow: hidden;
+  }
+
+  .brands-label {
+    text-align: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    text-transform: none;
+    line-height: 1.08;
+    color: #111;
+    margin-bottom: 1.2rem;
+  }
+
+  .brands-sub {
+    text-align: center;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.98rem;
+    line-height: 1.7;
+    color: #555;
+    max-width: 680px;
+    margin: 0 auto 1.6rem;
+  }
+
+  .ticker-wrapper {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ticker-wrapper::before,
+  .ticker-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 160px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .ticker-wrapper::before {
+    left: 0;
+    background: linear-gradient(to right, #fff, transparent);
+  }
+
+  .ticker-wrapper::after {
+    right: 0;
+    background: linear-gradient(to left, #fff, transparent);
+  }
+
+  .ticker-track {
+    display: flex;
+    gap: 0;
+    animation: ticker 28s linear infinite;
+    width: max-content;
+  }
+
+  .ticker-track.reverse {
+    animation-direction: reverse;
+    animation-duration: 32s;
+  }
+
+  .ticker-track:hover {
+    animation-play-state: paused;
+  }
+
+  .ticker-set {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding-right: 0;
+  }
+
+  @keyframes ticker {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .brand-item {
+    width: 290px;
+    height: 130px;
+    border: 0;
+    border-radius: 0;
+    overflow: hidden;
+    background: #fff;
+    flex-shrink: 0;
+    display: block;
+  }
+
+  .brand-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: grayscale(0.2);
+    transform: scale(1.24);
+    transition: var(--transition, all 0.28s cubic-bezier(0.4, 0, 0.2, 1));
+  }
+
+  .brand-item:hover .brand-logo {
+    transform: scale(1.3);
+    filter: grayscale(0);
+  }
+
+  /* â”€â”€ STATS STRIP â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+  .stats-strip {
+    display: none;
+  }
+
+
