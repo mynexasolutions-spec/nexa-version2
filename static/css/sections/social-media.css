@@ -195,9 +195,9 @@
 
 @media (max-width: 768px) {
   :root {
-    --orbit-r: 34vw;
-    --card-w: 28vw;
-    --card-h: 38vw;
+    --orbit-r: 30vw;
+    --card-w: 30vw;
+    --card-h: 40vw;
     --social-lottie-offset: clamp(115px, 27vw, 170px);
     --social-lottie-scale: 0.92;
   }
@@ -213,16 +213,42 @@
   .card-headline {
     font-size: clamp(24px, 7vw, 40px);
   }
+  .brand {
+    font-size: 8px;
+    letter-spacing: 0.18em;
+  }
+  .platform-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+  .card-sub {
+    font-size: 8px;
+    letter-spacing: 0.18em;
+    margin-top: 6px;
+  }
 }
 
 @media (max-width: 480px) {
   :root {
-    --orbit-r: 31vw;
-    --card-w: 30vw;
-    --card-h: 42vw;
+    --orbit-r: 28vw;
+    --card-w: 32vw;
+    --card-h: 43vw;
   }
 
   .social-media-section {
     min-height: 94vw;
+  }
+  .brand {
+    font-size: 8px;
+    letter-spacing: 0.18em;
+  }
+  .platform-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+  .card-sub {
+    font-size: 8px;
+    letter-spacing: 0.18em;
+    margin-top: 6px;
   }
 }
