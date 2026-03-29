@@ -1,0 +1,55 @@
+{% extends "layouts/base.html" %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="admin-container">
+
+    <h1>{{ "Edit Blog" if is_edit else "Create Blog" }}</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+
+        <label>Title</label>
+        {{ form.title(class="input", id="title") }}
+
+        <label>Slug</label>
+        {{ form.slug(class="input", id="slug") }}
+
+        <label>Summary</label>
+        {{ form.summary(class="textarea") }}
+
+        <label>Content</label>
+        {{ form.content(class="textarea rich-editor") }}
+
+        <label>Author Name</label>
+        {{ form.author_name(class="input") }}
+
+        <label>Category</label>
+        {{ form.category_id(class="input") }}
+
+        <label>Featured Image</label>
+        {% if blog and blog.featured_image %}
+            <div class="image-preview">
+                <img src="{{ blog.featured_image }}" alt="Featured Image">
+                <p class="image-hint">Current image</p>
+            </div>
+        {% endif %}
+        {{ form.featured_image() }}
+
+        <label class="checkbox">
+            {{ form.is_published() }} Publish
+        </label>
+
+        {{ form.submit(
+            value="Update Blog" if is_edit else "Create Blog",
+            class="btn-primary"
+        ) }}
+    </form>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+{% endblock %}

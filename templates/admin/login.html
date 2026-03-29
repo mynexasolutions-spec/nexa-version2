@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Login | Nexa</title>
+    <style>
+        body{
+            background:#0B1C3D;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            height:100vh;
+            font-family:Segoe UI;
+        }
+        .login-box{
+            background:#fff;
+            padding:40px;
+            border-radius:18px;
+            width:360px;
+            box-shadow:0 30px 80px rgba(0,0,0,.4);
+        }
+        h2{margin-bottom:20px;color:#1F3C88}
+        input{
+            width:100%;
+            padding:14px;
+            margin-bottom:16px;
+            border-radius:10px;
+            border:2px solid #E0E7FF;
+        }
+        button{
+            width:100%;
+            background:#4D7CFE;
+            color:#fff;
+            padding:14px;
+            border:none;
+            border-radius:10px;
+            font-weight:600;
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="login-box">
+    <h2>Admin Login</h2>
+    <form method="post">
+        <input name="username" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button>Login</button>
+    </form>
+</div>
+</body>
+</html>

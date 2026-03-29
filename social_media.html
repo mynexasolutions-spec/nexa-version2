@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Social Media Cards – Circular Orbit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red:    #C4150B;
+      --red-dk: #7A0C05;
+      --black:  #0D0D0D;
+      --white:  #FFFFFF;
+      --green:  #0B5E1A;
+      --orbit-r: 200px;   /* orbit radius — tweak to taste */
+      --card-w:  190px;
+      --card-h:  260px;
+      --duration: 14s;    /* one full revolution */
+    }
+
+    body {
+      background: #111;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Sans', sans-serif;
+      overflow: hidden;
+    }
+
+    /* ── SCENE ─────────────────────────────────── */
+    .scene {
+      position: relative;
+      width: calc(var(--orbit-r) * 2 + var(--card-w) + 40px);
+      height: calc(var(--orbit-r) * 2 + var(--card-h) + 40px);
+    }
+
+    /* faint orbit ring */
+    .orbit-ring {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: calc(var(--orbit-r) * 2);
+      height: calc(var(--orbit-r) * 2);
+      translate: -50% -50%;
+      border: 1px dashed rgba(196,21,11,0.25);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    /* ── CARD WRAPPER (moves on the orbit path) ── */
+    .card-wrap {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: var(--card-w);
+      height: var(--card-h);
+      margin-top: calc(var(--card-h) / -2);
+      margin-left: calc(var(--card-w) / -2);
+      animation: orbit var(--duration) linear infinite;
+      transform-origin: center center;
+    }
+
+    /* stagger each card by 90° (duration / 4 * index) */
+    .card-wrap:nth-child(2) { animation-delay: calc(var(--duration) / -4 * 1); }
+    .card-wrap:nth-child(3) { animation-delay: calc(var(--duration) / -4 * 2); }
+    .card-wrap:nth-child(4) { animation-delay: calc(var(--duration) / -4 * 3); }
+    .card-wrap:nth-child(5) { animation-delay: calc(var(--duration) / -4 * 4); }
+
+    @keyframes orbit {
+      from { transform: rotate(0deg)   translateX(var(--orbit-r)) rotate(0deg); }
+      to   { transform: rotate(360deg) translateX(var(--orbit-r)) rotate(-360deg); }
+    }
+
+    /* ── CARD ─────────────────────────────────── */
+    .card {
+      width: 100%;
+      height: 100%;
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.55);
+    }
+
+    .card:hover {
+      transform: scale(1.07);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.7);
+    }
+
+    /* ── BACKGROUNDS per platform ─────────────── */
+    .card.fb  { background: linear-gradient(150deg, #C4150B 0%, #7A0C05 100%); }
+    .card.ig  { background: linear-gradient(150deg, #B51209 0%, #CC1A0D 70%, #E03010 100%); }
+    .card.x   { background: linear-gradient(150deg, #0D0D0D 0%, #2A0704 55%, #C4150B 100%); }
+    .card.wa  { background: linear-gradient(150deg, #060E06 0%, #0C2A10 60%, #0B5E1A 100%); }
+
+    /* ── BLURRED SILHOUETTE LAYER ─────────────── */
+    .card-blur {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .card-blur svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ── CARD CONTENT ─────────────────────────── */
+    .card-inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 16px 16px 18px;
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: rgba(255,255,255,0.75);
+      text-transform: uppercase;
+    }
+
+    .platform-icon svg {
+      display: block;
+      width: 20px;
+      height: 20px;
+    }
+
+    .card-headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 46px;
+      line-height: 0.92;
+      color: #fff;
+      letter-spacing: 0.02em;
+    }
+
+    .card-sub {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-top: 6px;
+    }
+
+    /* ── GRAIN OVERLAY ───────────────────────── */
+    .card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.06;
+      pointer-events: none;
+      border-radius: 18px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="scene">
+  <div class="orbit-ring"></div>
+
+  <!-- ── FACEBOOK ───────────────────────────── -->
+  <div class="card-wrap">
+    <div class="card fb">
+      <div class="card-blur">
+        <svg viewBox="0 0 190 260" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="bf1" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="14"/>
+            </filter>
+          </defs>
+          <ellipse cx="120" cy="100" rx="60" ry="105" fill="rgba(0,0,0,0.55)" filter="url(#bf1)" transform="rotate(-18,120,100)"/>
+          <ellipse cx="90"  cy="170" rx="38" ry="60"  fill="rgba(200,20,10,0.3)" filter="url(#bf1)" transform="rotate(12,90,170)"/>
+          <ellipse cx="148" cy="55"  rx="24" ry="48"  fill="rgba(255,90,30,0.18)" filter="url(#bf1)" transform="rotate(-30,148,55)"/>
+        </svg>
+      </div>
+      <div class="card-inner">
+        <div class="card-top">
+          <span class="brand">acme™</span>
+          <span class="platform-icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"
+                    stroke="rgba(255,255,255,0.72)" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </div>
+        <div>
+          <div class="card-headline">Session<br>Complete.</div>
+          <div class="card-sub">Share on Facebook</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── INSTAGRAM ──────────────────────────── -->
+  <div class="card-wrap">
+    <div class="card ig">
+      <div class="card-blur">
+        <svg viewBox="0 0 190 260" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="bf2" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="14"/>
+            </filter>
+          </defs>
+          <ellipse cx="80"  cy="140" rx="65" ry="95"  fill="rgba(0,0,0,0.5)"     filter="url(#bf2)" transform="rotate(22,80,140)"/>
+          <ellipse cx="135" cy="70"  rx="38" ry="70"  fill="rgba(230,40,20,0.28)" filter="url(#bf2)" transform="rotate(-12,135,70)"/>
+          <ellipse cx="55"  cy="40"  rx="22" ry="40"  fill="rgba(255,100,50,0.2)" filter="url(#bf2)"/>
+        </svg>
+      </div>
+      <div class="card-inner">
+        <div class="card-top">
+          <span class="brand">acme™</span>
+          <span class="platform-icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"
+                    stroke="rgba(255,255,255,0.72)" stroke-width="1.8"/>
+              <circle cx="12" cy="12" r="4"
+                      stroke="rgba(255,255,255,0.72)" stroke-width="1.8"/>
+              <circle cx="17.5" cy="6.5" r="1.2"
+                      fill="rgba(255,255,255,0.72)"/>
+            </svg>
+          </span>
+        </div>
+        <div>
+          <div class="card-headline">New<br>Record.</div>
+          <div class="card-sub">Share on Instagram</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── X / TWITTER ───────────────────────── -->
+  <div class="card-wrap">
+    <div class="card x">
+      <div class="card-blur">
+        <svg viewBox="0 0 190 260" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="bf3" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="14"/>
+            </filter>
+          </defs>
+          <ellipse cx="100" cy="110" rx="70" ry="100" fill="rgba(180,12,8,0.45)"  filter="url(#bf3)" transform="rotate(-8,100,110)"/>
+          <ellipse cx="55"  cy="180" rx="42" ry="60"  fill="rgba(0,0,0,0.6)"       filter="url(#bf3)"/>
+          <ellipse cx="148" cy="45"  rx="30" ry="50"  fill="rgba(255,50,20,0.2)"   filter="url(#bf3)" transform="rotate(15,148,45)"/>
+        </svg>
+      </div>
+      <div class="card-inner">
+        <div class="card-top">
+          <span class="brand">acme™</span>
+          <span class="platform-icon">
+            <svg viewBox="0 0 24 24" fill="rgba(255,255,255,0.72)" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.743l7.733-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622z"/>
+            </svg>
+          </span>
+        </div>
+        <div>
+          <div class="card-headline">Stay<br>Locked.</div>
+          <div class="card-sub">Share on X</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── WHATSAPP ───────────────────────────── -->
+  <div class="card-wrap">
+    <div class="card wa">
+      <div class="card-blur">
+        <svg viewBox="0 0 190 260" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="bf4" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="14"/>
+            </filter>
+          </defs>
+          <ellipse cx="105" cy="120" rx="62" ry="95"  fill="rgba(0,0,0,0.55)"      filter="url(#bf4)" transform="rotate(14,105,120)"/>
+          <ellipse cx="65"  cy="65"  rx="42" ry="70"  fill="rgba(11,94,26,0.55)"   filter="url(#bf4)" transform="rotate(-16,65,65)"/>
+          <ellipse cx="145" cy="190" rx="30" ry="50"  fill="rgba(20,130,45,0.25)"  filter="url(#bf4)"/>
+        </svg>
+      </div>
+      <div class="card-inner">
+        <div class="card-top">
+          <span class="brand">acme™</span>
+          <span class="platform-icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"
+                    fill="rgba(255,255,255,0.72)"/>
+              <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.948-1.424A9.954 9.954 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"
+                    stroke="rgba(255,255,255,0.72)" stroke-width="1.6"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </div>
+        <div>
+          <div class="card-headline">Keep<br>Moving.</div>
+          <div class="card-sub">Share on WhatsApp</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /scene -->
+
+<script>
+  /* ── Pause on hover ─────────────────────── */
+  const wraps = document.querySelectorAll('.card-wrap');
+
+  wraps.forEach(wrap => {
+    wrap.addEventListener('mouseenter', () => {
+      wraps.forEach(w => {
+        const elapsed = getComputedStyle(w).animationDelay;
+        w.style.animationPlayState = 'paused';
+      });
+    });
+    wrap.addEventListener('mouseleave', () => {
+      wraps.forEach(w => {
+        w.style.animationPlayState = 'running';
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

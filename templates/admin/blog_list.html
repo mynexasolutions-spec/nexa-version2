@@ -1,0 +1,66 @@
+{% extends "layouts/base.html" %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="admin-container">
+
+    <div class="admin-header">
+        <h1>Blogs</h1>
+
+        <a href="{{ url_for('admin.create_blog') }}" class="btn-primary">
+            New Blog
+        </a>
+    </div>
+
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Status</th>
+                <th>Published</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for blog in blogs %}
+            <tr>
+                <td>{{ blog.title }}</td>
+                <td>{{ blog.category.name }}</td>
+
+                <td>
+                    {% if blog.is_published %}
+                        <span class="badge published">Published</span>
+                    {% else %}
+                        <span class="badge draft">Draft</span>
+                    {% endif %}
+                </td>
+
+                <td>
+                    {{ blog.published_at.strftime('%b %d, %Y') if blog.published_at else "-" }}
+                </td>
+
+                <td class="actions">
+                    <a href="{{ url_for('admin.edit_blog', blog_id=blog.id) }}">
+                        Edit
+                    </a>
+
+                    <form method="POST"
+                          action="{{ url_for('admin.delete_blog', blog_id=blog.id) }}"
+                          onsubmit="return confirm('Delete this blog?');"
+                          style="display:inline;">
+                        <button type="submit" class="link-danger">
+                            Delete
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
