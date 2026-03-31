@@ -8,6 +8,14 @@
     background: #fff;
     padding: 40px;
     border-radius: 20px;
+    
+    display: block;
+    overflow: visible;
+}
+
+.form-group {
+    margin-bottom: 30px;
+    clear: both; /* Prevents overlapping with title/slug */
 }
 
 .admin-container h1 {

@@ -12,8 +12,7 @@ class BlogForm(FlaskForm):
     slug = StringField("Slug", validators=[DataRequired(), Length(max=300)])
 
     summary = TextAreaField("Summary", validators=[DataRequired()])
-    content = TextAreaField("Content", validators=[DataRequired()])
-
+    content = HiddenField("Content")
     author_name = StringField("Author Name", validators=[DataRequired()])
 
     category_id = SelectField('Category', coerce=str, validators=[DataRequired()])
@@ -25,6 +24,6 @@ class BlogForm(FlaskForm):
 
     is_published = BooleanField("Publish now")
 
-    content = HiddenField("Content")
+    
 
     submit = SubmitField("Save Blog")

@@ -1,12 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
   var container = document.getElementById("editor-container");
   var hiddenInput = document.getElementById("hidden-content");
-  var form = document.querySelector("form");
+  var form = document.getElementById("blog-form");
 
   if (container && hiddenInput) {
-    // Initialize Quill
     var quill = new Quill("#editor-container", {
       theme: "snow",
+      placeholder: "Write your blog here...",
       modules: {
         toolbar: [
           [{ header: [1, 2, false] }],
@@ -17,26 +17,26 @@ document.addEventListener("DOMContentLoaded", function () {
       },
     });
 
-    var existingContent = hiddenInput.value;
-    if (existingContent) {
-      quill.root.innerHTML = existingContent;
+    // 1. If editing, put existing text into the editor
+    if (hiddenInput.value) {
+      quill.root.innerHTML = hiddenInput.value;
     }
 
-    // CRITICAL: Every time you type, update the hidden field
+    // 2. Sync whenever user types
     quill.on("text-change", function () {
       hiddenInput.value = quill.root.innerHTML;
     });
 
-    // SAFETY: Update one last time when the "Create Blog" button is clicked
+    // 3. Final sync on click
     if (form) {
       form.addEventListener("submit", function (e) {
-        hiddenInput.value = quill.root.innerHTML;
-
-        // If content is empty, alert the user (common reason for validation fail)
-        if (hiddenInput.value === "<p><br></p>" || hiddenInput.value === "") {
-          alert("Please enter some content for your blog.");
-          e.preventDefault(); // Stop submission
+        // Handle Quill's empty state: <p><br></p>
+        if (quill.getText().trim().length === 0) {
+          alert("Blog content cannot be empty!");
+          e.preventDefault();
+          return false;
         }
+        hiddenInput.value = quill.root.innerHTML;
       });
     }
   }

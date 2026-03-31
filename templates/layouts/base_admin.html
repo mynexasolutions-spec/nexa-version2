@@ -76,6 +76,19 @@
     font-weight: bold;
   }
   .published { background: #e6fffa; color: #2d3748; border: 1px solid #b2f5ea; }
+
+  .admin-wrapper {
+    padding: 20px;
+    margin-top: 20px;
+    min-height: 80vh;
+  }
+
+  /* Add this to prevent Quill from breaking the layout */
+  .form-group {
+      margin-bottom: 25px;
+      display: flex;
+      flex-direction: column;
+  }
 </style>
 </head>
 <body>
@@ -85,6 +98,11 @@
     
     <div class="admin-wrapper">
         {% block content %}{% endblock %}
+        
     </div>
+
+    {% block scripts %}{% endblock %}
 </body>
+
+
 </html>
