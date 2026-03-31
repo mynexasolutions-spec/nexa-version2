@@ -4,6 +4,8 @@ from models import db, BlogPost, Category, upload_blog_image
 from .forms import BlogForm
 from .utils import generate_unique_slug
 import os
+from extensions import db
+import slugify # Useful for turning "My Title" into "my-title"
 
 admin_bp = Blueprint("admin", __name__, url_prefix="/admin")
 
@@ -56,24 +58,29 @@ def blog_list():
     return render_template("admin/blog_list.html", blogs=posts)
 
 # ============================
-# CREATE BLOG
+# CREATE BLOG 
 # ============================
 @admin_bp.route("/blogs/new", methods=["GET", "POST"])
 @login_required
 def create_blog():
     form = BlogForm()
+    # Populate category choices
     form.category_id.choices = [
-        (c.id, c.name) for c in Category.query.order_by(Category.name).all()
+        (str(c.id), c.name) for c in Category.query.order_by(Category.name).all()
     ]
 
     if form.validate_on_submit():
-        image_url = upload_blog_image(form.featured_image.data)
+        # Handle Image Upload
+        image_url = None
+        if form.featured_image.data:
+            image_url = upload_blog_image(form.featured_image.data)
 
+        # Create the new record
         post = BlogPost(
             title=form.title.data,
             slug=generate_unique_slug(form.title.data),
             summary=form.summary.data,
-            content=form.content.data,
+            content=form.content.data,  # Correctly grabs HTML from Quill via admin.js
             author_name=form.author_name.data,
             category_id=form.category_id.data,
             featured_image=image_url,
@@ -81,13 +88,21 @@ def create_blog():
             published_at=db.func.now() if form.is_published.data else None,
         )
 
-        db.session.add(post)
-        db.session.commit()
+        try:
+            db.session.add(post)
+            db.session.commit()
+            flash("Blog created successfully!", "success")
+            return redirect(url_for("admin.blog_list"))
+        except Exception as e:
+            db.session.rollback()
+            flash(f"Database Error: {str(e)}", "error")
 
-        flash("Blog created successfully", "success")
-        return redirect(url_for("admin.blog_list"))
+    else:
+        print("VALIDATION FAILED!")
+        print(form.errors)
 
-    return render_template("admin/blog_form.html", form=form)
+    
+    return render_template("admin/blog_form.html", form=form, is_edit=False)
 
 # ============================
 # EDIT BLOG

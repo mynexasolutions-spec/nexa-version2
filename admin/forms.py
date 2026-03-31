@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import (
     StringField, TextAreaField, SelectField,
-    BooleanField, SubmitField
+    BooleanField, SubmitField, HiddenField
 )
 from wtforms.validators import DataRequired, Length
 from flask_wtf.file import FileField, FileAllowed
@@ -16,7 +16,7 @@ class BlogForm(FlaskForm):
 
     author_name = StringField("Author Name", validators=[DataRequired()])
 
-    category_id = SelectField("Category", coerce=int, validators=[DataRequired()])
+    category_id = SelectField('Category', coerce=str, validators=[DataRequired()])
 
     featured_image = FileField(
         "Featured Image",
@@ -24,5 +24,7 @@ class BlogForm(FlaskForm):
     )
 
     is_published = BooleanField("Publish now")
+
+    content = HiddenField("Content")
 
     submit = SubmitField("Save Blog")

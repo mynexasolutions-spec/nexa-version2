@@ -1,97 +1,416 @@
-﻿  /* â”€â”€ BLOG â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-  .blog-section {
-    background: var(--black);
-    color: var(--white);
-    padding: 110px 5vw;
+﻿:root {
+    --primary-blue: #040404;
+    --nexa-black: #1a1a1a;
+    --text-muted: #666;
+    --card-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  }
+  body {
+    background: radial-gradient(circle at 20% 20%, #111 0%, #000 60%);
+    color: #eaeaea;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      rgba(255,255,255,0.02),
+      rgba(255,255,255,0.02) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    pointer-events: none;
+  }
+
+  .blog-page-hero {
+    background: linear-gradient(to bottom, #000, #111);
+    color: #fff;
+    padding: 80px 20px;
+    text-align: center;
+  }
+
+  .blog-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+  }
+
+  /* --- HORIZONTAL CATEGORIES --- */
+  .category-nav-wrapper {
+    margin-bottom: 40px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+  }
+
+  .category-list-horizontal {
+    display: flex;
+    gap: 15px;
+    list-style: none;
+    padding: 0;
+    flex-wrap: wrap;
+    overflow-x: visible;
+    white-space: normal;
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .category-list-horizontal::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+
+  .category-item-link {
+    text-decoration: none;
+    
+    
+    
+    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+    
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+
+    
+    color: #333;
+    padding: 10px 18px;
+    background: #fff;
+    border-radius: 999px;
+    
+
+    
+
+    transition: all 0.25s ease;
+  }
+
+  .category-item-link:hover {
+    transform: translateY(-2px);
+    border-color: #000;
+    color: #000;
+  }
+
+  /* active = filled */
+  .category-item-link.active {
+      background: #1e1e1e;
+      color: #fff;
+      border-color: #000;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+
+ 
+
+  /* --- GRID LAYOUT --- */
+  .blog-main-grid {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 40px;
+    align-items: flex-start;
+  }
+
+  /* Ensure the main column leaves room for the sidebar */
+  .blog-feed {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+
+  /* --- BLOG CARDS (Uniform Size) --- */
+  .blog-card-custom {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    margin-bottom: 30px;
+    height: auto;
+
+    border: 1px solid #000000;
+
+    box-shadow:
+      0 2px 10px rgba(0,0,0,0.04),
+      0 10px 30px rgba(0,0,0,0.06);
+
+    transition: all 0.35s ease;
+    /*background: linear-gradient(
+      to left,
+      rgba(53, 52, 52, 0.6),
+      transparent
+    );*/
+    transform-style: preserve-3d;
+    will-change: transform;
     position: relative;
     overflow: hidden;
+    padding-bottom: 10px;
+    
   }
-  .blog-bg-text {
-    position: absolute;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 22vw;
-    color: rgba(255,255,255,0.025);
-    pointer-events: none;
-    user-select: none;
-    bottom: -2vw;
-    left: -1vw;
-    line-height: 1;
+
+  /* Ensure the Lottie covers the whole card background */
+  .card-lottie-container {
+    position: absolute; /* Floating layer */
+    right: 15px;      /* Move from center to bottom-right edge */
+    bottom: 15px;     /* Set the bottom edge distance */
+    width: 70px;      /* SHRINK: Set a small width */
+    height: 70px;     /* SHRINK: Set a small height to match */
+    z-index: 1;         /* Sits at the back */
+    opacity: 0.15;      /* Makes it subtle */
+    pointer-events: none; /* Allows you to click 'Read Article' through it */
   }
-  .blog-section .sec-header p { color: rgba(255,255,255,0.52); }
-  .blog-section .sec-header h2 { color: var(--white); }
-  .blog-section .sec-eyebrow { color: rgba(255,255,255,0.45); }
-  .blog-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
+
+  .card-lottie2-container {
+    position: absolute; /* Floating layer */
+    top:120px;
+    left:0;
+    height: 100%;
+    width: 100%;
+    z-index: 1;         /* Sits at the back */
+    opacity: 0.15;      /* Makes it subtle */
+    pointer-events: none; /* Allows you to click 'Read Article' through it */
   }
-  .blog-card {
-    border-radius: 20px;
-    overflow: hidden;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    transition: transform 0.3s ease, border-color 0.3s ease;
-  }
-  .blog-card:hover {
+
+  .blog-card-custom:hover {
     transform: translateY(-6px);
-    border-color: rgba(255,255,255,0.18);
+    box-shadow:
+      0 8px 25px rgba(0,0,0,0.08),
+      0 20px 50px rgba(0,0,0,0.12);
   }
-  .blog-img-wrap {
+
+  .blog-card-image {
+    flex: 0 0 40%;
     overflow: hidden;
-    aspect-ratio: 16/10;
+    position: relative;
+    height: 200px;
+    z-index: 2;
   }
-  .blog-card-img {
+
+  .blog-card-image::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    
+  }
+
+  .blog-card-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
-    transition: transform 0.5s ease;
-  }
-  .blog-card:hover .blog-card-img { transform: scale(1.06); }
-  .blog-card-body { padding: 1.8rem; }
-  .blog-tag {
-    display: inline-block;
-    font-size: 0.66rem;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.45);
-    border: 1px solid rgba(255,255,255,0.12);
-    padding: 0.22rem 0.75rem;
-    border-radius: 999px;
-    margin-bottom: 0.9rem;
-  }
-  .blog-card h3 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.5rem;
-    letter-spacing: 0.01em;
-    margin-bottom: 0.65rem;
-    line-height: 1.2;
-    color: var(--white);
-  }
-  .blog-card p {
-    color: rgba(255,255,255,0.52);
-    font-size: 0.9rem;
-    line-height: 1.62;
-    margin-bottom: 1.2rem;
-  }
-  .blog-read-more {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-size: 0.84rem;
-    font-weight: 600;
-    color: var(--white);
-    text-decoration: none;
-    letter-spacing: 0.04em;
-    transition: gap 0.2s ease;
-  }
-  .blog-read-more:hover { gap: 0.75rem; }
-  .blog-read-more svg {
-    width: 15px; height: 15px;
-    stroke: currentColor; fill: none;
-    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+    transition: transform 0.6s ease;
+    transform: translateZ(20px);
+    
   }
 
+  .blog-card-custom:hover .blog-card-image img {
+    transform: scale(1.05);
+  }
+
+  .blog-card-body {
+    flex: 1;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transform: translateZ(20px);
+    z-index: 2;
+  }
+
+  .meta-tags {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-size: 0.8rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+
+  /* Container for button and author */
+  .card-footer-flex {
+      display: flex;
+      align-items: center; /* Vertical center */
+      justify-content: flex-start; /* Keeps them close to the button */
+      gap: 15px; /* Space between button and name */
+      margin-top: auto; /* Pushes this whole row to the bottom */
+  }
+
+  .author-name {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #000;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      white-space: nowrap; /* Prevents name from breaking into two lines */
+      /* Multiline logic */
+      display: flex;
+      flex-direction: column; /* Stack 'BY' and the 'NAME' */
+      line-height: 1.2;       /* Tightens the gap between lines */
+      max-width: 12px;       /* Forces the wrap when the name is big */
+  }
+
+  /* Style for the "BY" specifically */
+  .author-name div {
+      color: #666; /* Slightly lighter for the name itself */
+      font-weight: 500;
+      
+      word-wrap: break-word;
+  }
+
+    
+    
+
+  .blog-card-body h2 {
+    font-size: 1.4rem;
+    margin: 10px 0;
+    line-height: 1.3;
+    color: #000;
+  }
+
+  .blog-card-body p {
+    color: #353434;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Limits text to 2 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .read-article-btn {
+    display: inline-block;
+    
+    
+    border: 1px solid #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    
+    text-align: center;
+    width: fit-content;
+
+    padding: 10px 20px;
+    background: #000;
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+    
+    transition: all 0.3s ease;
+  }
+
+  .read-article-btn:hover {
+    background: #222;
+    transform: translateY(-1px);
+    color: #fff;
+    border: 1px solid #fff;
+  }
+
+  /* --- STICKY SIDEBAR --- */
+  .sticky-sidebar {
+    flex: 0 0 350px; /* Fixed width of 350px */
+    position: sticky;
+    top: 20px; /* Distance from top while scrolling */
+  }
+
+  .sidebar-widget {
+    background: linear-gradient(145deg, #0d0d0d, #1a1a1a);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: #ddd;
+    padding: 25px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+  }
+
+  .recent-widget {
+    
+    border: 1px solid rgba(255,255,255,0.08);
+    color: #0a0a0a;
+    background: #fff;
+    padding: 25px;
+    border-radius: 18px;
+
+    
+
+    box-shadow:
+      0 2px 10px rgba(0,0,0,0.04),
+      0 10px 25px rgba(0,0,0,0.06);
+  }
+
+  .sidebar-widget h3 {
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-left: 4px solid var(--primary-blue);
+    padding-left: 15px;
+    color: #fff;
+  }
+
+  .recent-post-item {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    text-decoration: none;
+    color: inherit;
+    align-items: center;
+  }
+
+  .recent-post-item:hover {
+    background: #f7f7f7;
+    transform: translateX(5px);
+    transition: all 0.3s ease;
+  }
+
+  .recent-post-thumb {
+    width: 65px;
+    height: 65px;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+
+  .recent-post-info h4 {
+    font-size: 0.9rem;
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .join-now-btn{
+    display: inline-block;
+    padding: 12px 25px;
+    background: #fff;
+    color: #000;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background 0.3s ease;
+    text-align: center;
+    width: fit-content;
+  }
+
+  .card-footer-flex {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+    position: relative;
+    z-index: 5; /* Keeps text above the hand animation */
+  }
+  
+  @media (max-width: 768px) {
+    .blog-main-grid { grid-template-columns: 1fr; }
+    .blog-card-custom { height: auto; flex-direction: column; }
+    .blog-card-image { height: 200px; }
+    .blog-main-grid {
+        flex-direction: column;
+    }
+    .sticky-sidebar {
+        flex: 1 1 auto;
+        width: 100%;
+        position: static;
+    }
+
+    .blog-feed {
+      grid-template-columns: 1fr;
+    }
+}

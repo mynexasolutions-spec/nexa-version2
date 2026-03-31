@@ -1,8 +1,4 @@
-{% extends "layouts/base_admin.html" %}
-
-{% block content %}
-<style>
-/* ==============================
+/* Ensure the admin content starts below the navbar */
    ADMIN DASHBOARD (INLINE)
 ================================ */
 
@@ -90,34 +86,17 @@
 .btn-danger:hover {
     background: #D32F2F;
 }
-</style>
 
-<div class="admin-container">
+/* Fix table display */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: white;
+}
 
-    <h1>Admin Dashboard</h1>
-
-    <div class="dashboard-stats">
-        <div class="stat-card">
-            <h3>Total Blogs</h3>
-            <p>{{ blog_count }}</p>
-        </div>
-
-        <div class="stat-card">
-            <h3>Total Categories</h3>
-            <p>{{ category_count }}</p>
-        </div>
-
-        <div class="stat-card">
-            <h3>Total Tags</h3>
-            <p>{{ tag_count }}</p>
-        </div>
-    </div>
-
-    <div class="dashboard-actions">
-        <a href="/admin/blogs" class="btn-primary">Manage Blogs</a>
-        <a href="/admin/categories" class="btn-secondary">Manage Categories</a>
-        <a href="/admin/logout" class="btn-danger">Logout</a>
-    </div>
-
-</div>
-{% endblock %}
+.admin-table th, .admin-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
