@@ -29,8 +29,8 @@ app.config["MAIL_SERVER"] = "smtp.gmail.com"
 app.config["MAIL_PORT"] = 587
 app.config["MAIL_USE_TLS"] = True
 app.config["MAIL_USE_SSL"] = False
-app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")  # sadiqali8791@gmail.com
-app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")  # betz_ynfk_hvzl_cews
+app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")  
+app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD") 
 app.config["MAIL_DEFAULT_SENDER"] = os.getenv("MAIL_USERNAME")  # Just the email, not tuple
 mail.init_app(app)
 
@@ -348,7 +348,7 @@ def contact():
 
 @app.route("/about")
 def about():
-    return render_template("pages/about.html")
+    return render_template("about.html")
 
 
 if __name__ == "__main__":
