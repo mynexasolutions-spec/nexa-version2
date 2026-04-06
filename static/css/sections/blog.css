@@ -1,4 +1,4 @@
-﻿:root {
+:root {
     --primary-blue: #040404;
     --nexa-black: #1a1a1a;
     --text-muted: #666;
@@ -328,6 +328,7 @@
     background: #fff;
     padding: 25px;
     border-radius: 18px;
+    margin-bottom: 30px;
 
     
 

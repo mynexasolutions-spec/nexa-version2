@@ -343,12 +343,13 @@ def contact():
 
         return redirect(url_for("contact"))
 
-    return render_template("pages/contact.html")
+    return render_template("contact.html")
     
 
 @app.route("/about")
 def about():
     return render_template("about.html")
+
 
 
 if __name__ == "__main__":

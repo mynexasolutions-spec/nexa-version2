@@ -1,6 +1,7 @@
 <nav class="navbar" id="navbar">
   <a href="{{ url_for('home') }}" class="logo">
-    <img src="{{ url_for('static', filename='images/logo/logo.png') }}" alt="Nexa Solutions Logo" style="width:48px;height:48px;object-fit:contain;display:block;" />
+    <img src="{{ url_for('static', filename='images/logo/logo.png') }}" alt="Nexa Solutions Logo"
+      style="width:48px;height:48px;object-fit:contain;display:block;" />
     <span class="logo-name">Nexa Solutions</span>
   </a>
   <ul class="nav-links">
@@ -16,8 +17,8 @@
         <li><a href="#">Speech to Text</a></li>
       </ul>
     </li>
-    <li><a href="{{ url_for('home') }}#contact">Contact</a></li>
-    <li><a href="{{ url_for('home') }}#contact" class="nav-cta">Get Started</a></li>
+    <li><a href="{{ url_for('contact') }}">Contact</a></li>
+    <li><a href="{{ url_for('contact') }}" class="nav-cta">Get Started</a></li>
   </ul>
   <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation" aria-expanded="false">
     <span></span>

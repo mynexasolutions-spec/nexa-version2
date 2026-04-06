@@ -1,4 +1,4 @@
-﻿/*  Nexa Solutions — CSS Entry Point 
+/*  Nexa Solutions — CSS Entry Point 
    All styles are split by section in static/css/sections/.
    Import order matters — base first, then components, then responsive.
  */
@@ -16,6 +16,7 @@
 @import 'sections/blog-page.css';
 @import 'sections/reviews.css';
 @import 'sections/contact.css';
+@import 'sections/contact-page.css';
 @import 'sections/footer.css';
 @import 'sections/responsive.css';
 @import 'about.css';
