@@ -1,11 +1,10 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_user, logout_user, login_required
-from models import db, BlogPost, Category, upload_blog_image
+from models import BlogPost, Category, upload_blog_image
 from .forms import BlogForm
 from .utils import generate_unique_slug
 import os
 from extensions import db
-import slugify # Useful for turning "My Title" into "my-title"
 
 admin_bp = Blueprint("admin", __name__, url_prefix="/admin")
 
