@@ -1,4 +1,4 @@
-﻿/* â”€â”€ Navbar scroll float â”€â”€ */
+/* â”€â”€ Navbar scroll float â”€â”€ */
   const navbar = document.getElementById('navbar');
   if (navbar) {
     window.addEventListener('scroll', () => {
@@ -237,10 +237,12 @@
       }
     };
 
-    whyUsRail.addEventListener('mouseenter', pauseWhyUsMotion);
-    whyUsRail.addEventListener('mouseleave', resumeWhyUsMotion);
-    whyUsRail.addEventListener('focusin', pauseWhyUsMotion);
-    whyUsRail.addEventListener('focusout', resumeWhyUsMotion);
+    if (whyUsTrack) {
+      whyUsTrack.addEventListener('mouseenter', pauseWhyUsMotion);
+      whyUsTrack.addEventListener('mouseleave', resumeWhyUsMotion);
+      whyUsTrack.addEventListener('focusin', pauseWhyUsMotion);
+      whyUsTrack.addEventListener('focusout', resumeWhyUsMotion);
+    }
 
     whyUsRail.addEventListener('mousedown', (event) => {
       startRailDrag(event.clientX);

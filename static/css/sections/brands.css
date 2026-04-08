@@ -1,4 +1,4 @@
-﻿  /* â”€â”€â”€ BRANDS TICKER (imported from new_index) â”€â”€â”€ */
+  /* â”€â”€â”€ BRANDS TICKER (imported from new_index) â”€â”€â”€ */
   .brands-section {
     background: #fff;
     padding: 48px 0;
@@ -36,13 +36,7 @@
 
   .ticker-wrapper::before,
   .ticker-wrapper::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 160px;
-    z-index: 2;
-    pointer-events: none;
+    display: none;
   }
 
   .ticker-wrapper::before {

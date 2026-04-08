@@ -1,4 +1,4 @@
-﻿  /* â”€â”€ WHY US â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+  /* â”€â”€ WHY US â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   .why-us-section {
     background: var(--white);
     padding: 110px 5vw;
@@ -9,7 +9,8 @@
     position: absolute;
     font-family: 'Bebas Neue', sans-serif;
     font-size: 22vw;
-    color: rgba(0,0,0,0.025);
+    color: #cfcece;
+    opacity: 0.9;
     pointer-events: none;
     user-select: none;
     bottom: -2vw;
@@ -20,17 +21,18 @@
     max-width: 1300px;
     margin: 0 auto;
     overflow-x: auto;
-    overflow-y: visible;
+    overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     scroll-snap-type: none;
     cursor: grab;
-    touch-action: pan-x;
+    touch-action: pan-y;
     user-select: none;
-    padding: 1.35rem 0 1.35rem;
+    padding: 3.5rem 0;
   }
   .why-us-rail.dragging { cursor: grabbing; }
   .why-us-rail::-webkit-scrollbar { display: none; }
+  
   .why-us-grid {
     display: flex;
     gap: 1.8rem;
@@ -42,15 +44,17 @@
   .why-card {
     --tilt: 0deg;
     flex: 0 0 clamp(310px, 32vw, 430px);
-    min-height: 438px;
+    
     background: #fdfdfc;
     border-radius: 14px;
     padding: 1.95rem 1.7rem 0.75rem;
     border: 1px solid rgba(0,0,0,0.22);
     box-shadow: 0 14px 36px rgba(0,0,0,0.06);
     transform: rotate(var(--tilt));
+    translate: 0 0;
+    rotate: 0deg;
     transform-origin: center top;
-    transition: transform 0.28s ease, box-shadow 0.28s ease;
+    transition: translate 0.28s ease, rotate 0.28s ease, box-shadow 0.28s ease;
     display: flex;
     flex-direction: column;
     animation: whyCardDrift 3.8s ease-in-out infinite;
@@ -64,7 +68,8 @@
   .why-card:nth-child(odd) { --tilt: -1.2deg; }
   .why-card:nth-child(even) { --tilt: 1.1deg; }
   .why-card:hover {
-    transform: translateY(-8px) rotate(calc(var(--tilt) + 0.3deg));
+    translate: 0 -8px;
+    rotate: 0.3deg;
     box-shadow: 0 20px 44px rgba(0,0,0,0.14);
   }
   .why-icon {
@@ -104,6 +109,7 @@
     font-family: 'Bebas Neue', sans-serif;
     font-size: clamp(2.45rem, 4.1vw, 3.35rem);
     line-height: 0.88;
+    color: var(--black);
     letter-spacing: 0.005em;
     margin-bottom: 1.05rem;
     max-width: 95%;
