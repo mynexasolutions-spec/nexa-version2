@@ -117,7 +117,7 @@
     window.addEventListener('resize', requestProjectSync);
   }
 
-  /* â”€â”€ Why Us horizontal rail â”€â”€ */
+  /* ── Why Us horizontal rail (Ultra-Smooth) ── */
   const whyUsRail = document.getElementById('whyUsRail');
   if (whyUsRail) {
     const whyUsTrack = whyUsRail.querySelector('.why-us-grid');
@@ -126,149 +126,101 @@
     let isDraggingRail = false;
     let isWhyUsPaused = false;
     let dragStartX = 0;
-    let dragStartScroll = 0;
+    let dragStartXPos = 0;
+    let currentX = 0;
 
+    const pauseMotion = () => { isWhyUsPaused = true; };
+    const resumeMotion = () => { isWhyUsPaused = false; };
+
+    const setupCardInteractions = (card) => {
+      card.addEventListener('mouseenter', pauseMotion);
+      card.addEventListener('mouseleave', resumeMotion);
+      // For mobile: pause only when touching a specific card
+      card.addEventListener('touchstart', pauseMotion, { passive: true });
+      card.addEventListener('touchend', resumeMotion, { passive: true });
+      card.addEventListener('touchcancel', resumeMotion, { passive: true });
+    };
+
+    // Initialize original cards and clones for infinite loop
     if (whyUsTrack && !whyUsTrack.dataset.loopReady) {
       const originalCards = Array.from(whyUsTrack.children);
       originalCards.forEach((card) => {
+        setupCardInteractions(card);
         const clone = card.cloneNode(true);
         clone.classList.remove('reveal', 'visible');
         clone.removeAttribute('data-delay');
+        setupCardInteractions(clone);
         whyUsTrack.appendChild(clone);
       });
       whyUsTrack.dataset.loopReady = 'true';
     }
 
     const getLoopWidth = () => {
-      if (!whyUsTrack) {
-        return 0;
-      }
+      if (!whyUsTrack) return 0;
       return whyUsTrack.scrollWidth / 2;
     };
 
-    const normalizeLoopScroll = () => {
-      const loopWidth = getLoopWidth();
-      if (loopWidth <= 0) {
-        return;
-      }
-
-      if (whyUsRail.scrollLeft <= 0) {
-        whyUsRail.scrollLeft += loopWidth;
-      } else if (whyUsRail.scrollLeft >= loopWidth) {
-        whyUsRail.scrollLeft -= loopWidth;
-      }
-    };
-
-    const stopWhyUsMotion = () => {
-      if (whyUsRaf) {
-        window.cancelAnimationFrame(whyUsRaf);
-        whyUsRaf = null;
-      }
-      lastTick = 0;
-    };
-
     const animateWhyUsRail = (ts) => {
-      if (isDraggingRail || isWhyUsPaused) {
+      if (isWhyUsPaused || isDraggingRail) {
+        lastTick = ts; 
         whyUsRaf = window.requestAnimationFrame(animateWhyUsRail);
         return;
       }
-
-      if (!lastTick) {
-        lastTick = ts;
-      }
-
+      if (!lastTick) lastTick = ts;
       const dt = ts - lastTick;
       lastTick = ts;
-      const loopWidth = getLoopWidth();
 
+      const loopWidth = getLoopWidth();
       if (loopWidth > 0) {
-        whyUsRail.scrollLeft -= dt * 0.11;
-        normalizeLoopScroll();
+        currentX -= dt * 0.07; // Peppier speed as requested
+        if (currentX <= -loopWidth) currentX += loopWidth;
+        if (currentX > 0) currentX -= loopWidth;
+        whyUsTrack.style.transform = `translate3d(${currentX}px, 0, 0) rotate(-0.5deg)`;
       }
 
       whyUsRaf = window.requestAnimationFrame(animateWhyUsRail);
-    };
-
-    const startWhyUsMotion = () => {
-      stopWhyUsMotion();
-      const loopWidth = getLoopWidth();
-      if (loopWidth > 0) {
-        whyUsRail.scrollLeft = loopWidth / 2;
-        whyUsRaf = window.requestAnimationFrame(animateWhyUsRail);
-      }
     };
 
     const startRailDrag = (clientX) => {
       isDraggingRail = true;
       whyUsRail.classList.add('dragging');
       dragStartX = clientX;
-      dragStartScroll = whyUsRail.scrollLeft;
-      stopWhyUsMotion();
+      dragStartXPos = currentX;
     };
 
     const moveRailDrag = (clientX) => {
-      if (!isDraggingRail) {
-        return;
-      }
+      if (!isDraggingRail) return;
       const delta = clientX - dragStartX;
-      whyUsRail.scrollLeft = dragStartScroll - delta;
-      normalizeLoopScroll();
+      currentX = dragStartXPos + delta;
+      
+      const loopWidth = getLoopWidth();
+      if (currentX <= -loopWidth) currentX += loopWidth;
+      if (currentX > 0) currentX -= loopWidth;
+      whyUsTrack.style.transform = `translate3d(${currentX}px, 0, 0) rotate(-0.5deg)`;
     };
 
     const endRailDrag = () => {
-      if (!isDraggingRail) {
-        return;
-      }
+      if (!isDraggingRail) return;
       isDraggingRail = false;
       whyUsRail.classList.remove('dragging');
-      if (!whyUsRaf && !isWhyUsPaused) {
-        whyUsRaf = window.requestAnimationFrame(animateWhyUsRail);
-      }
     };
 
-    const pauseWhyUsMotion = () => {
-      isWhyUsPaused = true;
-    };
-
-    const resumeWhyUsMotion = () => {
-      isWhyUsPaused = false;
-      if (!whyUsRaf && !isDraggingRail) {
-        whyUsRaf = window.requestAnimationFrame(animateWhyUsRail);
-      }
-    };
-
-    if (whyUsTrack) {
-      whyUsTrack.addEventListener('mouseenter', pauseWhyUsMotion);
-      whyUsTrack.addEventListener('mouseleave', resumeWhyUsMotion);
-      whyUsTrack.addEventListener('focusin', pauseWhyUsMotion);
-      whyUsTrack.addEventListener('focusout', resumeWhyUsMotion);
-    }
-
-    whyUsRail.addEventListener('mousedown', (event) => {
-      startRailDrag(event.clientX);
-    });
-    window.addEventListener('mousemove', (event) => {
-      moveRailDrag(event.clientX);
-    });
+    // Rail Dragging (Area-wide)
+    whyUsRail.addEventListener('mousedown', (e) => startRailDrag(e.clientX));
+    window.addEventListener('mousemove', (e) => moveRailDrag(e.clientX));
     window.addEventListener('mouseup', endRailDrag);
-    whyUsRail.addEventListener('mouseleave', endRailDrag);
 
-    // Optimize mobile: Rely on native overflow-x: auto for touch devices
-    // Only pause/resume motion on touch interactions
-    whyUsRail.addEventListener('touchstart', pauseWhyUsMotion, { passive: true });
-    whyUsRail.addEventListener('touchend', resumeWhyUsMotion, { passive: true });
-    whyUsRail.addEventListener('touchcancel', resumeWhyUsMotion, { passive: true });
-
-    whyUsRail.addEventListener('scroll', () => {
-      normalizeLoopScroll();
-      // Briefly pause auto-motion on manual scroll to prevent fighting the user
-      pauseWhyUsMotion();
-      clearTimeout(whyUsRail.scrollTimeout);
-      whyUsRail.scrollTimeout = setTimeout(resumeWhyUsMotion, 150);
+    // Mobile Dragging (Allow swiping across the whole rail)
+    whyUsRail.addEventListener('touchstart', (e) => {
+      startRailDrag(e.touches[0].clientX);
     }, { passive: true });
+    whyUsRail.addEventListener('touchmove', (e) => {
+      moveRailDrag(e.touches[0].clientX);
+    }, { passive: true });
+    whyUsRail.addEventListener('touchend', endRailDrag, { passive: true });
+    whyUsRail.addEventListener('touchcancel', endRailDrag, { passive: true });
 
-    window.addEventListener('resize', startWhyUsMotion);
-    startWhyUsMotion();
+    whyUsRaf = window.requestAnimationFrame(animateWhyUsRail);
   }
 
   /* â”€â”€ Why Us Lottie icons â”€â”€ */
