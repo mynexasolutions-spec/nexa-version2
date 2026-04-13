@@ -26,7 +26,9 @@
     scrollbar-width: none;
     scroll-snap-type: none;
     cursor: grab;
+    /* Allow native vertical scroll, let JS/native handles horizontal */
     touch-action: pan-y;
+    -webkit-user-select: none;
     user-select: none;
     padding: 3.5rem 0;
   }
@@ -54,9 +56,10 @@
     translate: 0 0;
     rotate: 0deg;
     transform-origin: center top;
-    transition: translate 0.28s ease, rotate 0.28s ease, box-shadow 0.28s ease;
+    transition: transform 0.28s ease, box-shadow 0.28s ease;
     display: flex;
     flex-direction: column;
+    will-change: transform;
     animation: whyCardDrift 3.8s ease-in-out infinite;
   }
   .why-card:nth-child(3n) { animation-delay: 0.6s; }

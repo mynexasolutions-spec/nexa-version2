@@ -253,24 +253,20 @@
     window.addEventListener('mouseup', endRailDrag);
     whyUsRail.addEventListener('mouseleave', endRailDrag);
 
-    whyUsRail.addEventListener('touchstart', (event) => {
-      const touch = event.touches[0];
-      if (!touch) {
-        return;
-      }
-      startRailDrag(touch.clientX);
-    }, { passive: true });
-    whyUsRail.addEventListener('touchmove', (event) => {
-      const touch = event.touches[0];
-      if (!touch) {
-        return;
-      }
-      moveRailDrag(touch.clientX);
-    }, { passive: true });
-    whyUsRail.addEventListener('touchend', endRailDrag, { passive: true });
-    whyUsRail.addEventListener('touchcancel', endRailDrag, { passive: true });
+    // Optimize mobile: Rely on native overflow-x: auto for touch devices
+    // Only pause/resume motion on touch interactions
+    whyUsRail.addEventListener('touchstart', pauseWhyUsMotion, { passive: true });
+    whyUsRail.addEventListener('touchend', resumeWhyUsMotion, { passive: true });
+    whyUsRail.addEventListener('touchcancel', resumeWhyUsMotion, { passive: true });
 
-    whyUsRail.addEventListener('scroll', normalizeLoopScroll, { passive: true });
+    whyUsRail.addEventListener('scroll', () => {
+      normalizeLoopScroll();
+      // Briefly pause auto-motion on manual scroll to prevent fighting the user
+      pauseWhyUsMotion();
+      clearTimeout(whyUsRail.scrollTimeout);
+      whyUsRail.scrollTimeout = setTimeout(resumeWhyUsMotion, 150);
+    }, { passive: true });
+
     window.addEventListener('resize', startWhyUsMotion);
     startWhyUsMotion();
   }
