@@ -1,0 +1,804 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Web Development Services — Nexa Solutions{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/web-development.css') }}">
+<meta name="description" content="Custom web development services — Shopify, WordPress, React, Flask, Python and more. We build every type of website that converts visitors into customers.">
+{% endblock %}
+
+{% block content %}
+<main class="webdev-page">
+
+    <!-- ═══════════════════════════════════════════
+         1. HERO
+    ═══════════════════════════════════════════ -->
+    <section class="wd-hero">
+        <div class="wd-hero-inner">
+
+            <!-- LEFT — Text -->
+            <div class="wd-hero-text">
+                <h1 class="wd-hero-title">Web Development<br>Agency</h1>
+                <p class="wd-hero-sub">
+                    We develop websites and online stores that turn visitors into customers — with creativity, technical know-how, and enthusiasm.
+                </p>
+                <div class="wd-hero-btns">
+                    <a href="#wd-types" class="wd-btn wd-btn--outline">Learn more</a>
+                    <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Contact us ↗</a>
+                </div>
+            </div>
+
+            <!-- RIGHT — Visual -->
+            <div class="wd-hero-visual">
+                <div class="wd-hero-laptop-wrap">
+                    <img
+                        src="{{ url_for('static', filename='images/services/web-dev.png') }}"
+                        alt="Web Development — Nexa Solutions"
+                        class="wd-hero-laptop"
+                    >
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════
+         2. CERTIFIED AGENCY / STACKS
+    ═══════════════════════════════════════════ -->
+    <section class="wd-certified">
+        <div class="wd-certified-inner">
+
+            <!-- LEFT — Image -->
+            <div class="wd-certified-visual wd-reveal-left">
+                <img
+                    src="{{ url_for('static', filename='images/services/stacks.png') }}"
+                    alt="Technology stacks we work with"
+                    class="wd-certified-img"
+                >
+            </div>
+
+            <!-- RIGHT — Text -->
+            <div class="wd-certified-text wd-reveal-right">
+                <span class="wd-section-label">Our Technology Partners</span>
+                <h2 class="wd-section-title">Your Certified<br>Web Design Agency</h2>
+                <p class="wd-certified-desc">
+                    As specialised partners certified in the latest design and development technologies, we offer you tailor-made solutions that take your online presence to a whole new level.
+                </p>
+                <p class="wd-certified-desc">
+                    Our expertise includes responsive design, UX/UI optimisation, and the latest web standards to make your website both visually stunning and highly functional.
+                </p>
+                <div class="wd-certified-btns">
+                    <a href="#wd-types" class="wd-btn wd-btn--primary">Explore Our Work</a>
+                    <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--outline">Contact Us</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         3. TYPES OF WEBSITES — Tabbed
+    ═══════════════════════════════════════════ -->
+    <section class="wd-types" id="wd-types">
+        <div class="wd-types-inner">
+
+            <!-- Header -->
+            <div class="wd-types-header wd-reveal">
+                <span class="wd-section-label">What We Build</span>
+                <h2 class="wd-section-title">Every Type of Website.<br>Built to Perfection.</h2>
+                <p class="wd-section-desc" style="margin:0 auto; text-align:center;">
+                    From simple landing pages to complex e-commerce ecosystems — click any category to explore what we build.
+                </p>
+            </div>
+
+            <!-- Tab Buttons -->
+            <div class="wd-tab-bar-wrap wd-reveal">
+            <div class="wd-tab-bar">
+                <button class="wd-tab active" data-tab="0">
+                    <span class="wd-tab-num">01</span>
+                    <span class="wd-tab-name">E-Commerce</span>
+                </button>
+                <button class="wd-tab" data-tab="1">
+                    <span class="wd-tab-num">02</span>
+                    <span class="wd-tab-name">Business</span>
+                </button>
+                <button class="wd-tab" data-tab="2">
+                    <span class="wd-tab-num">03</span>
+                    <span class="wd-tab-name">Portfolio</span>
+                </button>
+                <button class="wd-tab" data-tab="3">
+                    <span class="wd-tab-num">04</span>
+                    <span class="wd-tab-name">Landing Pages</span>
+                </button>
+                <button class="wd-tab" data-tab="4">
+                    <span class="wd-tab-num">05</span>
+                    <span class="wd-tab-name">SaaS / Apps</span>
+                </button>
+                <button class="wd-tab" data-tab="5">
+                    <span class="wd-tab-num">06</span>
+                    <span class="wd-tab-name">Restaurant</span>
+                </button>
+                <button class="wd-tab" data-tab="6">
+                    <span class="wd-tab-num">07</span>
+                    <span class="wd-tab-name">Real Estate</span>
+                </button>
+                <button class="wd-tab" data-tab="7">
+                    <span class="wd-tab-num">08</span>
+                    <span class="wd-tab-name">Blog</span>
+                </button>
+                <button class="wd-tab" data-tab="8">
+                    <span class="wd-tab-num">09</span>
+                    <span class="wd-tab-name">Others</span>
+                </button>
+            </div><!-- /wd-tab-bar -->
+            </div><!-- /wd-tab-bar-wrap -->
+
+            <!-- Tab Panels -->
+            <div class="wd-tab-panels">
+
+                <!-- 1. E-Commerce -->
+                <div class="wd-tab-panel active" data-panel="0">
+                    <div class="wd-panel-text">
+                        <h3 class="wd-panel-title">E-Commerce Stores</h3>
+                        <p class="wd-panel-desc">Online stores built to sell. We design and develop high-converting e-commerce experiences with seamless checkout flows, mobile-first layouts, and backend integrations that keep your inventory, orders, and customers in perfect sync. Whether you are selling 10 products or 10,000 — we build it to scale.</p>
+                        <div class="wd-panel-tags">
+                            <span class="wd-type-tag">Shopify</span>
+                            <span class="wd-type-tag">WooCommerce</span>
+                            <span class="wd-type-tag">Custom Cart</span>
+                            <span class="wd-type-tag">Payment Gateways</span>
+                        </div>
+                        <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Build My Store</a>
+                    </div>
+                    <div class="wd-panel-image">
+                        <img src="{{ url_for('static', filename='images/services/ecommerce.png') }}" alt="E-Commerce" loading="lazy">
+                    </div>
+                </div>
+
+                <!-- 2. Business -->
+                <div class="wd-tab-panel" data-panel="1">
+                    <div class="wd-panel-text">
+                        <h3 class="wd-panel-title">Business & Corporate Websites</h3>
+                        <p class="wd-panel-desc">Your website is your 24/7 salesperson. We build authoritative, professional business sites that communicate your value instantly, build trust on first visit, and guide prospects toward a decision. Multi-page structures, service showcases, team pages, and contact systems — all crafted with intention.</p>
+                        <div class="wd-panel-tags">
+                            <span class="wd-type-tag">WordPress</span>
+                            <span class="wd-type-tag">Custom HTML/CSS</span>
+                            <span class="wd-type-tag">CMS</span>
+                            <span class="wd-type-tag">SEO-Ready</span>
+                        </div>
+                        <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Get a Business Site</a>
+                    </div>
+                    <div class="wd-panel-image">
+                        <img src="{{ url_for('static', filename='images/services/business.png') }}" alt="Business Website" loading="lazy">
+                    </div>
+                </div>
+
+                <!-- 3. Portfolio -->
+                <div class="wd-tab-panel" data-panel="2">
+                    <div class="wd-panel-text">
+                        <h3 class="wd-panel-title">Portfolio & Creative Sites</h3>
+                        <p class="wd-panel-desc">For creatives, freelancers, agencies, and artists who need their work to do the talking. We build visually stunning portfolio sites with gallery systems, case studies, interactive project showcases, and a personal brand identity that sets you apart in every room.</p>
+                        <div class="wd-panel-tags">
+                            <span class="wd-type-tag">React</span>
+                            <span class="wd-type-tag">GSAP Animations</span>
+                            <span class="wd-type-tag">Gallery Systems</span>
+                            <span class="wd-type-tag">Custom Design</span>
+                        </div>
+                        <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Showcase My Work</a>
+                    </div>
+                    <div class="wd-panel-image">
+                        <img src="https://images.unsplash.com/photo-1545235617-9465d2a55698?w=800&auto=format&fit=crop" alt="Portfolio Website" loading="lazy">
+                    </div>
+                </div>
+
+                <!-- 4. Landing Pages -->
+                <div class="wd-tab-panel" data-panel="3">
+                    <div class="wd-panel-text">
+                        <h3 class="wd-panel-title">Landing Pages & Sales Funnels</h3>
+                        <p class="wd-panel-desc">One page. One goal. Maximum conversions. We engineer high-converting landing pages with persuasive copy structures, clear CTAs, trust signals, and A/B-testable layouts. Built for ad campaigns, product launches, lead generation, and event signups — every pixel earns its place.</p>
+                        <div class="wd-panel-tags">
+                            <span class="wd-type-tag">Conversion-Focused</span>
+                            <span class="wd-type-tag">A/B Testing Ready</span>
+                            <span class="wd-type-tag">Fast Load</span>
+                            <span class="wd-type-tag">Lead Capture</span>
+                        </div>
+                        <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Build My Landing Page</a>
+                    </div>
+                    <div class="wd-panel-image">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop" alt="Landing Page" loading="lazy">
+                    </div>
+                </div>
+
+                <!-- 5. SaaS -->
+                <div class="wd-tab-panel" data-panel="4">
+                    <div class="wd-panel-text">
+                        <h3 class="wd-panel-title">SaaS & Web Applications</h3>
+                        <p class="wd-panel-desc">Full-stack web applications with user authentication, dashboards, real-time data, APIs, and complex business logic. We build the digital products behind growing SaaS companies — from the first prototype to production-grade systems that handle thousands of users daily.</p>
+                        <div class="wd-panel-tags">
+                            <span class="wd-type-tag">React</span>
+                            <span class="wd-type-tag">Flask / Python</span>
+                            <span class="wd-type-tag">REST APIs</span>
+                            <span class="wd-type-tag">Auth Systems</span>
+                            <span class="wd-type-tag">Dashboards</span>
+                        </div>
+                        <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Build My App</a>
+                    </div>
+                    <div class="wd-panel-image">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop" alt="SaaS App" loading="lazy">
+                    </div>
+                </div>
+
+                <!-- 6. Restaurant -->
+                <div class="wd-tab-panel" data-panel="5">
+                    <div class="wd-panel-text">
+                        <h3 class="wd-panel-title">Restaurant & Local Business</h3>
+                        <p class="wd-panel-desc">Local businesses deserve world-class digital presence. We build restaurant sites with online menus, table booking systems, and Google Maps integration. For local service businesses, we create Google-optimised sites that dominate local search and turn neighbourhood traffic into loyal customers.</p>
+                        <div class="wd-panel-tags">
+                            <span class="wd-type-tag">Online Booking</span>
+                            <span class="wd-type-tag">Google SEO</span>
+                            <span class="wd-type-tag">Menu Systems</span>
+                            <span class="wd-type-tag">Maps Integration</span>
+                        </div>
+                        <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Grow My Business</a>
+                    </div>
+                    <div class="wd-panel-image">
+                        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&auto=format&fit=crop" alt="Restaurant Website" loading="lazy">
+                    </div>
+                </div>
+
+                <!-- 7. Real Estate -->
+                <div class="wd-tab-panel" data-panel="6">
+                    <div class="wd-panel-text">
+                        <h3 class="wd-panel-title">Real Estate Platforms</h3>
+                        <p class="wd-panel-desc">Property listing portals, agency websites, and agent platforms built for performance. Filter-heavy search systems, property detail pages, virtual tours, inquiry forms, and CRM integrations that keep leads flowing and agents focused on closing deals — not spreadsheets.</p>
+                        <div class="wd-panel-tags">
+                            <span class="wd-type-tag">Property Listings</span>
+                            <span class="wd-type-tag">Search & Filter</span>
+                            <span class="wd-type-tag">CRM Integration</span>
+                            <span class="wd-type-tag">Lead Management</span>
+                        </div>
+                        <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Build My Platform</a>
+                    </div>
+                    <div class="wd-panel-image">
+                        <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&auto=format&fit=crop" alt="Real Estate Platform" loading="lazy">
+                    </div>
+                </div>
+
+                <!-- 8. Blog -->
+                <div class="wd-tab-panel" data-panel="7">
+                    <div class="wd-panel-text">
+                        <h3 class="wd-panel-title">Blogs & Content Platforms</h3>
+                        <p class="wd-panel-desc">Content-driven websites that build authority and organic traffic at scale. Custom blog platforms, editorial systems, newsletter integrations, category management, and SEO-optimised article structures — built for publishers, thought leaders, and brands that take content seriously.</p>
+                        <div class="wd-panel-tags">
+                            <span class="wd-type-tag">WordPress</span>
+                            <span class="wd-type-tag">Custom CMS</span>
+                            <span class="wd-type-tag">Newsletter</span>
+                            <span class="wd-type-tag">SEO Architecture</span>
+                        </div>
+                        <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Start Publishing</a>
+                    </div>
+                    <div class="wd-panel-image">
+                        <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&auto=format&fit=crop" alt="Blog Platform" loading="lazy">
+                    </div>
+                </div>
+
+                <!-- 9. Others -->
+                <div class="wd-tab-panel" data-panel="8">
+                    <div class="wd-panel-text">
+                        <h3 class="wd-panel-title">Custom & Specialized Projects</h3>
+                        <p class="wd-panel-desc">Beyond categories, we build custom digital solutions tailored to unique business needs. From community platforms and membership sites to marketplace ecosystems and enterprise portals — if you can imagine it, we can build it. Our expertise spans multiple industries and technologies.</p>
+                        <div class="wd-panel-tags">
+                            <span class="wd-type-tag">Node.js</span>
+                            <span class="wd-type-tag">Python</span>
+                            <span class="wd-type-tag">React</span>
+                            <span class="wd-type-tag">PostgreSQL</span>
+                            <span class="wd-type-tag">Cloud Deploy</span>
+                        </div>
+                        <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Tell Us Your Idea</a>
+                    </div>
+                    <div class="wd-panel-image">
+                        <img src="{{ url_for('static', filename='images/services/others-section.png') }}" alt="Custom Solutions" loading="lazy">
+                    </div>
+                </div>
+
+            </div><!-- /wd-tab-panels -->
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         4. INLINE CTA 1 — Not sure which type?
+    ═══════════════════════════════════════════ -->
+    <section class="wd-cta-band">
+        <div class="wd-cta-band-inner wd-reveal">
+            <div class="wd-cta-band-label">Not sure where to start?</div>
+            <h2 class="wd-cta-band-title">Let Us Find the Right Fit for Your Business</h2>
+            <p class="wd-cta-band-desc">
+                Tell us your idea in 2 minutes. We will assess your goals and recommend the exact type of website that will drive the most impact for your business.
+            </p>
+            <div class="wd-cta-band-btns">
+                <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--white">Book a Free Consultation</a>
+                <a href="https://wa.me/+919999999999" class="wd-btn wd-btn--ghost-white">Chat on WhatsApp</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         4B. CMS & PLATFORMS EXPERTISE
+    ═══════════════════════════════════════════ -->
+    <section class="wd-cms-systems">
+        <div class="wd-cms-inner">
+            <!-- LEFT — Image -->
+            <div class="wd-cms-visual wd-reveal-left">
+                <img 
+                    src="{{ url_for('static', filename='images/services/system-domains.png') }}"
+                    alt="CMS and Platform Technologies"
+                    class="wd-cms-img"
+                >
+            </div>
+
+            <!-- RIGHT — Text -->
+            <div class="wd-cms-text wd-reveal-right">
+                <span class="wd-section-label">Every System Is Different</span>
+                <h2 class="wd-section-title">We Can Do Web Design<br>for Any CMS</h2>
+                <p class="wd-cms-desc">
+                    We are experts in web design and development for all common content management systems, from WordPress to Drupal, and can therefore recommend the CMS that best suits your requirements.
+                </p>
+                <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Learn more</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         5. WHAT MAKES A GOOD WEBSITE
+    ═══════════════════════════════════════════ -->
+    <section class="wd-quality" id="wd-quality">
+        <div class="wd-quality-inner">
+
+            <!-- LEFT — Sticky heading -->
+            <div class="wd-quality-left wd-reveal-left">
+                <span class="wd-section-label">The Nexa Standard</span>
+                <h2 class="wd-section-title">What Makes a Website Truly Exceptional?</h2>
+                <p class="wd-section-desc">
+                    Good-looking is not enough. Every website we build is engineered around six non-negotiable pillars that separate high-performing sites from digital wallpaper.
+                </p>
+                <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary" style="margin-top:2rem;">Build the Right Way</a>
+            </div>
+
+            <!-- RIGHT — Pillar list -->
+            <div class="wd-quality-right wd-reveal-right">
+
+                <div class="wd-pillar">
+                    <div class="wd-pillar-icon">
+                        <!-- Lucide: zap -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    </div>
+                    <div class="wd-pillar-body">
+                        <div class="wd-pillar-title">Lightning Performance</div>
+                        <p class="wd-pillar-desc">Sub-2s load times via Core Web Vitals, lazy loading, CDN, and smart caching — a 1-second delay costs 7% of conversions.</p>
+                    </div>
+                </div>
+
+                <div class="wd-pillar">
+                    <div class="wd-pillar-icon">
+                        <!-- Lucide: smartphone -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                    </div>
+                    <div class="wd-pillar-body">
+                        <div class="wd-pillar-title">Mobile-First Design</div>
+                        <p class="wd-pillar-desc">70%+ of traffic is mobile. The phone is the primary canvas — every tap target, layout, and scroll flow tested on real devices.</p>
+                    </div>
+                </div>
+
+                <div class="wd-pillar">
+                    <div class="wd-pillar-icon">
+                        <!-- Lucide: navigation -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+                    </div>
+                    <div class="wd-pillar-body">
+                        <div class="wd-pillar-title">Clear User Journey</div>
+                        <p class="wd-pillar-desc">Every visitor has a question. We map the journey before writing a line of code — guiding them naturally toward a purchase, booking, or enquiry.</p>
+                    </div>
+                </div>
+
+                <div class="wd-pillar">
+                    <div class="wd-pillar-icon">
+                        <!-- Lucide: pen-tool -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="m2 2 7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+                    </div>
+                    <div class="wd-pillar-body">
+                        <div class="wd-pillar-title">Strong Visual Identity</div>
+                        <p class="wd-pillar-desc">Visitors judge your brand in 50 milliseconds. Typography, colour, and spacing that communicate your positioning instantly.</p>
+                    </div>
+                </div>
+
+                <div class="wd-pillar">
+                    <div class="wd-pillar-icon">
+                        <!-- Lucide: search -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    </div>
+                    <div class="wd-pillar-body">
+                        <div class="wd-pillar-title">SEO-Optimised Architecture</div>
+                        <p class="wd-pillar-desc">Semantic HTML5, structured data, clean URLs, and page-speed scores that satisfy Google's algorithms from day one.</p>
+                    </div>
+                </div>
+
+                <div class="wd-pillar">
+                    <div class="wd-pillar-icon">
+                        <!-- Lucide: shield -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <div class="wd-pillar-body">
+                        <div class="wd-pillar-title">Security & Reliability</div>
+                        <p class="wd-pillar-desc">SSL, input validation, XSS and SQL injection protection built in — not bolted on. Your site is a business asset, we protect it.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Mobile carousel dots -->
+            <div class="wd-pillar-dots" aria-hidden="true">
+                <span class="wd-pillar-dot active"></span>
+                <span class="wd-pillar-dot"></span>
+                <span class="wd-pillar-dot"></span>
+                <span class="wd-pillar-dot"></span>
+                <span class="wd-pillar-dot"></span>
+                <span class="wd-pillar-dot"></span>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         6. INLINE CTA 2 — Ready to start?
+    ═══════════════════════════════════════════ -->
+    <section class="wd-cta-band">
+        <div class="wd-cta-band-inner wd-reveal">
+            <div class="wd-cta-band-label">Zero Obligation</div>
+            <h2 class="wd-cta-band-title">Your Website, Built Right — From Day One</h2>
+            <p class="wd-cta-band-desc">
+                Stop settling for templates that look like everyone else. Tell us your vision and get a custom proposal within 24 hours.
+            </p>
+            <div class="wd-cta-band-btns">
+                <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--white">Request a Free Proposal</a>
+                <a href="{{ url_for('work') }}" class="wd-btn wd-btn--ghost-white">View Our Work First</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         8. OUR USP
+    ═══════════════════════════════════════════ -->
+    <section class="wd-usp" id="wd-usp">
+        <div class="wd-usp-inner">
+            <div class="wd-reveal-left">
+                <span class="wd-section-label">Why Choose Nexa</span>
+                <h2 class="wd-section-title">What Sets Us<br>Apart From<br>Everyone Else</h2>
+                <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary" style="margin-top:2.5rem;">Experience the Difference</a>
+            </div>
+
+            <div class="wd-usp-right wd-reveal-right">
+                <div class="wd-usp-card"><h4 class="wd-usp-card-title">Strategy Before Code</h4></div>
+                <div class="wd-usp-card"><h4 class="wd-usp-card-title">Full-Stack Capability</h4></div>
+                <div class="wd-usp-card"><h4 class="wd-usp-card-title">Any Platform, Any Stack</h4></div>
+                <div class="wd-usp-card"><h4 class="wd-usp-card-title">Built for Results</h4></div>
+                <div class="wd-usp-card"><h4 class="wd-usp-card-title">Fast Turnarounds</h4></div>
+                <div class="wd-usp-card"><h4 class="wd-usp-card-title">Long-Term Partnership</h4></div>
+            </div>
+        </div>
+
+        <!-- Full-width Promise Strip -->
+        <div class="wd-promise-strip wd-reveal">
+            <div class="wd-promise-content">
+                <p class="wd-promise-text">"We don't just deliver a website. We deliver a growth asset — one that works harder for your business every single day."</p>
+                <span class="wd-promise-sub">— The Nexa Promise</span>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════
+         9. TECH STACKS
+    ═══════════════════════════════════════════ -->
+    <section class="wd-stacks" id="wd-stacks">
+        <div class="wd-stacks-header wd-reveal">
+            <span class="wd-section-label">Our Technology Arsenal</span>
+            <h2 class="wd-section-title">We Work in Every Stack</h2>
+            <p class="wd-section-desc" style="margin: 0 auto; text-align:center;">
+                No platform lock-in, no single-technology bias. We choose the right tool for your project — from plug-and-play CMS solutions to fully custom-engineered systems.
+            </p>
+        </div>
+
+        <div class="wd-stacks-categories">
+
+            <!-- CMS Platforms -->
+            <div class="wd-stack-category wd-reveal wd-delay-1">
+                <div class="wd-stack-cat-label">CMS & E-Commerce Platforms</div>
+                <div class="wd-stack-cards">
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo">
+                            <img src="https://cdn.simpleicons.org/shopify/96BF48" alt="Shopify Logo">
+                        </div>
+                        <div class="wd-stack-name">Shopify</div>
+                        <p class="wd-stack-text">The gold standard for scalable online stores.</p>
+                        <div class="wd-stack-badges">
+                            <span class="wd-stack-badge">E-Commerce</span>
+                            <span class="wd-stack-badge">Shopify Plus</span>
+                        </div>
+                    </div>
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo">
+                            <img src="https://cdn.simpleicons.org/wordpress/21759B" alt="WordPress Logo">
+                        </div>
+                        <div class="wd-stack-name">WordPress</div>
+                        <p class="wd-stack-text">Powerful CMS for blogs and corporate sites.</p>
+                        <div class="wd-stack-badges">
+                            <span class="wd-stack-badge">CMS</span>
+                            <span class="wd-stack-badge">Themes</span>
+                        </div>
+                    </div>
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo">
+                            <img src="https://cdn.simpleicons.org/hostinger/673DE6" alt="Hostinger Logo">
+                        </div>
+                        <div class="wd-stack-name">Hostinger</div>
+                        <p class="wd-stack-text">Fast, reliable hosting for modern web projects.</p>
+                        <div class="wd-stack-badges">
+                            <span class="wd-stack-badge">Hosting</span>
+                            <span class="wd-stack-badge">Deployment</span>
+                        </div>
+                    </div>
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo">
+                            <img src="{{ url_for('static', filename='images/logo/woocommerce.png') }}" alt="WooCommerce Logo">
+                        </div>
+                        <div class="wd-stack-name">WooCommerce</div>
+                        <p class="wd-stack-text">Flexible e-commerce solutions built on WordPress.</p>
+                        <div class="wd-stack-badges">
+                            <span class="wd-stack-badge">E-Commerce</span>
+                            <span class="wd-stack-badge">Open Source</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Frontend -->
+            <div class="wd-stack-category wd-reveal wd-delay-2">
+                <div class="wd-stack-cat-label">Frontend Technologies</div>
+                <div class="wd-stack-cards">
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo">
+                            <img src="https://cdn.simpleicons.org/react/61DAFB" alt="React Logo">
+                        </div>
+                        <div class="wd-stack-name">React</div>
+                        <p class="wd-stack-text">Dynamic UIs for complex, high-performance apps.</p>
+                        <div class="wd-stack-badges">
+                            <span class="wd-stack-badge">UI Library</span>
+                            <span class="wd-stack-badge">SaaS</span>
+                        </div>
+                    </div>
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo">
+                            <img src="https://cdn.simpleicons.org/nextdotjs/000000" alt="Next.js Logo">
+                        </div>
+                        <div class="wd-stack-name">Next.js</div>
+                        <p class="wd-stack-text">The ultimate React framework for SEO and speed.</p>
+                        <div class="wd-stack-badges">
+                            <span class="wd-stack-badge">SSR</span>
+                            <span class="wd-stack-badge">Static Sites</span>
+                        </div>
+                    </div>
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo">
+                            <img src="https://cdn.simpleicons.org/html5/E34F26" alt="HTML5 Logo">
+                        </div>
+                        <div class="wd-stack-name">HTML5 / CSS3 / JS</div>
+                        <p class="wd-stack-text">Clean, performant, and framework-free code.</p>
+                        <div class="wd-stack-badges">
+                            <span class="wd-stack-badge">Core Web</span>
+                            <span class="wd-stack-badge">Fast</span>
+                        </div>
+                    </div>
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo">
+                            <img src="https://cdn.simpleicons.org/tailwindcss/06B6D4" alt="Tailwind CSS Logo">
+                        </div>
+                        <div class="wd-stack-name">Tailwind CSS</div>
+                        <p class="wd-stack-text">Utility-first styling for modern custom designs.</p>
+                        <div class="wd-stack-badges">
+                            <span class="wd-stack-badge">CSS</span>
+                            <span class="wd-stack-badge">Responsive</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Backend -->
+            <div class="wd-stack-category wd-reveal wd-delay-3">
+                <div class="wd-stack-cat-label">Backend & Server Technologies</div>
+                <div class="wd-stack-cards">
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo">
+                            <img src="https://cdn.simpleicons.org/python/3776AB" alt="Python Logo">
+                        </div>
+                        <div class="wd-stack-name">Python / Flask</div>
+                        <p class="wd-stack-text">Flexible backend for custom apps and REST APIs.</p>
+                        <div class="wd-stack-badges">
+                            <span class="wd-stack-badge">Python</span>
+                            <span class="wd-stack-badge">Backend</span>
+                        </div>
+                    </div>
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo">
+                            <img src="https://cdn.simpleicons.org/nodedotjs/339933" alt="Node.js Logo">
+                        </div>
+                        <div class="wd-stack-name">Node.js / Express</div>
+                        <p class="wd-stack-text">Fast runtime for real-time and scalable systems.</p>
+                        <div class="wd-stack-badges">
+                            <span class="wd-stack-badge">Node.js</span>
+                            <span class="wd-stack-badge">WebSockets</span>
+                        </div>
+                    </div>
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo">
+                            <img src="https://cdn.simpleicons.org/postgresql/4169E1" alt="PostgreSQL Logo">
+                        </div>
+                        <div class="wd-stack-name">PostgreSQL / MySQL</div>
+                        <p class="wd-stack-text">Secure, scalable data storage solutions.</p>
+                        <div class="wd-stack-badges">
+                            <span class="wd-stack-badge">Database</span>
+                            <span class="wd-stack-badge">SQL</span>
+                        </div>
+                    </div>
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo">
+                            <img src="https://www.vectorlogo.zone/logos/amazon_aws/amazon_aws-icon.svg" alt="AWS Logo">
+                        </div>
+                        <div class="wd-stack-name">Cloud Deployment</div>
+                        <p class="wd-stack-text">Global infrastructure for your application.</p>
+                        <div class="wd-stack-badges">
+                            <span class="wd-stack-badge">Cloud</span>
+                            <span class="wd-stack-badge">AWS / GCP</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         10. INLINE CTA 3 — Need a specific stack?
+    ═══════════════════════════════════════════ -->
+    <section class="wd-cta-band">
+        <div class="wd-cta-band-inner wd-reveal">
+            <div class="wd-cta-band-label">Need Assistance?</div>
+            <h2 class="wd-cta-band-title">Already Have a Tech Stack in Mind?</h2>
+            <p class="wd-cta-band-desc">
+                Tell us your preferred platform or framework and we will match it with our best-suited engineer. We speak your language — whether it is Shopify, WordPress, React, or custom Python.
+            </p>
+            <div class="wd-cta-band-btns">
+                <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--white">Discuss Your Stack</a>
+                <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--ghost-white">Get a Technical Consultation</a>
+            </div>
+        </div>
+    </section>
+
+
+</main>
+
+<script>
+(function () {
+    /* ── Scroll Reveal ── */
+    const revealEls = document.querySelectorAll(
+        '.wd-reveal, .wd-reveal-left, .wd-reveal-right'
+    );
+
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('wd-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.12, rootMargin: '0px 0px -60px 0px' }
+        );
+        revealEls.forEach((el) => observer.observe(el));
+    } else {
+        revealEls.forEach((el) => el.classList.add('wd-visible'));
+    }
+
+    /* ── Counter Animation ── */
+    const counters = document.querySelectorAll('.wd-stat-number[data-count]');
+
+    const countObserver = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                const el = entry.target;
+                const target = parseInt(el.dataset.count, 10);
+                const suffix = el.dataset.suffix || (target === 100 ? '%' : '+');
+                let start = 0;
+                const duration = 1800;
+                const step = Math.ceil(target / (duration / 16));
+
+                const ticker = setInterval(() => {
+                    start = Math.min(start + step, target);
+                    el.textContent = start + suffix;
+                    if (start >= target) clearInterval(ticker);
+                }, 16);
+
+                countObserver.unobserve(el);
+            });
+        },
+        { threshold: 0.5 }
+    );
+
+    counters.forEach((c) => countObserver.observe(c));
+
+    /* ── Tab Switcher ── */
+    const tabs   = document.querySelectorAll('.wd-tab');
+    const panels = document.querySelectorAll('.wd-tab-panel');
+
+    function activateTab(idx) {
+        idx = Math.max(0, Math.min(idx, tabs.length - 1));
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        tabs[idx].classList.add('active');
+        document.querySelector(`.wd-tab-panel[data-panel="${idx}"]`).classList.add('active');
+        tabs[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+
+    tabs.forEach((tab) => {
+        tab.addEventListener('click', () => activateTab(parseInt(tab.dataset.tab)));
+    });
+
+    /* ── Swipe to switch panels (mobile) ── */
+    const panelsWrap = document.querySelector('.wd-tab-panels');
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    panelsWrap.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].clientX;
+        touchStartY = e.changedTouches[0].clientY;
+    }, { passive: true });
+
+    panelsWrap.addEventListener('touchend', (e) => {
+        const dx = touchStartX - e.changedTouches[0].clientX;
+        const dy = touchStartY - e.changedTouches[0].clientY;
+
+        /* ignore if mostly vertical (user scrolling the page) */
+        if (Math.abs(dy) > Math.abs(dx)) return;
+        /* ignore small movements */
+        if (Math.abs(dx) < 50) return;
+
+        const currentIdx = parseInt(document.querySelector('.wd-tab.active').dataset.tab);
+        activateTab(dx > 0 ? currentIdx + 1 : currentIdx - 1);
+    }, { passive: true });
+})();
+
+// Pillar carousel dots sync
+(function () {
+    const track = document.querySelector('.wd-quality-right');
+    const dots = document.querySelectorAll('.wd-pillar-dot');
+    if (!track || !dots.length) return;
+    function updateDots() {
+        const pillars = track.querySelectorAll('.wd-pillar');
+        if (!pillars.length) return;
+        const cardW = pillars[0].offsetWidth + parseInt(getComputedStyle(pillars[0]).marginRight || 0);
+        const idx = Math.round(track.scrollLeft / (cardW || 1));
+        dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    }
+    track.addEventListener('scroll', updateDots, { passive: true });
+    dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => {
+            const pillars = track.querySelectorAll('.wd-pillar');
+            if (pillars[i]) pillars[i].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+        });
+    });
+})();
+
+</script>
+{% endblock %}

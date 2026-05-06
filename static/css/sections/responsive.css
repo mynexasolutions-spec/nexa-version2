@@ -136,6 +136,7 @@
       min-height: 60px;
       font-size: 1.1rem;
       opacity: 1 !important;
+      color: #000 !important;
     }
 
     .nav-links li .nav-cta {
@@ -159,10 +160,13 @@
       display: flex;
       align-items: center;
       font-size: 1.1rem;
+      color: #000 !important;
     }
 
     .nav-links .dropdown-arrow {
       transition: transform 0.22s ease;
+      color: #000;
+      opacity: 1;
     }
 
     .nav-links .has-dropdown.open .dropdown-arrow {
@@ -210,7 +214,8 @@
       justify-content: center;
       font-size: 0.95rem;
       padding: 0;
-      opacity: 0.65 !important;
+      opacity: 1 !important;
+      color: #000 !important;
       letter-spacing: 0;
     }
 

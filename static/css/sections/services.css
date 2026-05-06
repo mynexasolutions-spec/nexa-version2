@@ -50,7 +50,7 @@
   font-family: 'DM Sans', sans-serif;
   font-size: 1rem;
   line-height: 1.7;
-  color: #555;
+  color: #111;
   max-width: 680px;
   margin: 0 auto;
 }
@@ -58,6 +58,8 @@
 .services-stacked {
   max-width: 1400px;
   margin: 0 auto;
+  /* Lift the stacked service cards slightly to reduce gap above and create breathing space after the container */
+  margin-top: -60px;
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -169,7 +171,7 @@
 }
 
 .service-card p {
-  color: #666;
+  color: #111;
   line-height: 1.7;
   font-size: 0.95rem;
   margin-bottom: 1.8rem;
@@ -177,7 +179,7 @@
 }
 
 .service-card.dark p {
-  color: #aaa;
+  color: #fff;
 }
 
 .service-card.dark h3 {
@@ -239,6 +241,8 @@
     margin: 0 auto;
     flex-direction: column;
   }
+  /* Reduce the lifted amount on small screens to avoid overlap with header */
+  .services-stacked { margin-top: -20px; }
   
   .service-card:nth-child(even) {
     flex-direction: column;

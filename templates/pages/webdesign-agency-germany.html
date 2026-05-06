@@ -1,0 +1,142 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}High-End Web Design — Nexa Solutions{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/webdesign-agency-germany.css') }}">
+{% endblock %}
+
+{% block body_class %}webdesign-page dark-theme{% endblock %}
+
+{% block content %}
+<main>
+    <!-- HERO SECTION -->
+    <section class="hero-v2">
+        <div class="hero-v2--container">
+            <div class="hero-v2--content">
+                <span class="hero-v2--tag">Premium Web Experience</span>
+                <h1 class="hero-v2--title">Digital <br>Architects.</h1>
+                <p class="hero-v2--description">
+                    We don't just build websites. We create high-performance digital engines that drive growth, authority, and conversions.
+                </p>
+                <div class="hero-v2--cta">
+                    <a href="{{ url_for('contact') }}" class="btn-nexa primary">Start a Project</a>
+                    <a href="#services" class="btn-nexa outline">Our Services</a>
+                </div>
+            </div>
+            <div class="hero-v2--visual">
+                <img src="{{ url_for('static', filename='images/hero-webdesign.png') }}" alt="Nexa Web Design" class="hero-v2--image">
+            </div>
+        </div>
+    </section>
+
+    <!-- TRUST BAR -->
+    <section class="trust-bar" style="padding: 4rem 0; border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); background: #000;">
+        <div class="container-s" style="display: flex; justify-content: space-around; align-items: center; opacity: 0.5;">
+            <span style="font-family: 'Bebas Neue'; font-size: 1.5rem; letter-spacing: 2px;">Strategy First</span>
+            <span style="font-family: 'Bebas Neue'; font-size: 1.5rem; letter-spacing: 2px;">Design Driven</span>
+            <span style="font-family: 'Bebas Neue'; font-size: 1.5rem; letter-spacing: 2px;">Code Perfection</span>
+            <span style="font-family: 'Bebas Neue'; font-size: 1.5rem; letter-spacing: 2px;">Growth Focused</span>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section id="services" class="nexa-services">
+        <div class="section-header">
+            <span class="section-header--label">Excellence in every pixel</span>
+            <h2 class="section-header--title">The Nexa Ecosystem</h2>
+        </div>
+        
+        <div class="nexa-grid">
+            <div class="nexa-card">
+                <span class="nexa-card--icon">✦</span>
+                <h3 class="nexa-card--title">Brand Identity</h3>
+                <p class="nexa-card--text">Creating a visual language that resonates with your audience and establishes immediate market authority.</p>
+                <a href="{{ url_for('contact') }}" class="nexa-card--link">Explore Brand</a>
+            </div>
+            
+            <div class="nexa-card">
+                <span class="nexa-card--icon">◈</span>
+                <h3 class="nexa-card--title">UX/UI Design</h3>
+                <p class="nexa-card--text">Intuitive interfaces designed for seamless navigation and maximum user retention across all platforms.</p>
+                <a href="{{ url_for('contact') }}" class="nexa-card--link">Explore UX</a>
+            </div>
+            
+            <div class="nexa-card">
+                <span class="nexa-card--icon">▣</span>
+                <h3 class="nexa-card--title">Performance Dev</h3>
+                <p class="nexa-card--text">Blazing fast, SEO-optimized code architectures built for scalability and long-term business stability.</p>
+                <a href="{{ url_for('contact') }}" class="nexa-card--link">Explore Tech</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROCESS SECTION -->
+    <section class="nexa-process">
+        <div class="section-header" style="text-align: left;">
+            <span class="section-header--label">The Methodology</span>
+            <h2 class="section-header--title">How We Scale You</h2>
+        </div>
+        
+        <div class="process-list">
+            <div class="process-item">
+                <div class="process-number">01</div>
+                <div class="process-content">
+                    <h3 class="process-content--title">Deep Discovery</h3>
+                    <p class="process-content--text">We analyze your market, competitors, and audience to find the unique angle for your digital dominance.</p>
+                </div>
+            </div>
+            
+            <div class="process-item">
+                <div class="process-number">02</div>
+                <div class="process-number">02</div>
+                <div class="process-content">
+                    <h3 class="process-content--title">Architectural Design</h3>
+                    <p class="process-content--text">Wireframing and visual prototyping that ensures every interaction has a purpose and every pixel tells a story.</p>
+                </div>
+            </div>
+            
+            <div class="process-item">
+                <div class="process-number">03</div>
+                <div class="process-content">
+                    <h3 class="process-content--title">Precision Engineering</h3>
+                    <p class="process-content--text">Developing your solution with the latest tech stack, ensuring security, speed, and cross-platform perfection.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONVERSION CTA -->
+    <section class="conversion-cta">
+        <div class="cta-box">
+            <h2 class="cta-box--title">Ready to Outperform?</h2>
+            <p class="cta-box--description">Join the ranks of high-growth companies that trust Nexa Solutions for their digital engineering.</p>
+            <div style="display: flex; justify-content: center; gap: 2rem;">
+                <a href="{{ url_for('contact') }}" class="btn-nexa primary">Book a Discovery Call</a>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script>
+    // Subtle parallax and reveal animations could go here
+    document.addEventListener('DOMContentLoaded', () => {
+        const cards = document.querySelectorAll('.nexa-card');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        cards.forEach(card => {
+            card.style.opacity = 0;
+            card.style.transform = 'translateY(40px)';
+            card.style.transition = 'all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1)';
+            observer.observe(card);
+        });
+    });
+</script>
+{% endblock %}

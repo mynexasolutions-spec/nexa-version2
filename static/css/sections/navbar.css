@@ -65,7 +65,7 @@
     letter-spacing: 0.03em;
     padding: 0.5rem 1.1rem;
     border-radius: 999px;
-    opacity: 0.7;
+    opacity: 1;
     transition: opacity 0.2s, background 0.2s, color 0.2s;
   }
 
@@ -134,7 +134,8 @@
     transition: transform 0.22s ease;
     display: inline-block;
     line-height: 1;
-    opacity: 0.7;
+    opacity: 1;
+    color: var(--black);
   }
   .has-dropdown:hover .dropdown-arrow { transform: rotate(180deg); }
   .dropdown-menu {
@@ -148,7 +149,7 @@
     border: 1px solid rgba(0,0,0,0.08);
     border-radius: 16px;
     box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-    min-width: 190px;
+    min-width: 220px;
     padding: 0.4rem 0;
     list-style: none;
     opacity: 0;
@@ -158,6 +159,27 @@
     z-index: 300;
   }
   .has-dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
+  /* Keep dropdown open when focusing inside (keyboard/tab or mouse enters menu) */
+  .has-dropdown:focus-within .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
+  /* Keep open while hovering the menu itself (prevents disappearing when moving mouse) */
+  .has-dropdown .dropdown-menu:hover {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
+  /* Open state (used by JS toggle) */
+  .has-dropdown.open .dropdown-menu {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
@@ -175,7 +197,7 @@
     font-size: 0.88rem;
     font-weight: 500;
     letter-spacing: 0.02em;
-    opacity: 0.72;
+    opacity: 1;
     border-radius: 0;
     transition: opacity 0.18s, background 0.18s;
   }
@@ -183,4 +205,38 @@
     opacity: 1;
     background: rgba(0,0,0,0.04);
   }
+
+  /* Services dropdown — two-column grid with icon + label */
+  .services-dropdown .dropdown-menu {
+    left: 0;
+    transform: translateY(-6px);
+    min-width: 540px;
+    padding: 0.6rem;
+  }
+  .services-dropdown .dropdown-menu li { border: none; padding: 0; }
+  .dropdown-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(140px, 1fr));
+    gap: 0.35rem 0.6rem;
+    align-items: start;
+  }
+  .dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.5rem;
+    border-radius: 10px;
+    color: var(--black) !important;
+    text-decoration: none;
+    transition: background 0.16s, transform 0.06s;
+  }
+  .dropdown-item:hover { background: rgba(0,0,0,0.04); transform: translateY(-1px); }
+  .dropdown-item img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 6px;
+    display: inline-block;
+  }
+  .dropdown-item span { font-size: 0.92rem; font-weight: 600; }
 

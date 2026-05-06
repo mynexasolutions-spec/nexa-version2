@@ -5,8 +5,40 @@
     <span class="logo-name">Nexa Solutions</span>
   </a>
   <ul class="nav-links">
-    <li><a href="{{ url_for('home') }}#services">Services</a></li>
-    <li><a href="{{ url_for('home') }}#projects">Work</a></li>
+    <li class="has-dropdown services-dropdown">
+      <a href="{{ url_for('home') }}#services" class="dropdown-toggle">Services <span class="dropdown-arrow">&#9660;</span></a>
+      <ul class="dropdown-menu">
+        <li>
+          <div class="dropdown-grid">
+            <a href="{{ url_for('web_development') }}" class="dropdown-item">
+              <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?w=200" alt="Web Development">
+              <span>Web Development</span>
+            </a>
+            <a href="{{ url_for('home') }}#services" class="dropdown-item">
+              <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=200" alt="Mobile Apps">
+              <span>Mobile Apps</span>
+            </a>
+            <a href="{{ url_for('home') }}#services" class="dropdown-item">
+              <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=200" alt="AI Solutions">
+              <span>AI Solutions</span>
+            </a>
+            <a href="{{ url_for('home') }}#services" class="dropdown-item">
+              <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=200" alt="Data Analytics">
+              <span>Data Analytics</span>
+            </a>
+            <a href="{{ url_for('home') }}#services" class="dropdown-item">
+              <img src="https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=200" alt="SEO & Growth">
+              <span>SEO & Growth</span>
+            </a>
+            <a href="{{ url_for('home') }}#services" class="dropdown-item">
+              <img src="https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?w=200" alt="Automation">
+              <span>Automation</span>
+            </a>
+          </div>
+        </li>
+      </ul>
+    </li>
+    <li><a href="{{ url_for('work') }}">Work</a></li>
     <li><a href="{{ url_for('blog') }}">Blog</a></li>
     <li><a href="{{ url_for('about') }}">About</a></li>
     <li class="has-dropdown">

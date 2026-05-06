@@ -1,0 +1,1508 @@
+/* =====================================================
+   WEB DEVELOPMENT SERVICES PAGE
+   Nexa Solutions — matches homepage design system
+   ===================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
+/* ── SCOPED RESET / VARS ── */
+.webdev-page {
+    background: var(--white, #fff);
+    color: var(--black, #0a0a0a);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: clip;
+}
+
+.webdev-page *,
+.webdev-page *::before,
+.webdev-page *::after {
+    box-sizing: border-box;
+}
+
+/* ── COMMON UTILITIES ── */
+.wd-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.wd-section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--black, #0a0a0a);
+    margin-bottom: 1.2rem;
+}
+
+.wd-section-label::before,
+.wd-section-label::after {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1.5px;
+    background: currentColor;
+}
+
+.wd-section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.8rem, 5.5vw, 4.2rem);
+    line-height: 1.0;
+    letter-spacing: 0.01em;
+    color: #0a0a0a;
+    margin-bottom: 1.2rem;
+}
+
+.wd-section-desc {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: #444;
+    max-width: 620px;
+}
+
+/* ── REVEAL ANIMATION ── */
+.wd-reveal {
+    opacity: 0;
+    transform: translateY(36px);
+    transition: opacity 0.7s cubic-bezier(0.165, 0.84, 0.44, 1),
+                transform 0.7s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.wd-reveal.wd-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.wd-reveal-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.7s cubic-bezier(0.165, 0.84, 0.44, 1),
+                transform 0.7s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.wd-reveal-left.wd-visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.wd-reveal-right {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.7s cubic-bezier(0.165, 0.84, 0.44, 1),
+                transform 0.7s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.wd-reveal-right.wd-visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.wd-delay-1 { transition-delay: 0.1s; }
+.wd-delay-2 { transition-delay: 0.2s; }
+.wd-delay-3 { transition-delay: 0.3s; }
+.wd-delay-4 { transition-delay: 0.4s; }
+.wd-delay-5 { transition-delay: 0.5s; }
+.wd-delay-6 { transition-delay: 0.6s; }
+
+/* ─────────────────────────────────────────
+   1. HERO SECTION
+───────────────────────────────────────── */
+.wd-hero {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    padding: 5.5rem 0 2rem;
+    overflow: hidden;
+}
+
+.wd-hero-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+/* ── LEFT TEXT ── */
+.wd-hero-text {
+    z-index: 2;
+}
+
+.wd-hero-tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #e8472e;
+    margin-bottom: 1.4rem;
+    opacity: 0;
+    animation: wdFadeUp 0.6s 0.15s ease forwards;
+}
+
+.wd-hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.2rem, 6vw, 5.6rem);
+    line-height: 0.95;
+    letter-spacing: 0.01em;
+    color: #0a0a0a;
+    margin-bottom: 1.6rem;
+    opacity: 0;
+    animation: wdFadeUp 0.7s 0.3s ease forwards;
+}
+
+.wd-hero-title .wd-highlight {
+    display: inline-block;
+    background: #0a0a0a;
+    color: #fff;
+    padding: 0.02em 0.14em 0.05em;
+    line-height: 1;
+}
+
+.wd-hero-sub {
+    font-size: 1.05rem;
+    font-weight: 400;
+    color: #444;
+    max-width: 480px;
+    margin-bottom: 2.4rem;
+    line-height: 1.72;
+    opacity: 0;
+    animation: wdFadeUp 0.7s 0.45s ease forwards;
+}
+
+.wd-hero-btns {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: wdFadeUp 0.7s 0.6s ease forwards;
+}
+
+/* ── RIGHT VISUAL ── */
+.wd-hero-visual {
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    animation: wdFadeUp 0.9s 0.5s ease forwards;
+}
+
+.wd-hero-laptop-wrap {
+    position: relative;
+    width: 100%;
+}
+
+.wd-hero-laptop {
+    width: 100%;
+    height: auto;
+    display: block;
+    background: transparent;
+}
+
+/* ── FLOATING METRIC CARDS ── */
+.wd-float-card {
+    position: absolute;
+    background: #fff;
+    border-radius: 12px;
+    padding: 0.9rem 1.2rem;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.05);
+    min-width: 140px;
+    animation: wdFloat 4s ease-in-out infinite;
+}
+
+.wd-float-card--tl {
+    top: -24px;
+    left: -28px;
+    animation-delay: 0s;
+}
+
+.wd-float-card--tr {
+    top: 18px;
+    right: -28px;
+    animation-delay: 1.4s;
+}
+
+.wd-float-card--br {
+    bottom: 28px;
+    right: -24px;
+    animation-delay: 0.7s;
+}
+
+.wd-float-card-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #999;
+    margin-bottom: 0.3rem;
+}
+
+.wd-float-card-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 0.02em;
+    color: #0a0a0a;
+    line-height: 1;
+}
+
+.wd-float-card-val.wd-green { color: #22c55e; }
+
+/* mini sparkline bars */
+.wd-float-spark {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    margin-top: 0.5rem;
+    height: 22px;
+}
+
+.wd-float-spark span {
+    flex: 1;
+    background: #0a0a0a;
+    border-radius: 2px;
+    opacity: 0.15;
+}
+
+.wd-float-spark span:nth-child(1) { height: 50%; }
+.wd-float-spark span:nth-child(2) { height: 70%; opacity: 0.25; }
+.wd-float-spark span:nth-child(3) { height: 40%; }
+.wd-float-spark span:nth-child(4) { height: 85%; opacity: 0.3; }
+.wd-float-spark span:nth-child(5) { height: 60%; opacity: 0.2; }
+.wd-float-spark span:nth-child(6) { height: 100%; opacity: 0.5; background: #22c55e; }
+
+/* thin progress bar */
+.wd-float-progress {
+    margin-top: 0.6rem;
+    height: 4px;
+    background: #f0f0f0;
+    border-radius: 99px;
+    overflow: hidden;
+}
+
+.wd-float-progress-bar {
+    height: 100%;
+    width: 98%;
+    background: #22c55e;
+    border-radius: 99px;
+}
+
+@keyframes wdFloat {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-8px); }
+}
+
+/* ── HERO RESPONSIVE ── */
+@media (max-width: 900px) {
+    .wd-hero {
+        padding: 7rem 0 5rem;
+    }
+    .wd-hero-inner {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        padding: 0 1.5rem;
+        text-align: center;
+    }
+    .wd-hero-text { order: 1; }
+    .wd-hero-visual { order: 2; }
+    .wd-hero-sub { margin-left: auto; margin-right: auto; }
+    .wd-hero-btns { justify-content: center; }
+    .wd-hero-laptop {
+        transform: none;
+    }
+    .wd-float-card--tl { left: -8px; }
+    .wd-float-card--tr { right: -8px; }
+    .wd-float-card--br { right: -8px; }
+}
+
+@media (max-width: 480px) {
+    .wd-float-card--tr,
+    .wd-float-card--br { display: none; }
+    .wd-float-card--tl { left: 0; }
+}
+
+/* ── BUTTONS ── */
+.wd-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 0.85rem 2.2rem;
+    border-radius: 999px;
+    cursor: pointer;
+    text-decoration: none;
+    border: 2px solid #0a0a0a;
+    transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+    white-space: nowrap;
+}
+
+.wd-btn--primary {
+    background: #0a0a0a;
+    color: #fff;
+}
+
+.wd-btn--primary:hover {
+    background: #222;
+    transform: translateY(-2px);
+}
+
+.wd-btn--outline {
+    background: transparent;
+    color: #0a0a0a;
+}
+
+.wd-btn--outline:hover {
+    background: #0a0a0a;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.wd-btn--white {
+    background: #fff;
+    color: #0a0a0a;
+    border-color: #fff;
+}
+
+.wd-btn--white:hover {
+    background: #0a0a0a;
+    color: #fff;
+    border-color: #0a0a0a;
+    transform: translateY(-2px);
+}
+
+.wd-btn--ghost-white {
+    background: transparent;
+    color: #fff;
+    border-color: rgba(255,255,255,0.5);
+}
+
+.wd-btn--ghost-white:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: #fff;
+    transform: translateY(-2px);
+}
+
+/* ─────────────────────────────────────────
+   2. STATS BAR
+───────────────────────────────────────── */
+.wd-stats {
+    background: #0a0a0a;
+    padding: 3rem 0;
+}
+
+.wd-stats-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    text-align: center;
+}
+
+.wd-stat-item {
+    border-right: 1px solid rgba(255,255,255,0.1);
+    padding: 0 2rem;
+}
+
+.wd-stat-item:last-child { border-right: none; }
+
+.wd-stat-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 0.4rem;
+}
+
+.wd-stat-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    font-weight: 600;
+}
+
+/* ─────────────────────────────────────────
+   2. CERTIFIED AGENCY / STACKS
+───────────────────────────────────────── */
+.wd-certified {
+    background: #f9f9f7;
+    /* reduce bottom padding to tighten spacing to next section */
+    padding: 5rem 0 4rem;
+}
+
+.wd-certified-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+}
+
+.wd-certified-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    background: transparent;
+}
+
+.wd-certified-text .wd-section-title {
+    margin-bottom: 1.6rem;
+}
+
+.wd-certified-desc {
+    font-size: 0.97rem;
+    line-height: 1.75;
+    color: #444;
+    margin-bottom: 1.1rem;
+}
+
+.wd-certified-btns {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
+
+@media (max-width: 900px) {
+    .wd-certified-inner {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        padding: 0 1.5rem;
+    }
+}
+
+/* ─────────────────────────────────────────
+   2B. CMS & PLATFORMS
+───────────────────────────────────────── */
+.wd-cms-systems {
+    background: #ffffff;
+    padding: 5rem 0 3rem;
+}
+
+.wd-cms-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 6rem;
+    align-items: center;
+}
+
+.wd-cms-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    background: transparent;
+}
+
+.wd-cms-text .wd-section-title {
+    margin-bottom: 1.6rem;
+}
+
+.wd-cms-desc {
+    font-size: 0.97rem;
+    line-height: 1.75;
+    color: #444;
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 900px) {
+    .wd-cms-inner {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        padding: 0 1.5rem;
+    }
+}
+
+/* ─────────────────────────────────────────
+   3. WEBSITE TYPES — Tabbed
+───────────────────────────────────────── */
+.wd-types {
+    /* make this section white to visually separate it from the certified agency band */
+    background: #ffffff;
+    /* reduce vertical padding to remove excessive gap */
+    padding: 4rem 0;
+    /* subtle divider to emphasize separation from previous section */
+    border-top: 1px solid rgba(0,0,0,0.04);
+}
+
+.wd-types-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.wd-types-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+/* ── TAB BAR ── */
+.wd-tab-bar {
+    display: flex;
+    gap: 0;
+    /* make the tab bar visually part of the panel: single border, no bottom edge */
+    border: 1px solid rgba(0,0,0,0.07);
+    /* keep a subtle bottom divider to separate tabs from panels */
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    border-radius: 16px 16px 0 0;
+    overflow: hidden;
+    margin-bottom: 0;
+    background: #fff;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.wd-tab-bar::-webkit-scrollbar { display: none; }
+
+.wd-tab {
+    flex: 1;
+    min-width: 115px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 1.4rem 1.1rem;
+    border: none;
+    border-right: 1px solid rgba(0,0,0,0.08);
+    background: transparent;
+    cursor: pointer;
+    transition: background 0.25s ease, color 0.25s ease;
+    position: relative;
+}
+
+.wd-tab:last-child { border-right: none; }
+
+.wd-tab-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.05rem;
+    letter-spacing: 0.15em;
+    color: #333;
+    transition: color 0.25s ease;
+    line-height: 1;
+    font-weight: 700;
+}
+
+.wd-tab-name {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #222;
+    transition: color 0.25s ease;
+    white-space: nowrap;
+}
+
+.wd-tab:hover {
+    background: #f5f5f3;
+}
+
+.wd-tab.active {
+    background: #0a0a0a;
+}
+
+.wd-tab.active .wd-tab-num {
+    color: #fff;
+    opacity: 0.9;
+}
+
+.wd-tab.active .wd-tab-name {
+    color: #fff;
+}
+
+/* ── TAB PANELS ── */
+.wd-tab-panels {
+    position: relative;
+    min-height: 420px;
+    margin-top: 0.5rem; /* small offset to visually connect with tab bar */
+}
+
+.wd-tab-panel {
+    display: none;
+    grid-template-columns: 1fr 1fr;
+    gap: 4.5rem;
+    align-items: center;
+    background: #fff;
+    /* remove top border so the tab-bar border acts as the panel top */
+    border: 1px solid rgba(0,0,0,0.07);
+    border-top: none;
+    border-radius: 0 0 24px 24px;
+    overflow: hidden;
+    padding: 3rem 4.5rem; /* reduce top padding so content sits closer */
+}
+
+.wd-tab-panel.active {
+    display: grid;
+    animation: wdPanelIn 0.35s ease forwards;
+}
+
+@keyframes wdPanelIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.wd-panel-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    line-height: 1.1;
+    color: #0a0a0a;
+    margin-bottom: 1.3rem;
+    letter-spacing: 0.01em;
+    font-weight: 700;
+}
+
+.wd-panel-desc {
+    font-size: 1.02rem;
+    line-height: 1.8;
+    color: #444;
+    margin-bottom: 1.8rem;
+    font-weight: 400;
+}
+
+.wd-panel-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin-bottom: 2.2rem;
+}
+
+.wd-type-tag {
+    font-size: 0.77rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.5rem 1.1rem;
+    border-radius: 999px;
+    border: 1.5px solid rgba(0,0,0,0.15);
+    color: #444;
+    background: #f9f9f7;
+    transition: all 0.3s ease;
+}
+
+.wd-type-tag:hover {
+    background: #0a0a0a;
+    color: #fff;
+    border-color: #0a0a0a;
+}
+
+.wd-panel-image {
+    border-radius: 16px;
+    overflow: hidden;
+    aspect-ratio: 3/2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+}
+
+.wd-panel-image img {
+    width: 110%;
+    height: 110%;
+    object-fit: contain;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.wd-tab-panel:hover .wd-panel-image img {
+    transform: scale(1.04);
+}
+
+/* ── TAB BAR SCROLL HINT ── */
+.wd-tab-bar-wrap {
+    position: relative;
+}
+
+.wd-tab-bar-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 48px;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.9));
+    pointer-events: none;
+    border-radius: 0 16px 0 0;
+    display: none;
+}
+
+/* ── TABLET ── */
+@media (max-width: 900px) {
+    .wd-types-inner { padding: 0 1.2rem; }
+    .wd-tab { min-width: 100px; padding: 1.1rem 0.8rem; }
+    .wd-tab-name { font-size: 0.8rem; }
+    .wd-tab-panel {
+        grid-template-columns: 1fr;
+        padding: 2.5rem 2rem;
+        gap: 2rem;
+    }
+    /* specificity fix — must beat .wd-tab-panel.active { display: grid } */
+    .wd-tab-panel.active {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+    .wd-panel-image { aspect-ratio: 16/9; }
+    .wd-panel-title { font-size: clamp(1.8rem, 3.5vw, 2.5rem); }
+    .wd-panel-desc { font-size: 0.95rem; }
+}
+
+/* ── PHONE ── */
+@media (max-width: 640px) {
+    .wd-types { padding: 5rem 0 6rem; }
+    .wd-types-inner { padding: 0 1rem; }
+    .wd-types-header { margin-bottom: 1.8rem; }
+
+    /* show scroll hint gradient */
+    .wd-tab-bar-wrap::after { display: block; }
+
+    /* tab bar: scroll snap, show 2.5 tabs so user knows more exist */
+    .wd-tab-bar {
+        border-radius: 14px 14px 0 0;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+    .wd-tab-bar::-webkit-scrollbar { display: none; }
+
+    .wd-tab {
+        flex: 0 0 auto;
+        width: calc(33.33% - 1px); /* show 3 tabs, hint of 4th */
+        min-width: 90px;
+        padding: 1rem 0.5rem 0.9rem;
+        gap: 0.35rem;
+        scroll-snap-align: start;
+    }
+
+    .wd-tab-icon {
+        font-size: 1.3rem;
+        line-height: 1;
+    }
+
+    .wd-tab-name {
+        font-size: 0.65rem;
+        font-weight: 700;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+        text-align: center;
+    }
+
+    /* ── PANEL FIX — override display:grid from .active ── */
+    .wd-tab-panel,
+    .wd-tab-panel.active {
+        display: none;
+        border-radius: 0 0 16px 16px;
+        padding: 1.6rem 1.2rem 2rem;
+        gap: 0;
+    }
+
+    .wd-tab-panel.active {
+        display: flex !important;
+        flex-direction: column;
+        gap: 1.6rem;
+    }
+
+    /* image on top, text below */
+    .wd-panel-image {
+        order: -1;
+        aspect-ratio: 16/9;
+        border-radius: 10px;
+    }
+
+    .wd-panel-text { order: 1; }
+
+    .wd-panel-title {
+        font-size: 1.7rem;
+        margin-bottom: 0.7rem;
+    }
+
+    .wd-panel-desc {
+        font-size: 0.9rem;
+        line-height: 1.68;
+        margin-bottom: 1.2rem;
+    }
+
+    /* examples */
+    .wd-panel-examples { margin-bottom: 1.2rem; }
+    .wd-examples-list { grid-template-columns: 1fr; gap: 0.3rem; }
+
+    /* stack chips */
+    .wd-stack-chips { gap: 0.5rem; margin-bottom: 1.4rem; }
+    .wd-stack-chip { padding: 0.4rem 0.8rem; font-size: 0.75rem; }
+    .wd-stack-chip img { width: 14px; height: 14px; }
+
+    .wd-type-tag { font-size: 0.68rem; padding: 0.35rem 0.8rem; }
+}
+
+
+/* ─────────────────────────────────────────
+   4. INLINE CTA BAND (dark)
+───────────────────────────────────────── */
+.wd-cta-band {
+    background: #0a0a0a;
+    padding: 5rem 2rem;
+    text-align: center;
+}
+
+.wd-cta-band-inner {
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.wd-cta-band-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 1.2rem;
+}
+
+.wd-cta-band-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.4rem, 4.5vw, 3.4rem);
+    color: #fff;
+    margin-bottom: 1.2rem;
+    line-height: 1.0;
+}
+
+.wd-cta-band-desc {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.7;
+    margin-bottom: 2.4rem;
+}
+
+.wd-cta-band-btns {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* ─────────────────────────────────────────
+   5. WHAT MAKES A GOOD WEBSITE
+───────────────────────────────────────── */
+.wd-quality {
+    background: #ffffff;
+    padding: 3rem 0 2rem;
+}
+
+.wd-quality-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 7rem;
+    align-items: start;
+}
+
+.wd-quality-left {
+    position: sticky;
+    top: 100px;
+    align-self: start;
+}
+
+.wd-quality-left .wd-section-title {
+    margin-bottom: 1.4rem;
+}
+
+/* ── PILLAR LIST ── */
+.wd-quality-right {
+    display: flex;
+    flex-direction: column;
+}
+
+.wd-pillar {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.4rem;
+    padding: 1.8rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    transition: background 0.2s ease;
+}
+
+.wd-pillar:first-child {
+    border-top: 1px solid rgba(0,0,0,0.08);
+}
+
+.wd-pillar-icon {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    background: #0a0a0a;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+}
+
+
+
+.wd-pillar-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.35rem;
+    letter-spacing: 0.02em;
+    color: #0a0a0a;
+    margin-bottom: 0.3rem;
+    line-height: 1;
+}
+
+.wd-pillar-desc {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: #666;
+}
+
+@media (max-width: 900px) {
+    .wd-quality-inner {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+    .wd-quality-left {
+        position: static;
+    }
+}
+
+/* ── PILLAR DOTS (hidden on desktop) ── */
+.wd-pillar-dots {
+    display: none;
+}
+
+@media (max-width: 640px) {
+    .wd-quality {
+        padding: 1.5rem 0 3rem;
+    }
+    .wd-quality-inner {
+        gap: 2rem;
+        padding: 0;
+    }
+
+    /* Heading block keeps side padding */
+    .wd-quality-left {
+        padding: 0 1.4rem;
+    }
+
+    /* ── Horizontal swipe carousel ── */
+    .wd-quality-right {
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        gap: 0;
+        padding: 0.25rem 1.4rem 0.5rem;
+    }
+    .wd-quality-right::-webkit-scrollbar {
+        display: none;
+    }
+
+    .wd-pillar {
+        flex: 0 0 calc(100% - 2.8rem);
+        width: calc(100% - 2.8rem);
+        scroll-snap-align: start;
+        flex-direction: column;
+        gap: 1.2rem;
+        padding: 1.8rem 1.6rem;
+        margin-right: 1rem;
+        border: 1px solid rgba(0,0,0,0.1);
+        border-radius: 16px;
+        background: #ffffff;
+    }
+
+    .wd-pillar:last-child {
+        margin-right: 0;
+    }
+
+    .wd-pillar:first-child {
+        border-top: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .wd-pillar-icon {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        border-radius: 10px;
+    }
+
+    .wd-pillar-title {
+        font-size: 1.15rem;
+    }
+
+    .wd-pillar-desc {
+        font-size: 0.88rem;
+        line-height: 1.65;
+    }
+
+    /* ── Dots ── */
+    .wd-pillar-dots {
+        display: flex;
+        justify-content: center;
+        gap: 6px;
+        margin-top: 1.4rem;
+    }
+
+    .wd-pillar-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: rgba(0,0,0,0.18);
+        transition: background 0.25s, transform 0.25s;
+    }
+
+    .wd-pillar-dot.active {
+        background: #0a0a0a;
+        transform: scale(1.35);
+    }
+}
+
+/* ─────────────────────────────────────────
+   6. USP SECTION
+───────────────────────────────────────── */
+.wd-usp {
+    background: #f9f9f7;
+    padding: 7rem 0 0;
+}
+
+.wd-usp-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+}
+
+/* ── RIGHT — bordered card list ── */
+.wd-usp-right {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.wd-usp-card {
+    padding: 1.25rem 1.8rem;
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+    transition: background 0.2s ease;
+}
+
+.wd-usp-card:last-child {
+    border-bottom: none;
+}
+
+.wd-usp-card:hover {
+    background: #f4f4f2;
+}
+
+.wd-usp-card-title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #0a0a0a;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.wd-usp-card-title::before {
+    content: '';
+    display: inline-flex;
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    background: #0a0a0a url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center/13px no-repeat;
+    border-radius: 50%;
+}
+
+.wd-promise-strip {
+    background: #0a0a0a;
+    color: #fff;
+    padding: 5rem 2rem;
+    margin-top: 4rem;
+    text-align: center;
+}
+
+.wd-promise-content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.wd-promise-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    margin: 0;
+}
+
+.wd-promise-sub {
+    display: block;
+    margin-top: 1.5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: rgba(255,255,255,0.5);
+}
+
+@media (max-width: 768px) {
+    .wd-promise-text {
+        font-size: 1.8rem;
+    }
+    .wd-promise-strip {
+        padding: 4rem 1.5rem;
+    }
+}
+
+/* ─────────────────────────────────────────
+   8. TECH STACKS
+───────────────────────────────────────── */
+.wd-stacks {
+    background: #f9f9f7;
+    padding: 3rem 0 9rem;
+}
+
+.wd-stacks-header {
+    max-width: 1200px;
+    margin: 0 auto 5rem;
+    padding: 0 2rem;
+    text-align: center;
+}
+
+.wd-stacks-categories {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+
+
+.wd-stack-cat-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: #000;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.wd-stack-cat-label::before,
+.wd-stack-cat-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #000;
+}
+
+.wd-stack-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.5rem;
+}
+
+.wd-stack-card {
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.08);
+    padding: 1.8rem 1.6rem;
+    border-radius: 16px;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+.wd-stack-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px -12px rgba(0,0,0,0.15);
+    border-color: rgba(0,0,0,0.15);
+}
+
+.wd-stack-logo {
+    height: 32px;
+    width: auto;
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.wd-stack-logo img {
+    height: 100%;
+    width: auto;
+    max-width: 150px;
+    object-fit: contain;
+}
+
+.wd-stack-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 0.02em;
+    color: #0a0a0a;
+    margin-bottom: 0.5rem;
+}
+
+.wd-stack-text {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: #666;
+    margin-bottom: 1.4rem;
+}
+
+.wd-stack-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: auto;
+}
+
+.wd-stack-badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    background: rgba(0,0,0,0.05);
+    color: #555;
+}
+
+/* ─────────────────────────────────────────
+   9. ASSISTANCE FLOATING STRIP
+───────────────────────────────────────── */
+.wd-assist-strip {
+    background: #f0f0ee;
+    padding: 2rem 0;
+    border-top: 1px solid rgba(0,0,0,0.07);
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+}
+
+.wd-assist-strip-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.wd-assist-text {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #0a0a0a;
+}
+
+.wd-assist-text strong {
+    font-weight: 700;
+}
+
+/* ─────────────────────────────────────────
+   10. FINAL GRAND CTA
+───────────────────────────────────────── */
+.wd-final-cta {
+    position: relative;
+    background: #0a0a0a;
+    padding: 10rem 2rem;
+    text-align: center;
+    overflow: hidden;
+}
+
+.wd-final-cta-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.04) 0%, transparent 65%);
+    pointer-events: none;
+}
+
+.wd-final-cta-bg-letter {
+    position: absolute;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 55vw;
+    color: rgba(255,255,255,0.02);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    bottom: -12vw;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.wd-final-cta-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 880px;
+    margin: 0 auto;
+}
+
+.wd-final-cta-label {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 2rem;
+    padding: 0.5rem 1.2rem;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 999px;
+}
+
+.wd-final-cta-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    color: #fff;
+    line-height: 0.95;
+    margin-bottom: 2rem;
+    letter-spacing: 0.01em;
+}
+
+.wd-final-cta-title .wd-stroke {
+    -webkit-text-stroke: 1px rgba(255,255,255,0.4);
+    color: transparent;
+}
+
+.wd-final-cta-desc {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.7;
+    max-width: 580px;
+    margin: 0 auto 3rem;
+}
+
+.wd-final-cta-btns {
+    display: flex;
+    gap: 1.2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 3.5rem;
+}
+
+.wd-final-cta-note {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.08em;
+}
+
+/* ─────────────────────────────────────────
+   ANIMATIONS
+───────────────────────────────────────── */
+@keyframes wdFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ─────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────── */
+@media (max-width: 900px) {
+    .wd-usp-inner {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .wd-type-card {
+        flex-direction: column !important;
+        height: auto;
+        min-height: 500px;
+        width: 92vw;
+    }
+    .wd-type-card-body {
+        flex: 0 0 auto;
+        padding: 2.5rem 2rem;
+        margin-top: 0;
+    }
+    .wd-type-card-image {
+        min-height: 42vh;
+        flex: 1;
+    }
+    .wd-quality-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .wd-stats-inner {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .wd-stat-item:nth-child(2) { border-right: none; }
+    .wd-stat-item:nth-child(1),
+    .wd-stat-item:nth-child(2) {
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        padding-bottom: 2rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .wd-hero-title { font-size: clamp(3rem, 13vw, 5rem); }
+    .wd-quality-grid { grid-template-columns: 1fr; }
+    .wd-stats-inner { grid-template-columns: 1fr 1fr; }
+    .wd-stack-cards { grid-template-columns: 1fr 1fr; }
+    .wd-assist-strip-inner { flex-direction: column; text-align: center; }
+
+    /* Center all section headings/labels on mobile */
+    .wd-section-label {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        text-align: center;
+    }
+    .wd-section-title,
+    .wd-section-desc {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Section-specific centering fixes */
+    .wd-certified-text,
+    .wd-cms-text,
+    .wd-quality-left,
+    .wd-usp-inner > div:first-child {
+        text-align: center;
+    }
+    .wd-certified-btns,
+    .wd-hero-btns {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 420px) {
+    .wd-stack-cards { grid-template-columns: 1fr; }
+}

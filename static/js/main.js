@@ -42,14 +42,28 @@ if (hamburgerBtn && navLinks) {
 }
 
 /* ── Tools dropdown (mobile accordion) ── */
+// Dropdown toggles: prevent navigation and toggle open state. Works on desktop and mobile.
 document.querySelectorAll('.dropdown-toggle').forEach((toggle) => {
   toggle.addEventListener('click', (e) => {
+    e.preventDefault();
+    const parent = toggle.closest('.has-dropdown');
+    if (!parent) return;
+    const isOpen = parent.classList.toggle('open');
+    // Close other open dropdowns
+    document.querySelectorAll('.has-dropdown.open').forEach((d) => {
+      if (d !== parent) d.classList.remove('open');
+    });
+    // On mobile, also expand the nav container if necessary
     if (window.innerWidth <= 768) {
-      e.preventDefault();
-      const parent = toggle.closest('.has-dropdown');
-      if (parent) parent.classList.toggle('open');
+      parent.classList.toggle('open', isOpen);
     }
   });
+});
+
+// Close dropdowns when clicking outside
+document.addEventListener('click', (e) => {
+  if (e.target.closest('.has-dropdown')) return;
+  document.querySelectorAll('.has-dropdown.open').forEach((d) => d.classList.remove('open'));
 });
 
 /* â”€â”€ Projects scroll observer â”€â”€ */

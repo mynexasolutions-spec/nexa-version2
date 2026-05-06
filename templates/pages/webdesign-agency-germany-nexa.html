@@ -1,0 +1,84 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Web Design — Nexa Solutions{% endblock %}
+
+{% block extra_head %}
+<style>
+  /* Nexa black & white (light) theme overrides */
+  body { background: #ffffff; color: #0b0b0b; }
+  .image-header, .img-text { background: #ffffff; color: #0b0b0b; }
+  .image-header--title, .img-text--title, .image-header--subtext, .img-text--subtext { color: #0b0b0b; }
+  .btn-primary { background:#0b0b0b; color:#ffffff; border-color:#0b0b0b; }
+  .btn-secondary { background:transparent; color:#0b0b0b; border-color:#0b0b0b; }
+  .logo-grid--text { color: #222; }
+  .logo-grid--item img, .logo-grid--item svg { filter:grayscale(100%); opacity:0.9; }
+  /* Keep layout spacing similar to source */
+  .image-header--img img{max-width:100%;height:auto;display:block}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<section class="image-header">
+  <div class="container-s">
+    <div class="image-header-wrapper">
+      <div class="image-header--content">
+        <div class="image-header--subheading">Concept, design & development</div>
+        <h1 class="image-header--title">Web Design — Nexa Solutions</h1>
+        <div class="image-header--subtext">
+          <p>We build clean, conversion-focused websites with modern, accessible design. Fast, responsive and easy to maintain.</p>
+        </div>
+        <div class="image-header--btns">
+          <a href="/#services" class="btn btn-secondary">Learn more</a>
+          <a href="/contact" class="btn btn-primary btn--with-icon">Contact us</a>
+        </div>
+      </div>
+
+      <div class="image-header--img">
+        <picture class="w-full" title="Nexa web design">
+          <img src="/static/images/webdesign-hero.png" alt="Nexa Web Design" class="w-full" loading="eager">
+        </picture>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="logo-grid js-animation-hidden">
+  <div class="container-s logo-grid-container">
+    <p class="logo-grid--text">Trusted by small teams and growing businesses</p>
+    <div class="logo-grid-slider">
+      <div class="logo-grid--item">
+        <!-- placeholder grayscale logos; replace with your logos in /static/images/logos/ -->
+        <img src="/static/images/logos/logo-placeholder-1.png" alt="Client logo" />
+      </div>
+      <div class="logo-grid--item">
+        <img src="/static/images/logos/logo-placeholder-2.png" alt="Client logo" />
+      </div>
+      <div class="logo-grid--item">
+        <img src="/static/images/logos/logo-placeholder-3.png" alt="Client logo" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="img-text js-animation-hidden" id="section-1">
+  <div class="container-s">
+    <div class="img-text-wrapper">
+      <div class="img-text--content">
+        <h3 class="img-text--title">Certified web design partner</h3>
+        <div class="img-text--subtext">
+          <p>We combine UX, performance and SEO best-practices to deliver sites that look great and perform even better.</p>
+        </div>
+        <div class="img-text--btns">
+          <a href="/services" class="btn btn-secondary">Our services</a>
+        </div>
+      </div>
+      <div class="img-text--img">
+        <img src="/static/images/why-us-illustration.png" alt="Why choose Nexa" />
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

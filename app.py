@@ -73,6 +73,18 @@ def home():
 def services():
     return render_template("pages/services.html")
 
+@app.route("/webdesign-agency-germany")
+def webdesign_agency_germany():
+    return render_template("pages/webdesign-agency-germany.html")
+
+@app.route("/services/web-development")
+def web_development():
+    return render_template("pages/web-development.html")
+
+@app.route("/work")
+def work():
+    return render_template("work.html")
+
 @app.route("/blog")
 def blog():
     page = request.args.get("page", 1, type=int)
@@ -353,5 +365,5 @@ def about():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", debug=True)
+    app.run(host="0.0.0.0", port=5001, debug=True)
 

@@ -1,0 +1,324 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap');
+
+:root {
+    --primary: #000000;
+    --secondary: #ffffff;
+    --accent: #ffffff;
+    --bg-dark: #000000;
+    --bg-light: #ffffff;
+    --text-main: #ffffff;
+    --text-muted: rgba(255, 255, 255, 0.6);
+    --glass: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+/* Global Styles */
+.webdesign-page {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+}
+
+.webdesign-page h1, 
+.webdesign-page h2, 
+.webdesign-page h3 {
+    font-family: 'Bebas Neue', cursive;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Premium Hero Section */
+.hero-v2 {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: 100px;
+    background: radial-gradient(circle at 70% 30%, rgba(255,255,255,0.05) 0%, transparent 50%);
+}
+
+.hero-v2--container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 4rem;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.hero-v2--content {
+    z-index: 2;
+}
+
+.hero-v2--tag {
+    display: inline-block;
+    padding: 8px 16px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(10px);
+}
+
+.hero-v2--title {
+    font-size: clamp(4rem, 8vw, 7rem);
+    line-height: 0.9;
+    margin-bottom: 2rem;
+}
+
+.hero-v2--description {
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    max-width: 500px;
+    margin-bottom: 3rem;
+    line-height: 1.6;
+}
+
+.hero-v2--cta {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.btn-nexa {
+    padding: 18px 40px;
+    border-radius: 0;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    transition: var(--transition);
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.btn-nexa.primary {
+    background: var(--secondary);
+    color: var(--primary);
+    border: none;
+}
+
+.btn-nexa.primary:hover {
+    background: transparent;
+    color: var(--secondary);
+    box-shadow: inset 0 0 0 1px var(--secondary);
+}
+
+.btn-nexa.outline {
+    background: transparent;
+    color: var(--secondary);
+    border: 1px solid var(--glass-border);
+}
+
+.btn-nexa.outline:hover {
+    background: var(--glass);
+    border-color: var(--secondary);
+}
+
+.hero-v2--visual {
+    position: relative;
+}
+
+.hero-v2--image {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+    transform: perspective(1000px) rotateY(-10deg);
+    transition: var(--transition);
+}
+
+.hero-v2--visual:hover .hero-v2--image {
+    transform: perspective(1000px) rotateY(0deg) scale(1.02);
+}
+
+/* Services Grid */
+.nexa-services {
+    padding: 10rem 0;
+    background: #050505;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 6rem;
+}
+
+.section-header--label {
+    color: var(--text-muted);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.section-header--title {
+    font-size: 4rem;
+}
+
+.nexa-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--glass-border);
+    max-width: 1400px;
+    margin: 0 auto;
+    border: 1px solid var(--glass-border);
+}
+
+.nexa-card {
+    background: var(--bg-dark);
+    padding: 4rem 3rem;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.nexa-card:hover {
+    background: #0a0a0a;
+}
+
+.nexa-card--icon {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    display: block;
+}
+
+.nexa-card--title {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.nexa-card--text {
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+}
+
+.nexa-card--link {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: var(--transition);
+}
+
+.nexa-card:hover .nexa-card--link {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Process Section */
+.nexa-process {
+    padding: 10rem 4rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.process-item {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 4rem;
+    margin-bottom: 6rem;
+    align-items: center;
+}
+
+.process-number {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 6rem;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--glass-border);
+}
+
+.process-content--title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.process-content--text {
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    max-width: 700px;
+}
+
+/* Final Conversion CTA */
+.conversion-cta {
+    padding: 10rem 4rem;
+    text-align: center;
+    background: linear-gradient(180deg, #000 0%, #0a0a0a 100%);
+}
+
+.cta-box {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 6rem;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px);
+}
+
+.cta-box--title {
+    font-size: 4rem;
+    margin-bottom: 2rem;
+}
+
+.cta-box--description {
+    font-size: 1.4rem;
+    color: var(--text-muted);
+    margin-bottom: 3rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .hero-v2--container {
+        grid-template-columns: 1fr;
+        padding: 0 2rem;
+        text-align: center;
+    }
+    
+    .hero-v2--description {
+        margin: 0 auto 3rem auto;
+    }
+    
+    .hero-v2--cta {
+        justify-content: center;
+    }
+    
+    .hero-v2--visual {
+        display: none;
+    }
+    
+    .nexa-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-v2--title {
+        font-size: 4rem;
+    }
+    
+    .section-header--title {
+        font-size: 3rem;
+    }
+    
+    .cta-box {
+        padding: 4rem 2rem;
+    }
+}

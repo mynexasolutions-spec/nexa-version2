@@ -160,8 +160,8 @@
           <h3 style="color: #fff; border-color: #fff;">Newsletter</h3>
           <p style="font-size:0.85rem;">Join 5,000+ tech leaders getting our weekly brief.</p>
           <form action="{{ url_for('newsletter_subscribe') }}" method="POST">
-            <input type="email" placeholder="Email address" style="width:100%; border:none; padding:10px; border-radius:8px; margin-bottom:10px;">
-            <button class="join-now-btn" style="width:100%; background:#fff; text-decoration-color:#000 ;">Join Now</button>
+            <input type="email" name="email" placeholder="Email address" class="newsletter-email-input">
+            <button type="submit" class="join-now-btn newsletter-join-btn">Join Now</button>
           </form>
         </div>
 

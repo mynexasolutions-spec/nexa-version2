@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        html,
+        body {
+            width: 100%;
+            overflow-x: hidden
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #f5f2ed;
+            color: #111
+        }
+
+        /* ── PROGRESS BAR ─────────────────────── */
+        #prog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: #111;
+            z-index: 999;
+            width: 0;
+            transition: width .06s linear;
+        }
+
+        /* ── NAV ──────────────────────────────── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 300;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.3rem 2.5rem;
+            mix-blend-mode: multiply;
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 20px;
+            letter-spacing: .12em;
+            color: #111;
+        }
+
+        .logo em {
+            color: #c8a000;
+            font-style: normal
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none
+        }
+
+        .nav-links a {
+            font-size: 11px;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: #777;
+            text-decoration: none;
+            transition: color .2s;
+        }
+
+        .nav-links a:hover {
+            color: #111
+        }
+
+        @media(max-width:500px) {
+            .nav-links {
+                display: none
+            }
+        }
+
+        /* ══════════════════════════════════════════
+   PHASE 1 — HERO  (light mode, full bleed)
+   Driver: 200vh  →  hero stays for 100vh of scroll
+══════════════════════════════════════════ */
+        #hero-wrap {
+            height: 200vh;
+            /* 100vh enter + 100vh hold */
+            position: relative;
+        }
+
+        #hero-sticky {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* full-bleed warm-light background */
+        #hero-bg {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 110% 80% at 30% 60%, #fffbe8 0%, transparent 55%),
+                radial-gradient(ellipse 80% 90% at 80% 20%, #ffeedd 0%, transparent 50%),
+                #f5f2ed;
+        }
+
+        /* subtle dot grid */
+        #hero-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle, rgba(0, 0, 0, .07) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+
+        /* decorative geometric shapes */
+        .hero-shape {
+            position: absolute;
+            border-radius: 50%
+        }
+
+        .hs1 {
+            width: 520px;
+            height: 520px;
+            top: -180px;
+            right: -120px;
+            border: 1.5px solid rgba(0, 0, 0, .06)
+        }
+
+        .hs2 {
+            width: 360px;
+            height: 360px;
+            top: -60px;
+            right: -30px;
+            border: 1.5px solid rgba(0, 0, 0, .05)
+        }
+
+        .hs3 {
+            width: 220px;
+            height: 220px;
+            bottom: -60px;
+            left: -60px;
+            border: 1.5px solid rgba(0, 0, 0, .05)
+        }
+
+        .hero-accent-line {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 0, 0, .06) 20%, rgba(0, 0, 0, .06) 80%, transparent);
+        }
+
+        /* main hero content — full width layout */
+        #hero-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 1200px;
+            padding: 0 4rem;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 3rem;
+            will-change: transform, opacity;
+        }
+
+        .hero-left {
+            flex: 1
+        }
+
+        .hero-eyebrow {
+            font-size: 11px;
+            letter-spacing: .32em;
+            text-transform: uppercase;
+            color: #aaa;
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+        }
+
+        .hero-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(72px, 12vw, 160px);
+            line-height: .88;
+            letter-spacing: .01em;
+            color: #111;
+        }
+
+        .hero-title span {
+            display: block;
+            color: #c8a000;
+        }
+
+        .hero-cta {
+            margin-top: 2.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 13px 28px;
+            background: #111;
+            color: #f5f2ed;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            border-radius: 100px;
+            border: none;
+            cursor: pointer;
+            transition: transform .22s, box-shadow .22s;
+        }
+
+        .hero-cta:hover {
+            transform: scale(1.04);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, .2)
+        }
+
+        .hero-right {
+            width: min(380px, 38vw);
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            align-items: flex-end;
+        }
+
+        .hero-stat {
+            text-align: right
+        }
+
+        .hero-stat-num {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(36px, 5vw, 60px);
+            color: #111;
+            letter-spacing: .02em;
+            line-height: 1;
+        }
+
+        .hero-stat-label {
+            font-size: 11px;
+            color: #aaa;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        .hero-divider {
+            width: 100%;
+            height: 1px;
+            background: rgba(0, 0, 0, .1)
+        }
+
+        .hero-tag {
+            font-size: 13px;
+            color: #555;
+            font-weight: 300;
+            line-height: 1.6;
+            text-align: right;
+            max-width: 280px;
+        }
+
+        /* scroll hint */
+        #hero-hint {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            z-index: 3;
+        }
+
+        .hint-label {
+            font-size: 10px;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            color: #bbb
+        }
+
+        .hint-line {
+            width: 1px;
+            height: 44px;
+            background: linear-gradient(180deg, #333, transparent);
+            animation: hintPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes hintPulse {
+
+            0%,
+            100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: .2
+            }
+        }
+
+        @media(max-width:700px) {
+            #hero-content {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 0 2rem;
+                gap: 2rem
+            }
+
+            .hero-right {
+                width: 100%;
+                align-items: flex-start
+            }
+
+            .hero-stat,
+            .hero-tag {
+                text-align: left
+            }
+        }
+
+        /* ══════════════════════════════════════════
+   PHASE 2 — CARDS SLIDE IN ONE-BY-ONE
+   Each card gets its own 80vh scroll window
+   so they appear clearly, one at a time
+══════════════════════════════════════════ */
+
+        /* dark transition section */
+        #cards-wrap {
+            position: relative;
+            /* 6 cards × 100vh each + 100vh for header + 80vh hold */
+            height: 880vh;
+        }
+
+        #cards-sticky {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #cards-bg {
+            position: absolute;
+            inset: 0;
+            background: #0a0a0a;
+        }
+
+        #cards-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(255, 255, 255, .018) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, .018) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        /* section header */
+        #cards-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 5rem 3rem 0;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .ch-label-col {}
+
+        .ch-eyebrow {
+            font-size: 11px;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: #e8ff3c;
+            margin-bottom: .5rem
+        }
+
+        .ch-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(40px, 6vw, 80px);
+            background: linear-gradient(180deg, #fff, rgba(255, 255, 255, .4));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .ch-count {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(14px, 2vw, 22px);
+            color: rgba(255, 255, 255, .15);
+            letter-spacing: .04em;
+            align-self: flex-end;
+            padding-bottom: .3rem;
+        }
+
+        /* ── card row: one card visible at a time, centered ── */
+        #card-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 5;
+        }
+
+        /* each card is absolutely positioned, slides in from right */
+        .proj-card {
+            position: absolute;
+            width: min(680px, 88vw);
+            /* portrait-ish on mobile, landscape on desktop */
+            height: min(380px, 55vw);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, .08);
+            will-change: transform, opacity;
+            /* default: hidden to the right */
+            transform: translateX(120%) scale(.92);
+            opacity: 0;
+            pointer-events: none;
+            cursor: pointer;
+            transition: box-shadow .3s;
+        }
+
+        .proj-card:hover {
+            box-shadow: 0 30px 80px rgba(0, 0, 0, .8)
+        }
+
+        .proj-card:hover .card-img-layer {
+            transform: scale(1.04)
+        }
+
+        @media(max-width:500px) {
+            .proj-card {
+                width: 90vw;
+                height: 60vw;
+                border-radius: 14px
+            }
+        }
+
+        /* rich gradient per card */
+        .card-img-layer {
+            position: absolute;
+            inset: 0;
+            transition: transform .6s cubic-bezier(.25, .46, .45, .94);
+        }
+
+        .c0 .card-img-layer {
+            background: linear-gradient(145deg, #0a1830 0%, #1a3a70 60%, #0d2050 100%)
+        }
+
+        .c1 .card-img-layer {
+            background: linear-gradient(145deg, #160626 0%, #3c1068 60%, #28085a 100%)
+        }
+
+        .c2 .card-img-layer {
+            background: linear-gradient(145deg, #051a0a 0%, #0c3e1a 60%, #082e12 100%)
+        }
+
+        .c3 .card-img-layer {
+            background: linear-gradient(145deg, #1a0c00 0%, #4e2c00 60%, #381e00 100%)
+        }
+
+        .c4 .card-img-layer {
+            background: linear-gradient(145deg, #1a0404 0%, #501010 60%, #3a0a0a 100%)
+        }
+
+        .c5 .card-img-layer {
+            background: linear-gradient(145deg, #031a1c 0%, #083e44 60%, #052c30 100%)
+        }
+
+        /* glow blob */
+        .card-img-layer::before {
+            content: '';
+            position: absolute;
+            width: 55%;
+            height: 80%;
+            border-radius: 50%;
+            top: -20%;
+            right: -5%;
+            opacity: .22;
+            filter: blur(45px);
+        }
+
+        .c0 .card-img-layer::before {
+            background: #5599ff
+        }
+
+        .c1 .card-img-layer::before {
+            background: #cc66ff
+        }
+
+        .c2 .card-img-layer::before {
+            background: #44ff99
+        }
+
+        .c3 .card-img-layer::before {
+            background: #ffaa44
+        }
+
+        .c4 .card-img-layer::before {
+            background: #ff6666
+        }
+
+        .c5 .card-img-layer::before {
+            background: #44ffee
+        }
+
+        /* noise */
+        .card-img-layer::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-size: 200px;
+            opacity: .04;
+        }
+
+        /* mock UI lines inside card */
+        .card-ui {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            right: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            opacity: .25;
+        }
+
+        .ui-bar {
+            height: 3px;
+            border-radius: 2px;
+            background: rgba(255, 255, 255, .6)
+        }
+
+        .ui-bar:nth-child(1) {
+            width: 38%
+        }
+
+        .ui-bar:nth-child(2) {
+            width: 62%
+        }
+
+        .ui-bar:nth-child(3) {
+            width: 48%
+        }
+
+        .ui-block {
+            height: 90px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, .06);
+            margin-top: 6px;
+            border: 1px solid rgba(255, 255, 255, .1);
+        }
+
+        /* vignette bottom */
+        .card-vignette {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(0deg, rgba(0, 0, 0, .75) 0%, rgba(0, 0, 0, .1) 45%, transparent 100%);
+        }
+
+        /* card text info — bottom left */
+        .card-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.6rem 2rem;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+        }
+
+        .ci-left {}
+
+        .card-num {
+            font-size: 10px;
+            letter-spacing: .22em;
+            color: #e8ff3c;
+            margin-bottom: 5px
+        }
+
+        .card-name {
+            font-size: clamp(18px, 3vw, 26px);
+            font-weight: 500;
+            line-height: 1.15;
+            color: #fff
+        }
+
+        .card-tag {
+            font-size: 12px;
+            color: rgba(255, 255, 255, .4);
+            font-weight: 300;
+            margin-top: 5px
+        }
+
+        .ci-right {}
+
+        .card-arrow {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, .25);
+            font-size: 16px;
+            color: rgba(255, 255, 255, .7);
+            transition: background .25s, color .25s;
+        }
+
+        .proj-card:hover .card-arrow {
+            background: rgba(255, 255, 255, .12);
+            color: #fff
+        }
+
+        /* progress indicator for cards */
+        #card-progress {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .cp-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .2);
+            transition: all .35s cubic-bezier(.34, 1.56, .64, 1);
+        }
+
+        .cp-dot.on {
+            background: #e8ff3c;
+            transform: scale(1.6)
+        }
+
+        /* ══════════════════════════════════════════
+   PHASE 3 — SWIPE DECK
+══════════════════════════════════════════ */
+        #swipe-wrap {
+            height: 400vh;
+            position: relative
+        }
+
+        #swipe-sticky {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            opacity: 0;
+        }
+
+        #swipe-bg {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(160deg, #030308, #07070f);
+        }
+
+        #swipe-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 255, 255, .01) 2px, rgba(255, 255, 255, .01) 4px);
+        }
+
+        .sw-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            position: relative;
+            z-index: 5
+        }
+
+        .sw-label {
+            font-size: 11px;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: #e8ff3c;
+            margin-bottom: .5rem
+        }
+
+        .sw-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(40px, 7vw, 88px);
+            background: linear-gradient(180deg, #fff, rgba(255, 255, 255, .4));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        #deck {
+            position: relative;
+            width: min(340px, 84vw);
+            height: min(430px, 72vw);
+            perspective: 1100px;
+            z-index: 5;
+        }
+
+        .s-card {
+            position: absolute;
+            inset: 0;
+            border-radius: 22px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, .08);
+            will-change: transform, opacity;
+            transition: transform .52s cubic-bezier(.34, 1.18, .64, 1), opacity .38s ease;
+            cursor: pointer;
+        }
+
+        .s-bg {
+            position: absolute;
+            inset: 0
+        }
+
+        .s0 .s-bg {
+            background: linear-gradient(150deg, #0a1628, #162e60)
+        }
+
+        .s1 .s-bg {
+            background: linear-gradient(150deg, #160828, #3a1260)
+        }
+
+        .s2 .s-bg {
+            background: linear-gradient(150deg, #061610, #0e3a20)
+        }
+
+        .s3 .s-bg {
+            background: linear-gradient(150deg, #180e00, #422800)
+        }
+
+        .s4 .s-bg {
+            background: linear-gradient(150deg, #180406, #481010)
+        }
+
+        .s-bg::before {
+            content: '';
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            top: -60px;
+            right: -40px;
+            opacity: .2;
+            filter: blur(40px);
+        }
+
+        .s0 .s-bg::before {
+            background: #4488ff
+        }
+
+        .s1 .s-bg::before {
+            background: #bb44ff
+        }
+
+        .s2 .s-bg::before {
+            background: #33ff88
+        }
+
+        .s3 .s-bg::before {
+            background: #ffaa33
+        }
+
+        .s4 .s-bg::before {
+            background: #ff4444
+        }
+
+        .s-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(0deg, rgba(0, 0, 0, .58) 0%, transparent 55%)
+        }
+
+        .s-ghost {
+            position: absolute;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 160px;
+            line-height: 1;
+            top: -22px;
+            right: -12px;
+            color: #fff;
+            opacity: .045;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .s-chip {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            z-index: 3;
+            font-size: 10px;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            background: rgba(232, 255, 60, .1);
+            color: #e8ff3c;
+            padding: 4px 10px;
+            border-radius: 100px;
+            border: 1px solid rgba(232, 255, 60, .18);
+        }
+
+        .s-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            z-index: 3
+        }
+
+        .s-year {
+            font-size: 10px;
+            letter-spacing: .25em;
+            color: #e8ff3c;
+            text-transform: uppercase;
+            margin-bottom: .4rem
+        }
+
+        .s-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 40px;
+            letter-spacing: .04em;
+            line-height: 1;
+            margin-bottom: .5rem;
+            color: #fff
+        }
+
+        .s-desc {
+            font-size: 12px;
+            color: rgba(255, 255, 255, .42);
+            font-weight: 300;
+            line-height: 1.68
+        }
+
+        #swipe-dots {
+            display: flex;
+            gap: 8px;
+            margin-top: 1.8rem;
+            position: relative;
+            z-index: 5
+        }
+
+        .s-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .2);
+            transition: all .3s cubic-bezier(.34, 1.56, .64, 1)
+        }
+
+        .s-dot.on {
+            background: #e8ff3c;
+            transform: scale(1.55)
+        }
+
+        /* ══════════════════════════════════════════
+   PHASE 4 — FINALE
+══════════════════════════════════════════ */
+        #finale-wrap {
+            height: 200vh;
+            position: relative
+        }
+
+        #finale-sticky {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            opacity: 0;
+        }
+
+        #fin-bg {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(232, 255, 60, .065) 0%, transparent 70%),
+                #080808;
+        }
+
+        .f-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(232, 255, 60, .08);
+            animation: fRing 5s ease-in-out infinite alternate;
+        }
+
+        .f-ring:nth-child(1) {
+            width: 240px;
+            height: 240px;
+            animation-delay: 0s
+        }
+
+        .f-ring:nth-child(2) {
+            width: 440px;
+            height: 440px;
+            animation-delay: .7s
+        }
+
+        .f-ring:nth-child(3) {
+            width: 640px;
+            height: 640px;
+            animation-delay: 1.4s
+        }
+
+        .f-ring:nth-child(4) {
+            width: 880px;
+            height: 880px;
+            animation-delay: 2s
+        }
+
+        @keyframes fRing {
+            from {
+                opacity: .32;
+                transform: scale(1)
+            }
+
+            to {
+                opacity: .07;
+                transform: scale(1.05)
+            }
+        }
+
+        #fin-content {
+            position: relative;
+            z-index: 5;
+            text-align: center;
+            padding: 2rem
+        }
+
+        .f-eyebrow {
+            font-size: 11px;
+            letter-spacing: .35em;
+            text-transform: uppercase;
+            color: #e8ff3c;
+            margin-bottom: 1.2rem
+        }
+
+        .f-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(72px, 14vw, 180px);
+            line-height: .88;
+            background: linear-gradient(180deg, #fff 20%, rgba(232, 255, 60, .65) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+        }
+
+        .f-sub {
+            font-size: clamp(13px, 2vw, 15px);
+            color: rgba(255, 255, 255, .35);
+            font-weight: 300;
+            max-width: 400px;
+            line-height: 1.8;
+            margin: 0 auto 2.5rem;
+        }
+
+        .f-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 34px;
+            background: #e8ff3c;
+            color: #080808;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            border-radius: 100px;
+            border: none;
+            cursor: pointer;
+            transition: transform .25s, box-shadow .25s;
+        }
+
+        .f-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 50px rgba(232, 255, 60, .35)
+        }
+
+        /* particles */
+        #pcv {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="prog"></div>
+    <canvas id="pcv"></canvas>
+
+    <nav>
+        <div class="logo">PORT<em>.</em>FOLIO</div>
+        <ul class="nav-links">
+            <li><a href="#">Work</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- ══ PHASE 1 : HERO ══ -->
+    <div id="hero-wrap">
+        <div id="hero-sticky">
+            <div id="hero-bg">
+                <div class="hero-shape hs1"></div>
+                <div class="hero-shape hs2"></div>
+                <div class="hero-shape hs3"></div>
+                <div class="hero-accent-line"></div>
+            </div>
+            <div id="hero-content">
+                <div class="hero-left">
+                    <p class="hero-eyebrow">Creative Developer &amp; Designer</p>
+                    <h1 class="hero-title">MAKING<br><span>IDEAS</span><br>REAL</h1>
+                    <button class="hero-cta">View Work →</button>
+                </div>
+                <div class="hero-right">
+                    <div class="hero-stat">
+                        <div class="hero-stat-num">6+</div>
+                        <div class="hero-stat-label">Years Experience</div>
+                    </div>
+                    <div class="hero-divider"></div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-num">40+</div>
+                        <div class="hero-stat-label">Projects Shipped</div>
+                    </div>
+                    <div class="hero-divider"></div>
+                    <p class="hero-tag">Crafting digital experiences that move people — from concept to launch.</p>
+                </div>
+            </div>
+            <div id="hero-hint">
+                <span class="hint-label">Scroll</span>
+                <div class="hint-line"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══ PHASE 2 : CARDS SLIDE IN ONE-BY-ONE ══ -->
+    <div id="cards-wrap">
+        <div id="cards-sticky">
+            <div id="cards-bg"></div>
+            <div id="cards-header">
+                <div class="ch-label-col">
+                    <p class="ch-eyebrow">Selected Work</p>
+                    <h2 class="ch-title">PROJECTS</h2>
+                </div>
+                <div class="ch-count" id="ch-count">01 / 06</div>
+            </div>
+            <div id="card-row"><!-- injected --></div>
+            <div id="card-progress"><!-- dots injected --></div>
+        </div>
+    </div>
+
+    <!-- ══ PHASE 3 : SWIPE DECK ══ -->
+    <div id="swipe-wrap">
+        <div id="swipe-sticky">
+            <div id="swipe-bg"></div>
+            <div class="sw-header">
+                <p class="sw-label">Featured</p>
+                <h2 class="sw-title">DEEP DIVES</h2>
+            </div>
+            <div id="deck"></div>
+            <div id="swipe-dots"></div>
+        </div>
+    </div>
+
+    <!-- ══ PHASE 4 : FINALE ══ -->
+    <div id="finale-wrap">
+        <div id="finale-sticky">
+            <div id="fin-bg">
+                <div class="f-ring"></div>
+                <div class="f-ring"></div>
+                <div class="f-ring"></div>
+                <div class="f-ring"></div>
+            </div>
+            <div id="fin-content">
+                <p class="f-eyebrow">Let's build together</p>
+                <h2 class="f-title">SAY<br>HELLO</h2>
+                <p class="f-sub">Available for freelance projects and full-time roles. Based on Earth, working
+                    everywhere.</p>
+                <button class="f-btn">Get in touch →</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ─── DATA ────────────────────────────────────────────────────────────────────
+        const GRID = [
+            { num: '01', name: 'Orbital Dashboard', tag: 'UI / Data Viz', cls: 'c0' },
+            { num: '02', name: 'Bloom E-Commerce', tag: 'Web Design', cls: 'c1' },
+            { num: '03', name: 'Pulse Health App', tag: 'Mobile / UX', cls: 'c2' },
+            { num: '04', name: 'Vanta Branding', tag: 'Identity', cls: 'c3' },
+            { num: '05', name: 'Echo Music Player', tag: 'Interaction', cls: 'c4' },
+            { num: '06', name: 'Tide Weather', tag: 'Web App', cls: 'c5' },
+        ];
+        const SWIPE = [
+            { year: '2024', name: 'Orbital', desc: 'Real-time analytics serving 50k+ users with animated data layers and live collaboration.', chip: 'Data Viz', cls: 's0', g: '01' },
+            { year: '2024', name: 'Bloom', desc: 'Award-winning e-commerce with editorial art direction, micro-animations, and conversion UX.', chip: 'E-Commerce', cls: 's1', g: '02' },
+            { year: '2023', name: 'Pulse', desc: 'Health tracking combining biometric data with intelligent nudges and beautiful charts.', chip: 'Mobile App', cls: 's2', g: '03' },
+            { year: '2023', name: 'Vanta', desc: 'Complete rebrand for a Series-B fintech — identity system, motion language, and design tokens.', chip: 'Branding', cls: 's3', g: '04' },
+            { year: '2022', name: 'Echo', desc: 'Immersive music player with generative audio-reactive visuals, built entirely in-browser.', chip: 'Interaction', cls: 's4', g: '05' },
+        ];
+
+        // ─── BUILD CARD ROW ──────────────────────────────────────────────────────────
+        const rowEl = document.getElementById('card-row');
+        const cpEl = document.getElementById('card-progress');
+        const chCount = document.getElementById('ch-count');
+
+        GRID.forEach((p, i) => {
+            rowEl.innerHTML += `
+    <div class="proj-card ${p.cls}" data-i="${i}">
+      <div class="card-img-layer"></div>
+      <div class="card-ui">
+        <div class="ui-bar"></div><div class="ui-bar"></div><div class="ui-bar"></div>
+        <div class="ui-block"></div>
+      </div>
+      <div class="card-vignette"></div>
+      <div class="card-info">
+        <div class="ci-left">
+          <p class="card-num">${p.num}</p>
+          <p class="card-name">${p.name}</p>
+          <p class="card-tag">${p.tag}</p>
+        </div>
+        <div class="ci-right"><div class="card-arrow">↗</div></div>
+      </div>
+    </div>`;
+            cpEl.innerHTML += `<div class="cp-dot${i === 0 ? ' on' : ''}" data-dot="${i}"></div>`;
+        });
+
+        // ─── BUILD SWIPE DECK ────────────────────────────────────────────────────────
+        const deckEl = document.getElementById('deck');
+        const dotsEl = document.getElementById('swipe-dots');
+        SWIPE.forEach((p, i) => {
+            deckEl.innerHTML += `
+    <div class="s-card ${p.cls}">
+      <div class="s-bg"></div>
+      <div class="s-ghost">${p.g}</div>
+      <div class="s-chip">${p.chip}</div>
+      <div class="s-info">
+        <p class="s-year">${p.year}</p>
+        <p class="s-name">${p.name}</p>
+        <p class="s-desc">${p.desc}</p>
+      </div>
+    </div>`;
+            dotsEl.innerHTML += `<div class="s-dot${i === 0 ? ' on' : ''}"></div>`;
+        });
+
+        const sCards = document.querySelectorAll('.s-card');
+        const sDots = document.querySelectorAll('.s-dot');
+        function setDeck(active) {
+            sCards.forEach((c, i) => {
+                const off = i - active, abs = Math.abs(off);
+                if (abs > 3) { c.style.opacity = 0; return; }
+                const sc = 1 - abs * .055, ty = off < 0 ? off * 18 : -abs * 22;
+                const tx = off * 10, rz = off * 2.5;
+                const op = off <= 0 ? 1 - abs * .22 : 1 - abs * .38;
+                c.style.transform = `translateX(${tx}px) translateY(${ty}px) scale(${sc}) rotateZ(${rz}deg)`;
+                c.style.opacity = Math.max(0, op); c.style.zIndex = 10 - abs;
+            });
+            sDots.forEach((d, i) => d.classList.toggle('on', i === active));
+        }
+        setDeck(0);
+
+        // ─── PARTICLES ───────────────────────────────────────────────────────────────
+        const cv = document.getElementById('pcv'), ctx = cv.getContext('2d');
+        let W, H, ptOpacity = 0;
+        const pts = [];
+        function resizeCv() { W = cv.width = innerWidth; H = cv.height = innerHeight; }
+        resizeCv(); window.addEventListener('resize', resizeCv);
+        function mkPt() { return { x: Math.random() * W, y: H + 10, vy: -(0.4 + Math.random() * .9), r: .5 + Math.random() * 1.5, life: 0, maxLife: 220 + Math.random() * 280, maxA: .28 + Math.random() * .32 }; }
+        for (let i = 0; i < 50; i++) { const p = mkPt(); p.y = Math.random() * H; p.life = Math.random() * p.maxLife; pts.push(p); }
+        (function ptLoop() {
+            ctx.clearRect(0, 0, W, H);
+            if (ptOpacity > 0) {
+                pts.forEach((p, i) => {
+                    p.life++; p.y += p.vy;
+                    const pr = p.life / p.maxLife;
+                    const a = (pr < .15 ? pr / .15 : pr > .8 ? (1 - pr) / .2 : 1) * p.maxA * ptOpacity;
+                    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(232,255,60,${a})`; ctx.fill();
+                    if (p.life >= p.maxLife || p.y < -10) pts[i] = mkPt();
+                });
+            }
+            requestAnimationFrame(ptLoop);
+        })();
+
+        // ─── SCROLL ENGINE ────────────────────────────────────────────────────────────
+        const progBar = document.getElementById('prog');
+        const heroWrap = document.getElementById('hero-wrap');
+        const cardsWrap = document.getElementById('cards-wrap');
+        const swipeWrap = document.getElementById('swipe-wrap');
+        const finaleWrap = document.getElementById('finale-wrap');
+        const heroBgEl = document.getElementById('hero-bg');
+        const heroContentEl = document.getElementById('hero-content');
+        const cardsHeaderEl = document.getElementById('cards-header');
+        const swipeSticky = document.getElementById('swipe-sticky');
+        const finaleSticky = document.getElementById('finale-sticky');
+        const projCards = document.querySelectorAll('.proj-card');
+        const cpDots = document.querySelectorAll('.cp-dot');
+
+        function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+        function eio(t) { return t < .5 ? 2 * t * t : -1 + (4 - 2 * t) * t; }
+        function lerp(a, b, t) { return a + (b - a) * t; }
+
+        // Get scroll progress within a wrapper div (0 when its sticky child first pins, 1 at end)
+        function phaseP(wrapEl, sy) {
+            const wrapTop = wrapEl.offsetTop;
+            const scrollH = wrapEl.offsetHeight - innerHeight; // total scrollable range
+            return clamp((sy - wrapTop) / Math.max(scrollH, 1), 0, 1);
+        }
+
+        let lastCardIdx = -1;
+        let lastSwipeIdx = 0;
+
+        function tick() {
+            const sy = window.scrollY;
+            const total = document.body.scrollHeight - innerHeight;
+            progBar.style.width = clamp(sy / total, 0, 1) * 100 + '%';
+
+            // ─── HERO ──────────────────────────────────────────────────────────────────
+            // hero-wrap = 200vh, so phase 0→0.5 = hero filling screen, 0.5→1 = hero exiting
+            const hp = phaseP(heroWrap, sy);
+
+            // Hero content: stays crisp until ~60% through its driver, then fades up
+            const heroFade = clamp((hp - .55) / .45, 0, 1);
+            heroContentEl.style.opacity = 1 - heroFade;
+            heroContentEl.style.transform = `translateY(${-heroFade * 60}px)`;
+
+            // Background: subtle zoom in, then fade to dark for transition
+            heroBgEl.style.transform = `scale(${1 + hp * .04})`;
+            heroBgEl.style.opacity = clamp(1 - heroFade * 2, 0, 1);
+
+            // ─── CARDS ONE-BY-ONE ──────────────────────────────────────────────────────
+            // cards-wrap = 880vh for 6 cards
+            // Layout: first ~8% = dark transition + header in, then each card gets ~14%
+            const cp = phaseP(cardsWrap, sy);
+
+            // header slides down from top
+            const hdrP = eio(clamp(cp * 10, 0, 1));
+            cardsHeaderEl.style.opacity = hdrP;
+            cardsHeaderEl.style.transform = `translateY(${lerp(-30, 0, hdrP)}px)`;
+
+            // determine which card should be "active" (fully visible, centered)
+            // cards start at cp=0.06 and each occupies 0.14 of the range
+            const cardStart = 0.06;
+            const cardStep = 0.14; // each card gets this much scroll
+            // rawIdx floats between cards
+            const rawIdx = clamp((cp - cardStart) / cardStep, 0, GRID.length - 1);
+            const activeIdx = clamp(Math.round(rawIdx), 0, GRID.length - 1);
+
+            // update counter
+            if (activeIdx !== lastCardIdx) {
+                lastCardIdx = activeIdx;
+                chCount.textContent = String(activeIdx + 1).padStart(2, '0') + ' / ' + String(GRID.length).padStart(2, '0');
+                cpDots.forEach((d, i) => d.classList.toggle('on', i === activeIdx));
+            }
+
+            // animate each card based on its distance from active
+            projCards.forEach((card, i) => {
+                const dist = i - rawIdx; // negative = already passed, 0 = active, positive = upcoming
+                const absDist = Math.abs(dist);
+
+                if (absDist > 1.5) {
+                    // far away: hidden
+                    card.style.opacity = 0;
+                    card.style.pointerEvents = 'none';
+                    card.style.transform = dist < 0
+                        ? 'translateX(-140%) scale(.88)'   // left (exited)
+                        : 'translateX(140%) scale(.88)';    // right (waiting)
+                    return;
+                }
+
+                card.style.pointerEvents = absDist < .5 ? 'auto' : 'none';
+
+                let tx, sc, op;
+                if (dist >= 0) {
+                    // upcoming card sliding in from right
+                    tx = lerp(0, 110, dist);      // 0% when active, 110% when 1 step away
+                    sc = lerp(1, .9, dist);
+                    op = lerp(1, 0, dist);
+                } else {
+                    // exited card sliding out to left
+                    tx = lerp(0, -110, -dist);
+                    sc = lerp(1, .9, -dist);
+                    op = lerp(1, 0, -dist);
+                }
+
+                card.style.transform = `translateX(${tx}%) scale(${sc})`;
+                card.style.opacity = Math.max(0, op);
+            });
+
+            // ─── SWIPE DECK ────────────────────────────────────────────────────────────
+            const sp = phaseP(swipeWrap, sy);
+            const swIn = eio(clamp(sp * 5, 0, 1));
+            const swOut = eio(clamp((sp - .82) / .18, 0, 1));
+            const swVis = swIn * (1 - swOut);
+            swipeSticky.style.opacity = swVis;
+            swipeSticky.style.pointerEvents = swVis > .2 ? 'auto' : 'none';
+
+            const di = Math.round(clamp((sp - .06) / .8, 0, 1) * (SWIPE.length - 1));
+            if (di !== lastSwipeIdx) { lastSwipeIdx = di; setDeck(di); }
+
+            // ─── FINALE ────────────────────────────────────────────────────────────────
+            const fp = phaseP(finaleWrap, sy);
+            const finVis = eio(clamp(fp * 4, 0, 1));
+            finaleSticky.style.opacity = finVis;
+            finaleSticky.style.pointerEvents = finVis > .2 ? 'auto' : 'none';
+            ptOpacity = clamp((fp - .25) / .45, 0, 1);
+        }
+
+        window.addEventListener('scroll', tick, { passive: true });
+        window.addEventListener('resize', () => { tick(); });
+        tick();
+    </script>
+</body>
+
+</html>
