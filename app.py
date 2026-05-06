@@ -81,6 +81,10 @@ def webdesign_agency_germany():
 def web_development():
     return render_template("pages/web-development.html")
 
+@app.route("/services/app-development")
+def app_development():
+    return render_template("pages/app-development.html")
+
 @app.route("/work")
 def work():
     return render_template("work.html")

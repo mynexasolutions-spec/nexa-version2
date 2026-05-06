@@ -1,10 +1,10 @@
 {% extends 'layouts/base.html' %}
 
-{% block title %}Web Development Services — Nexa Solutions{% endblock %}
+{% block title %}App Development Services — Nexa Solutions{% endblock %}
 
 {% block extra_head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/web-development.css') }}">
-<meta name="description" content="Custom web development services — Shopify, WordPress, React, Flask, Python and more. We build every type of website that converts visitors into customers.">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/app-development.css') }}">
+<meta name="description" content="Custom application development services — iOS, Android, cross-platform (React Native, Flutter), and complex web apps. We build apps that users love.">
 {% endblock %}
 
 {% block content %}
@@ -18,9 +18,9 @@
 
             <!-- LEFT — Text -->
             <div class="wd-hero-text">
-                <h1 class="wd-hero-title">Web Development<br>Agency</h1>
+                <h1 class="wd-hero-title">App Development<br>Agency</h1>
                 <p class="wd-hero-sub">
-                    We develop websites and online stores that turn visitors into customers — with creativity, technical know-how, and enthusiasm.
+                    We engineer high-performance mobile and web applications that solve real problems, engage users, and scale seamlessly. From iOS and Android to complex SaaS platforms.
                 </p>
                 <div class="wd-hero-btns">
                     <a href="#wd-types" class="wd-btn wd-btn--outline">Learn more</a>
@@ -32,9 +32,10 @@
             <div class="wd-hero-visual">
                 <div class="wd-hero-laptop-wrap">
                     <img
-                        src="{{ url_for('static', filename='images/services/web-dev.png') }}"
-                        alt="Web Development — Nexa Solutions"
+                        src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=1200&auto=format&fit=crop"
+                        alt="App Development — Nexa Solutions"
                         class="wd-hero-laptop"
+                        style="object-fit: cover; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.2);"
                     >
                 </div>
             </div>
@@ -52,24 +53,25 @@
             <!-- LEFT — Image -->
             <div class="wd-certified-visual wd-reveal-left">
                 <img
-                    src="{{ url_for('static', filename='images/services/stacks.png') }}"
-                    alt="Technology stacks we work with"
+                    src="https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?w=800&auto=format&fit=crop"
+                    alt="App development technologies"
                     class="wd-certified-img"
+                    style="object-fit: cover; border-radius: 20px;"
                 >
             </div>
 
             <!-- RIGHT — Text -->
             <div class="wd-certified-text wd-reveal-right">
-                <span class="wd-section-label">Our Technology Partners</span>
-                <h2 class="wd-section-title">Your Certified<br>Web Design Agency</h2>
+                <span class="wd-section-label">Our Development Partners</span>
+                <h2 class="wd-section-title">Your Certified<br>App Agency</h2>
                 <p class="wd-certified-desc">
-                    As specialised partners certified in the latest design and development technologies, we offer you tailor-made solutions that take your online presence to a whole new level.
+                    As experienced engineers in native and cross-platform development, we deliver applications that feel natural to your users and robust to your business.
                 </p>
                 <p class="wd-certified-desc">
-                    Our expertise includes responsive design, UX/UI optimisation, and the latest web standards to make your website both visually stunning and highly functional.
+                    Our expertise covers the entire lifecycle: from initial architecture and UX design, to App Store deployment and ongoing maintenance.
                 </p>
                 <div class="wd-certified-btns">
-                    <a href="#wd-types" class="wd-btn wd-btn--primary">Explore Our Work</a>
+                    <a href="#wd-types" class="wd-btn wd-btn--primary">Explore Our Apps</a>
                     <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--outline">Contact Us</a>
                 </div>
             </div>
@@ -86,9 +88,9 @@
             <!-- Header -->
             <div class="wd-types-header wd-reveal">
                 <span class="wd-section-label">What We Build</span>
-                <h2 class="wd-section-title">Every Type of Website.<br>Built to Perfection.</h2>
+                <h2 class="wd-section-title">Every Type of Application.<br>Built to Perfection.</h2>
                 <p class="wd-section-desc" style="margin:0 auto; text-align:center;">
-                    From simple landing pages to complex e-commerce ecosystems — click any category to explore what we build.
+                    From consumer-facing mobile apps to complex internal enterprise tools — click any category to explore what we build.
                 </p>
             </div>
 
@@ -97,39 +99,39 @@
             <div class="wd-tab-bar">
                 <button class="wd-tab active" data-tab="0">
                     <span class="wd-tab-num">01</span>
-                    <span class="wd-tab-name">E-Commerce</span>
+                    <span class="wd-tab-name">Native Apps</span>
                 </button>
                 <button class="wd-tab" data-tab="1">
                     <span class="wd-tab-num">02</span>
-                    <span class="wd-tab-name">Business</span>
+                    <span class="wd-tab-name">Cross-Platform</span>
                 </button>
                 <button class="wd-tab" data-tab="2">
                     <span class="wd-tab-num">03</span>
-                    <span class="wd-tab-name">Portfolio</span>
+                    <span class="wd-tab-name">SaaS / Web Apps</span>
                 </button>
                 <button class="wd-tab" data-tab="3">
                     <span class="wd-tab-num">04</span>
-                    <span class="wd-tab-name">Landing Pages</span>
+                    <span class="wd-tab-name">E-Commerce</span>
                 </button>
                 <button class="wd-tab" data-tab="4">
                     <span class="wd-tab-num">05</span>
-                    <span class="wd-tab-name">SaaS / Apps</span>
+                    <span class="wd-tab-name">Enterprise</span>
                 </button>
                 <button class="wd-tab" data-tab="5">
                     <span class="wd-tab-num">06</span>
-                    <span class="wd-tab-name">Restaurant</span>
+                    <span class="wd-tab-name">FinTech</span>
                 </button>
                 <button class="wd-tab" data-tab="6">
                     <span class="wd-tab-num">07</span>
-                    <span class="wd-tab-name">Real Estate</span>
+                    <span class="wd-tab-name">On-Demand</span>
                 </button>
                 <button class="wd-tab" data-tab="7">
                     <span class="wd-tab-num">08</span>
-                    <span class="wd-tab-name">Blog</span>
+                    <span class="wd-tab-name">Healthcare</span>
                 </button>
                 <button class="wd-tab" data-tab="8">
                     <span class="wd-tab-num">09</span>
-                    <span class="wd-tab-name">Others</span>
+                    <span class="wd-tab-name">Custom</span>
                 </button>
             </div><!-- /wd-tab-bar -->
             </div><!-- /wd-tab-bar-wrap -->
@@ -137,167 +139,165 @@
             <!-- Tab Panels -->
             <div class="wd-tab-panels">
 
-                <!-- 1. E-Commerce -->
+                <!-- 1. Native Apps -->
                 <div class="wd-tab-panel active" data-panel="0">
                     <div class="wd-panel-text">
-                        <h3 class="wd-panel-title">E-Commerce Stores</h3>
-                        <p class="wd-panel-desc">Online stores built to sell. We design and develop high-converting e-commerce experiences with seamless checkout flows, mobile-first layouts, and backend integrations that keep your inventory, orders, and customers in perfect sync. Whether you are selling 10 products or 10,000 — we build it to scale.</p>
+                        <h3 class="wd-panel-title">Native iOS & Android Apps</h3>
+                        <p class="wd-panel-desc">We build high-performance native applications using Swift for iOS and Kotlin for Android. Native development ensures maximum device capability usage, fluid animations, and adherence to Apple and Google design guidelines for a premium user experience.</p>
                         <div class="wd-panel-tags">
-                            <span class="wd-type-tag">Shopify</span>
-                            <span class="wd-type-tag">WooCommerce</span>
-                            <span class="wd-type-tag">Custom Cart</span>
-                            <span class="wd-type-tag">Payment Gateways</span>
+                            <span class="wd-type-tag">Swift / iOS</span>
+                            <span class="wd-type-tag">Kotlin / Android</span>
+                            <span class="wd-type-tag">High Performance</span>
+                            <span class="wd-type-tag">Device APIs</span>
                         </div>
-                        <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Build My Store</a>
+                        <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Build My Native App</a>
                     </div>
                     <div class="wd-panel-image">
-                        <img src="{{ url_for('static', filename='images/services/ecommerce.png') }}" alt="E-Commerce" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&auto=format&fit=crop" alt="Native Apps" loading="lazy" style="object-fit: cover; border-radius: 12px;">
                     </div>
                 </div>
 
-                <!-- 2. Business -->
+                <!-- 2. Cross-Platform -->
                 <div class="wd-tab-panel" data-panel="1">
                     <div class="wd-panel-text">
-                        <h3 class="wd-panel-title">Business & Corporate Websites</h3>
-                        <p class="wd-panel-desc">Your website is your 24/7 salesperson. We build authoritative, professional business sites that communicate your value instantly, build trust on first visit, and guide prospects toward a decision. Multi-page structures, service showcases, team pages, and contact systems — all crafted with intention.</p>
+                        <h3 class="wd-panel-title">Cross-Platform Applications</h3>
+                        <p class="wd-panel-desc">Launch on iOS and Android simultaneously with a single codebase. We leverage React Native and Flutter to significantly reduce development time and costs while maintaining near-native performance and beautiful, consistent UI across both platforms.</p>
                         <div class="wd-panel-tags">
-                            <span class="wd-type-tag">WordPress</span>
-                            <span class="wd-type-tag">Custom HTML/CSS</span>
-                            <span class="wd-type-tag">CMS</span>
-                            <span class="wd-type-tag">SEO-Ready</span>
+                            <span class="wd-type-tag">React Native</span>
+                            <span class="wd-type-tag">Flutter</span>
+                            <span class="wd-type-tag">Single Codebase</span>
+                            <span class="wd-type-tag">Fast Time-to-Market</span>
                         </div>
-                        <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Get a Business Site</a>
+                        <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Get a Cross-Platform App</a>
                     </div>
                     <div class="wd-panel-image">
-                        <img src="{{ url_for('static', filename='images/services/business.png') }}" alt="Business Website" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1555421689-d68471e189f2?w=800&auto=format&fit=crop" alt="Cross Platform" loading="lazy" style="object-fit: cover; border-radius: 12px;">
                     </div>
                 </div>
 
-                <!-- 3. Portfolio -->
+                <!-- 3. SaaS / Web Apps -->
                 <div class="wd-tab-panel" data-panel="2">
                     <div class="wd-panel-text">
-                        <h3 class="wd-panel-title">Portfolio & Creative Sites</h3>
-                        <p class="wd-panel-desc">For creatives, freelancers, agencies, and artists who need their work to do the talking. We build visually stunning portfolio sites with gallery systems, case studies, interactive project showcases, and a personal brand identity that sets you apart in every room.</p>
+                        <h3 class="wd-panel-title">SaaS & Progressive Web Apps</h3>
+                        <p class="wd-panel-desc">We build powerful browser-based applications that function like desktop software. From B2B SaaS platforms to interactive dashboards and portals, our web apps are fast, secure, responsive, and deployable instantly without app store approvals.</p>
                         <div class="wd-panel-tags">
-                            <span class="wd-type-tag">React</span>
-                            <span class="wd-type-tag">GSAP Animations</span>
-                            <span class="wd-type-tag">Gallery Systems</span>
-                            <span class="wd-type-tag">Custom Design</span>
+                            <span class="wd-type-tag">React / Next.js</span>
+                            <span class="wd-type-tag">PWA</span>
+                            <span class="wd-type-tag">Dashboards</span>
+                            <span class="wd-type-tag">No App Store</span>
                         </div>
-                        <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Showcase My Work</a>
+                        <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Build My Web App</a>
                     </div>
                     <div class="wd-panel-image">
-                        <img src="https://images.unsplash.com/photo-1545235617-9465d2a55698?w=800&auto=format&fit=crop" alt="Portfolio Website" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop" alt="SaaS Web App" loading="lazy" style="object-fit: cover; border-radius: 12px;">
                     </div>
                 </div>
 
-                <!-- 4. Landing Pages -->
+                <!-- 4. E-Commerce -->
                 <div class="wd-tab-panel" data-panel="3">
                     <div class="wd-panel-text">
-                        <h3 class="wd-panel-title">Landing Pages & Sales Funnels</h3>
-                        <p class="wd-panel-desc">One page. One goal. Maximum conversions. We engineer high-converting landing pages with persuasive copy structures, clear CTAs, trust signals, and A/B-testable layouts. Built for ad campaigns, product launches, lead generation, and event signups — every pixel earns its place.</p>
+                        <h3 class="wd-panel-title">E-Commerce & Retail Apps</h3>
+                        <p class="wd-panel-desc">Increase customer loyalty and conversions with a dedicated mobile shopping app. We build e-commerce apps with Apple Pay/Google Pay integration, push notifications for abandoned carts, augmented reality (AR) previews, and seamless backend syncing.</p>
                         <div class="wd-panel-tags">
-                            <span class="wd-type-tag">Conversion-Focused</span>
-                            <span class="wd-type-tag">A/B Testing Ready</span>
-                            <span class="wd-type-tag">Fast Load</span>
-                            <span class="wd-type-tag">Lead Capture</span>
+                            <span class="wd-type-tag">M-Commerce</span>
+                            <span class="wd-type-tag">Push Notifications</span>
+                            <span class="wd-type-tag">One-Tap Checkout</span>
+                            <span class="wd-type-tag">Loyalty Programs</span>
                         </div>
-                        <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Build My Landing Page</a>
+                        <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Build My Shopping App</a>
                     </div>
                     <div class="wd-panel-image">
-                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop" alt="Landing Page" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=800&auto=format&fit=crop" alt="E-Commerce App" loading="lazy" style="object-fit: cover; border-radius: 12px;">
                     </div>
                 </div>
 
-                <!-- 5. SaaS -->
+                <!-- 5. Enterprise -->
                 <div class="wd-tab-panel" data-panel="4">
                     <div class="wd-panel-text">
-                        <h3 class="wd-panel-title">SaaS & Web Applications</h3>
-                        <p class="wd-panel-desc">Full-stack web applications with user authentication, dashboards, real-time data, APIs, and complex business logic. We build the digital products behind growing SaaS companies — from the first prototype to production-grade systems that handle thousands of users daily.</p>
+                        <h3 class="wd-panel-title">Internal Enterprise Applications</h3>
+                        <p class="wd-panel-desc">Transform your business operations with custom internal tools. We develop secure, role-based applications for inventory management, HR portals, field worker reporting, and data analytics. Built to integrate with your existing legacy systems and databases.</p>
                         <div class="wd-panel-tags">
-                            <span class="wd-type-tag">React</span>
-                            <span class="wd-type-tag">Flask / Python</span>
-                            <span class="wd-type-tag">REST APIs</span>
-                            <span class="wd-type-tag">Auth Systems</span>
-                            <span class="wd-type-tag">Dashboards</span>
+                            <span class="wd-type-tag">Business Logic</span>
+                            <span class="wd-type-tag">Role-based Access</span>
+                            <span class="wd-type-tag">API Integration</span>
+                            <span class="wd-type-tag">High Security</span>
                         </div>
-                        <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Build My App</a>
+                        <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Automate My Operations</a>
                     </div>
                     <div class="wd-panel-image">
-                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop" alt="SaaS App" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop" alt="Enterprise App" loading="lazy" style="object-fit: cover; border-radius: 12px;">
                     </div>
                 </div>
 
-                <!-- 6. Restaurant -->
+                <!-- 6. FinTech -->
                 <div class="wd-tab-panel" data-panel="5">
                     <div class="wd-panel-text">
-                        <h3 class="wd-panel-title">Restaurant & Local Business</h3>
-                        <p class="wd-panel-desc">Local businesses deserve world-class digital presence. We build restaurant sites with online menus, table booking systems, and Google Maps integration. For local service businesses, we create Google-optimised sites that dominate local search and turn neighbourhood traffic into loyal customers.</p>
+                        <h3 class="wd-panel-title">FinTech & Finance Apps</h3>
+                        <p class="wd-panel-desc">We build highly secure, scalable financial applications. From personal budgeting and crypto wallets to complex investment platforms. We focus on bank-grade security, biometric authentication, real-time data streaming, and strict compliance.</p>
                         <div class="wd-panel-tags">
-                            <span class="wd-type-tag">Online Booking</span>
-                            <span class="wd-type-tag">Google SEO</span>
-                            <span class="wd-type-tag">Menu Systems</span>
-                            <span class="wd-type-tag">Maps Integration</span>
+                            <span class="wd-type-tag">Bank-Grade Security</span>
+                            <span class="wd-type-tag">Biometrics</span>
+                            <span class="wd-type-tag">Real-Time Data</span>
+                            <span class="wd-type-tag">Payment APIs</span>
                         </div>
-                        <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Grow My Business</a>
+                        <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Build My FinTech App</a>
                     </div>
                     <div class="wd-panel-image">
-                        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&auto=format&fit=crop" alt="Restaurant Website" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&auto=format&fit=crop" alt="FinTech App" loading="lazy" style="object-fit: cover; border-radius: 12px;">
                     </div>
                 </div>
 
-                <!-- 7. Real Estate -->
+                <!-- 7. On-Demand -->
                 <div class="wd-tab-panel" data-panel="6">
                     <div class="wd-panel-text">
-                        <h3 class="wd-panel-title">Real Estate Platforms</h3>
-                        <p class="wd-panel-desc">Property listing portals, agency websites, and agent platforms built for performance. Filter-heavy search systems, property detail pages, virtual tours, inquiry forms, and CRM integrations that keep leads flowing and agents focused on closing deals — not spreadsheets.</p>
+                        <h3 class="wd-panel-title">On-Demand & Delivery Apps</h3>
+                        <p class="wd-panel-desc">Two-sided marketplace apps connecting service providers with customers. We build complex ecosystems involving customer apps, driver/provider apps, and admin dashboards with real-time GPS tracking, chat systems, and automated dispatch logic.</p>
                         <div class="wd-panel-tags">
-                            <span class="wd-type-tag">Property Listings</span>
-                            <span class="wd-type-tag">Search & Filter</span>
-                            <span class="wd-type-tag">CRM Integration</span>
-                            <span class="wd-type-tag">Lead Management</span>
+                            <span class="wd-type-tag">GPS Tracking</span>
+                            <span class="wd-type-tag">Real-Time Chat</span>
+                            <span class="wd-type-tag">Multi-App Ecosystem</span>
+                            <span class="wd-type-tag">Stripe Connect</span>
                         </div>
                         <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Build My Platform</a>
                     </div>
                     <div class="wd-panel-image">
-                        <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&auto=format&fit=crop" alt="Real Estate Platform" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=800&auto=format&fit=crop" alt="On Demand App" loading="lazy" style="object-fit: cover; border-radius: 12px;">
                     </div>
                 </div>
 
-                <!-- 8. Blog -->
+                <!-- 8. Healthcare -->
                 <div class="wd-tab-panel" data-panel="7">
                     <div class="wd-panel-text">
-                        <h3 class="wd-panel-title">Blogs & Content Platforms</h3>
-                        <p class="wd-panel-desc">Content-driven websites that build authority and organic traffic at scale. Custom blog platforms, editorial systems, newsletter integrations, category management, and SEO-optimised article structures — built for publishers, thought leaders, and brands that take content seriously.</p>
+                        <h3 class="wd-panel-title">Healthcare & Telemed Apps</h3>
+                        <p class="wd-panel-desc">Secure, HIPAA-compliant healthcare applications. We develop telemedicine platforms with video consultation features, patient portals, prescription tracking, and integration with existing electronic health record (EHR) systems.</p>
                         <div class="wd-panel-tags">
-                            <span class="wd-type-tag">WordPress</span>
-                            <span class="wd-type-tag">Custom CMS</span>
-                            <span class="wd-type-tag">Newsletter</span>
-                            <span class="wd-type-tag">SEO Architecture</span>
+                            <span class="wd-type-tag">HIPAA Compliant</span>
+                            <span class="wd-type-tag">Video Calls</span>
+                            <span class="wd-type-tag">Patient Portals</span>
+                            <span class="wd-type-tag">Data Encryption</span>
                         </div>
-                        <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Start Publishing</a>
+                        <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Start Building</a>
                     </div>
                     <div class="wd-panel-image">
-                        <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&auto=format&fit=crop" alt="Blog Platform" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&auto=format&fit=crop" alt="Healthcare App" loading="lazy" style="object-fit: cover; border-radius: 12px;">
                     </div>
                 </div>
 
-                <!-- 9. Others -->
+                <!-- 9. Custom -->
                 <div class="wd-tab-panel" data-panel="8">
                     <div class="wd-panel-text">
-                        <h3 class="wd-panel-title">Custom & Specialized Projects</h3>
-                        <p class="wd-panel-desc">Beyond categories, we build custom digital solutions tailored to unique business needs. From community platforms and membership sites to marketplace ecosystems and enterprise portals — if you can imagine it, we can build it. Our expertise spans multiple industries and technologies.</p>
+                        <h3 class="wd-panel-title">Custom & Specialized Apps</h3>
+                        <p class="wd-panel-desc">Have a unique idea that doesn't fit a standard category? From social networks and dating apps to IoT controller applications and AI-driven platforms. If you can imagine it, our engineering team can architect and build it from the ground up.</p>
                         <div class="wd-panel-tags">
-                            <span class="wd-type-tag">Node.js</span>
-                            <span class="wd-type-tag">Python</span>
-                            <span class="wd-type-tag">React</span>
-                            <span class="wd-type-tag">PostgreSQL</span>
-                            <span class="wd-type-tag">Cloud Deploy</span>
+                            <span class="wd-type-tag">IoT Integration</span>
+                            <span class="wd-type-tag">AI / ML</span>
+                            <span class="wd-type-tag">Social Networks</span>
+                            <span class="wd-type-tag">Custom Architecture</span>
                         </div>
                         <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Tell Us Your Idea</a>
                     </div>
                     <div class="wd-panel-image">
-                        <img src="{{ url_for('static', filename='images/services/others-section.png') }}" alt="Custom Solutions" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?w=800&auto=format&fit=crop" alt="Custom Apps" loading="lazy" style="object-fit: cover; border-radius: 12px;">
                     </div>
                 </div>
 
@@ -311,9 +311,9 @@
     <section class="wd-cta-band">
         <div class="wd-cta-band-inner wd-reveal">
             <div class="wd-cta-band-label">Not sure where to start?</div>
-            <h2 class="wd-cta-band-title">Let Us Find the Right Fit for Your Business</h2>
+            <h2 class="wd-cta-band-title">Let Us Find the Right Architecture for Your App</h2>
             <p class="wd-cta-band-desc">
-                Tell us your idea in 2 minutes. We will assess your goals and recommend the exact type of website that will drive the most impact for your business.
+                Tell us your idea in 2 minutes. We will assess your goals and recommend the exact platform (Native, Cross-Platform, or Web) that will drive the most impact for your business.
             </p>
             <div class="wd-cta-band-btns">
                 <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--white">Book a Free Consultation</a>
@@ -323,25 +323,26 @@
     </section>
 
     <!-- ═══════════════════════════════════════════
-         4B. CMS & PLATFORMS EXPERTISE
+         4B. API & INTEGRATION EXPERTISE
     ═══════════════════════════════════════════ -->
     <section class="wd-cms-systems">
         <div class="wd-cms-inner">
             <!-- LEFT — Image -->
             <div class="wd-cms-visual wd-reveal-left">
                 <img 
-                    src="{{ url_for('static', filename='images/services/system-domains.png') }}"
-                    alt="CMS and Platform Technologies"
+                    src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&auto=format&fit=crop"
+                    alt="API and Backend Integrations"
                     class="wd-cms-img"
+                    style="object-fit: cover; border-radius: 20px;"
                 >
             </div>
 
             <!-- RIGHT — Text -->
             <div class="wd-cms-text wd-reveal-right">
-                <span class="wd-section-label">Every System Is Different</span>
-                <h2 class="wd-section-title">We Can Do Web Design<br>for Any CMS</h2>
+                <span class="wd-section-label">Seamless Connections</span>
+                <h2 class="wd-section-title">We Integrate With<br>Any Existing System</h2>
                 <p class="wd-cms-desc">
-                    We are experts in web design and development for all common content management systems, from WordPress to Drupal, and can therefore recommend the CMS that best suits your requirements.
+                    Your app shouldn't exist in a silo. We are experts in building robust APIs and integrating mobile/web applications with your existing CRM, ERP, payment gateways, and legacy databases.
                 </p>
                 <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Learn more</a>
             </div>
@@ -357,9 +358,9 @@
             <!-- LEFT — Sticky heading -->
             <div class="wd-quality-left wd-reveal-left">
                 <span class="wd-section-label">The Nexa Standard</span>
-                <h2 class="wd-section-title">What Makes a Website Truly Exceptional?</h2>
+                <h2 class="wd-section-title">What Makes an App Truly Exceptional?</h2>
                 <p class="wd-section-desc">
-                    Good-looking is not enough. Every website we build is engineered around six non-negotiable pillars that separate high-performing sites from digital wallpaper.
+                    Good-looking is not enough. Every application we build is engineered around six non-negotiable pillars that separate high-performing apps from the rest.
                 </p>
                 <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary" style="margin-top:2rem;">Build the Right Way</a>
             </div>
@@ -373,8 +374,8 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
                     </div>
                     <div class="wd-pillar-body">
-                        <div class="wd-pillar-title">Lightning Performance</div>
-                        <p class="wd-pillar-desc">Sub-2s load times via Core Web Vitals, lazy loading, CDN, and smart caching — a 1-second delay costs 7% of conversions.</p>
+                        <div class="wd-pillar-title">60 FPS Performance</div>
+                        <p class="wd-pillar-desc">Smooth animations, fast load times, and optimized memory usage. We engineer apps that feel native and never drain the user's battery.</p>
                     </div>
                 </div>
 
@@ -384,8 +385,8 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
                     </div>
                     <div class="wd-pillar-body">
-                        <div class="wd-pillar-title">Mobile-First Design</div>
-                        <p class="wd-pillar-desc">70%+ of traffic is mobile. The phone is the primary canvas — every tap target, layout, and scroll flow tested on real devices.</p>
+                        <div class="wd-pillar-title">Offline Capability</div>
+                        <p class="wd-pillar-desc">Your app should work even when the network doesn't. We implement robust local databases and sync engines for a seamless offline experience.</p>
                     </div>
                 </div>
 
@@ -395,8 +396,8 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
                     </div>
                     <div class="wd-pillar-body">
-                        <div class="wd-pillar-title">Clear User Journey</div>
-                        <p class="wd-pillar-desc">Every visitor has a question. We map the journey before writing a line of code — guiding them naturally toward a purchase, booking, or enquiry.</p>
+                        <div class="wd-pillar-title">Intuitive UX/UI</div>
+                        <p class="wd-pillar-desc">We follow iOS Human Interface and Android Material Design guidelines to create interfaces that users instantly know how to navigate.</p>
                     </div>
                 </div>
 
@@ -406,8 +407,8 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="m2 2 7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
                     </div>
                     <div class="wd-pillar-body">
-                        <div class="wd-pillar-title">Strong Visual Identity</div>
-                        <p class="wd-pillar-desc">Visitors judge your brand in 50 milliseconds. Typography, colour, and spacing that communicate your positioning instantly.</p>
+                        <div class="wd-pillar-title">Scalable Architecture</div>
+                        <p class="wd-pillar-desc">Built to grow from 100 to 100,000 users. We design backend infrastructures that scale automatically to handle sudden spikes in traffic.</p>
                     </div>
                 </div>
 
@@ -417,8 +418,8 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                     </div>
                     <div class="wd-pillar-body">
-                        <div class="wd-pillar-title">SEO-Optimised Architecture</div>
-                        <p class="wd-pillar-desc">Semantic HTML5, structured data, clean URLs, and page-speed scores that satisfy Google's algorithms from day one.</p>
+                        <div class="wd-pillar-title">App Store Success</div>
+                        <p class="wd-pillar-desc">We don't just build it; we help you launch it. We ensure strict compliance with Apple and Google review guidelines to guarantee approval.</p>
                     </div>
                 </div>
 
@@ -428,8 +429,8 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                     </div>
                     <div class="wd-pillar-body">
-                        <div class="wd-pillar-title">Security & Reliability</div>
-                        <p class="wd-pillar-desc">SSL, input validation, XSS and SQL injection protection built in — not bolted on. Your site is a business asset, we protect it.</p>
+                        <div class="wd-pillar-title">Bank-Grade Security</div>
+                        <p class="wd-pillar-desc">End-to-end encryption, secure token storage, and OWASP mobile security standards applied to protect your users' sensitive data.</p>
                     </div>
                 </div>
 
@@ -454,9 +455,9 @@
     <section class="wd-cta-band">
         <div class="wd-cta-band-inner wd-reveal">
             <div class="wd-cta-band-label">Zero Obligation</div>
-            <h2 class="wd-cta-band-title">Your Website, Built Right — From Day One</h2>
+            <h2 class="wd-cta-band-title">Your App, Built Right — From Day One</h2>
             <p class="wd-cta-band-desc">
-                Stop settling for templates that look like everyone else. Tell us your vision and get a custom proposal within 24 hours.
+                Stop settling for off-the-shelf templates. Tell us your vision and get a custom app development proposal within 24 hours.
             </p>
             <div class="wd-cta-band-btns">
                 <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--white">Request a Free Proposal</a>
@@ -489,7 +490,7 @@
         <!-- Full-width Promise Strip -->
         <div class="wd-promise-strip wd-reveal">
             <div class="wd-promise-content">
-                <p class="wd-promise-text">"We don't just deliver a website. We deliver a growth asset — one that works harder for your business every single day."</p>
+                <p class="wd-promise-text">"We don't just deliver an app. We deliver a digital product — one that scales and works harder for your business every single day."</p>
                 <span class="wd-promise-sub">— The Nexa Promise</span>
             </div>
         </div>
@@ -510,52 +511,52 @@
 
         <div class="wd-stacks-categories">
 
-            <!-- CMS Platforms -->
+            <!-- Mobile Platforms -->
             <div class="wd-stack-category wd-reveal wd-delay-1">
-                <div class="wd-stack-cat-label">CMS & E-Commerce Platforms</div>
+                <div class="wd-stack-cat-label">Mobile Platforms</div>
                 <div class="wd-stack-cards">
                     <div class="wd-stack-card">
                         <div class="wd-stack-logo">
-                            <img src="https://cdn.simpleicons.org/shopify/96BF48" alt="Shopify Logo">
+                            <img src="https://cdn.simpleicons.org/apple/000000" alt="Apple iOS">
                         </div>
-                        <div class="wd-stack-name">Shopify</div>
-                        <p class="wd-stack-text">The gold standard for scalable online stores.</p>
+                        <div class="wd-stack-name">iOS (Swift)</div>
+                        <p class="wd-stack-text">Premium native experiences for iPhone and iPad users.</p>
                         <div class="wd-stack-badges">
-                            <span class="wd-stack-badge">E-Commerce</span>
-                            <span class="wd-stack-badge">Shopify Plus</span>
+                            <span class="wd-stack-badge">Native</span>
+                            <span class="wd-stack-badge">High Performance</span>
                         </div>
                     </div>
                     <div class="wd-stack-card">
                         <div class="wd-stack-logo">
-                            <img src="https://cdn.simpleicons.org/wordpress/21759B" alt="WordPress Logo">
+                            <img src="https://cdn.simpleicons.org/android/3DDC84" alt="Android Logo">
                         </div>
-                        <div class="wd-stack-name">WordPress</div>
-                        <p class="wd-stack-text">Powerful CMS for blogs and corporate sites.</p>
+                        <div class="wd-stack-name">Android (Kotlin)</div>
+                        <p class="wd-stack-text">Robust native apps for the world's largest mobile OS.</p>
                         <div class="wd-stack-badges">
-                            <span class="wd-stack-badge">CMS</span>
-                            <span class="wd-stack-badge">Themes</span>
+                            <span class="wd-stack-badge">Native</span>
+                            <span class="wd-stack-badge">Scalable</span>
                         </div>
                     </div>
                     <div class="wd-stack-card">
                         <div class="wd-stack-logo">
-                            <img src="https://cdn.simpleicons.org/hostinger/673DE6" alt="Hostinger Logo">
+                            <img src="https://cdn.simpleicons.org/react/61DAFB" alt="React Native Logo">
                         </div>
-                        <div class="wd-stack-name">Hostinger</div>
-                        <p class="wd-stack-text">Fast, reliable hosting for modern web projects.</p>
+                        <div class="wd-stack-name">React Native</div>
+                        <p class="wd-stack-text">High-quality cross-platform development powered by Meta.</p>
                         <div class="wd-stack-badges">
-                            <span class="wd-stack-badge">Hosting</span>
-                            <span class="wd-stack-badge">Deployment</span>
+                            <span class="wd-stack-badge">Cross-Platform</span>
+                            <span class="wd-stack-badge">Fast Delivery</span>
                         </div>
                     </div>
                     <div class="wd-stack-card">
                         <div class="wd-stack-logo">
-                            <img src="{{ url_for('static', filename='images/logo/woocommerce.png') }}" alt="WooCommerce Logo">
+                            <img src="https://cdn.simpleicons.org/flutter/02569B" alt="Flutter Logo">
                         </div>
-                        <div class="wd-stack-name">WooCommerce</div>
-                        <p class="wd-stack-text">Flexible e-commerce solutions built on WordPress.</p>
+                        <div class="wd-stack-name">Flutter</div>
+                        <p class="wd-stack-text">Beautiful, natively compiled applications by Google.</p>
                         <div class="wd-stack-badges">
-                            <span class="wd-stack-badge">E-Commerce</span>
-                            <span class="wd-stack-badge">Open Source</span>
+                            <span class="wd-stack-badge">UI Toolkit</span>
+                            <span class="wd-stack-badge">60 FPS</span>
                         </div>
                     </div>
                 </div>
@@ -640,13 +641,13 @@
                     </div>
                     <div class="wd-stack-card">
                         <div class="wd-stack-logo">
-                            <img src="https://cdn.simpleicons.org/postgresql/4169E1" alt="PostgreSQL Logo">
+                            <img src="https://cdn.simpleicons.org/firebase/FFCA28" alt="Firebase Logo">
                         </div>
-                        <div class="wd-stack-name">PostgreSQL / MySQL</div>
-                        <p class="wd-stack-text">Secure, scalable data storage solutions.</p>
+                        <div class="wd-stack-name">Firebase</div>
+                        <p class="wd-stack-text">Real-time databases, auth, and push notifications.</p>
                         <div class="wd-stack-badges">
-                            <span class="wd-stack-badge">Database</span>
-                            <span class="wd-stack-badge">SQL</span>
+                            <span class="wd-stack-badge">BaaS</span>
+                            <span class="wd-stack-badge">NoSQL</span>
                         </div>
                     </div>
                     <div class="wd-stack-card">
@@ -674,7 +675,7 @@
             <div class="wd-cta-band-label">Need Assistance?</div>
             <h2 class="wd-cta-band-title">Already Have a Tech Stack in Mind?</h2>
             <p class="wd-cta-band-desc">
-                Tell us your preferred platform or framework and we will match it with our best-suited engineer. We speak your language — whether it is Shopify, WordPress, React, or custom Python.
+                Tell us your preferred platform or framework and we will match it with our best-suited engineer. We speak your language — whether it is React Native, Flutter, Swift, or custom Node.js backend.
             </p>
             <div class="wd-cta-band-btns">
                 <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--white">Discuss Your Stack</a>
