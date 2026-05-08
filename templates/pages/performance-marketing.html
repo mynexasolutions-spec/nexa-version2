@@ -1,0 +1,803 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Performance Marketing & Ads — Nexa Solutions{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/performance-marketing.css') }}">
+<meta name="description" content="Data-driven performance marketing and digital ads services. We specialize in Google Ads, Meta Ads, LinkedIn Ads, SEO, and full-funnel growth strategies.">
+{% endblock %}
+
+{% block content %}
+<main class="webdev-page">
+
+    <!-- ═══════════════════════════════════════════
+         1. HERO
+    ═══════════════════════════════════════════ -->
+    <section class="wd-hero">
+        <div class="wd-hero-inner">
+
+            <!-- LEFT — Text -->
+            <div class="wd-hero-text">
+                <h1 class="wd-hero-title">Performance<br>Marketing & Ads</h1>
+                <p class="wd-hero-sub">
+                    We drive high-quality traffic and scale your revenue with data-driven advertising, conversion optimization, and strategic brand positioning.
+                </p>
+                <div class="wd-hero-btns">
+                    <a href="#wd-types" class="wd-btn wd-btn--outline">Learn more</a>
+                    <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Contact us</a>
+                </div>
+            </div>
+
+            <!-- RIGHT — Visual -->
+            <div class="wd-hero-visual">
+                <div class="wd-hero-laptop-wrap">
+                    <img
+                        src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800"
+                        alt="Performance Marketing — Nexa Solutions"
+                        class="wd-hero-laptop"
+                        style="border-radius: 12px;"
+                    >
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════
+         2. CERTIFIED AGENCY / STACKS
+    ═══════════════════════════════════════════ -->
+    <section class="wd-certified">
+        <div class="wd-certified-inner">
+
+            <!-- LEFT — Image -->
+            <div class="wd-certified-visual wd-reveal-left">
+                <img
+                    src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800"
+                    alt="Data Analytics and Ads"
+                    class="wd-certified-img"
+                    style="border-radius: 12px; object-fit: cover; aspect-ratio: 4/3;"
+                >
+            </div>
+
+            <!-- RIGHT — Text -->
+            <div class="wd-certified-text wd-reveal-right">
+                <span class="wd-section-label">Data-Driven Growth</span>
+                <h2 class="wd-section-title">Your Certified<br>Growth Partner</h2>
+                <p class="wd-certified-desc">
+                    We are certified partners for the world's leading advertising platforms. We manage millions in ad spend to deliver predictable, scalable growth for your business.
+                </p>
+                <p class="wd-certified-desc">
+                    From deep audience research to high-converting ad creative and landing page optimization, we handle the entire funnel so you can focus on running your business.
+                </p>
+                <div class="wd-certified-btns">
+                    <a href="#wd-types" class="wd-btn wd-btn--primary">Explore Our Channels</a>
+                    <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--outline">Get an Audit</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         3. TYPES OF WEBSITES — Tabbed
+    ═══════════════════════════════════════════ -->
+    <section class="wd-types" id="wd-types">
+        <div class="wd-types-inner">
+
+            <!-- Header -->
+            <div class="wd-types-header wd-reveal">
+                <span class="wd-section-label">Channels We Master</span>
+                <h2 class="wd-section-title">Omnichannel Strategies.<br>Maximum ROI.</h2>
+                <p class="wd-section-desc" style="margin:0 auto; text-align:center;">
+                    From top-of-funnel awareness to bottom-of-funnel conversions — click a channel to see how we drive growth.
+                </p>
+            </div>
+
+            <!-- Tab Buttons -->
+            <div class="wd-tab-bar-wrap wd-reveal">
+            <div class="wd-tab-bar">
+                <button class="wd-tab active" data-tab="0">
+                    <span class="wd-tab-num">01</span>
+                    <span class="wd-tab-name">Paid Search</span>
+                </button>
+                <button class="wd-tab" data-tab="1">
+                    <span class="wd-tab-num">02</span>
+                    <span class="wd-tab-name">Social Ads</span>
+                </button>
+                <button class="wd-tab" data-tab="2">
+                    <span class="wd-tab-num">03</span>
+                    <span class="wd-tab-name">Organic SEO</span>
+                </button>
+                <button class="wd-tab" data-tab="3">
+                    <span class="wd-tab-num">04</span>
+                    <span class="wd-tab-name">AEO</span>
+                </button>
+                <button class="wd-tab" data-tab="4">
+                    <span class="wd-tab-num">05</span>
+                    <span class="wd-tab-name">GEO</span>
+                </button>
+                <button class="wd-tab" data-tab="5">
+                    <span class="wd-tab-num">06</span>
+                    <span class="wd-tab-name">Content Strategy</span>
+                </button>
+                <button class="wd-tab" data-tab="6">
+                    <span class="wd-tab-num">07</span>
+                    <span class="wd-tab-name">CRO</span>
+                </button>
+                <button class="wd-tab" data-tab="7">
+                    <span class="wd-tab-num">08</span>
+                    <span class="wd-tab-name">Email & SMS</span>
+                </button>
+                <button class="wd-tab" data-tab="8">
+                    <span class="wd-tab-num">09</span>
+                    <span class="wd-tab-name">Branding</span>
+                </button>
+            </div><!-- /wd-tab-bar -->
+            </div><!-- /wd-tab-bar-wrap -->
+
+            <!-- Tab Panels -->
+            <div class="wd-tab-panels">
+
+                <!-- 1. Paid Search -->
+                <div class="wd-tab-panel active" data-panel="0">
+                    <div class="wd-panel-text">
+                        <h3 class="wd-panel-title">Google & Bing Ads</h3>
+                        <p class="wd-panel-desc">Capture high-intent prospects precisely when they are searching for your product or service. We build meticulously structured Search, Shopping, and Performance Max campaigns designed to minimize wasted spend and maximize return on ad spend (ROAS).</p>
+                        <div class="wd-panel-tags">
+                            <span class="wd-type-tag">Search Ads</span>
+                            <span class="wd-type-tag">Shopping</span>
+                            <span class="wd-type-tag">Performance Max</span>
+                            <span class="wd-type-tag">Retargeting</span>
+                        </div>
+                        <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Launch Campaigns</a>
+                    </div>
+                    <div class="wd-panel-image">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop" alt="Paid Search Analytics" loading="lazy">
+                    </div>
+                </div>
+
+                <!-- 2. Social Ads -->
+                <div class="wd-tab-panel" data-panel="1">
+                    <div class="wd-panel-text">
+                        <h3 class="wd-panel-title">Meta & LinkedIn Ads</h3>
+                        <p class="wd-panel-desc">Drive massive awareness and generate leads where your audience spends their time. From highly visual D2C campaigns on Instagram and TikTok, to precise B2B targeting on LinkedIn, we match the right creative with the right audience.</p>
+                        <div class="wd-panel-tags">
+                            <span class="wd-type-tag">Facebook & IG</span>
+                            <span class="wd-type-tag">LinkedIn B2B</span>
+                            <span class="wd-type-tag">TikTok</span>
+                            <span class="wd-type-tag">Creative Strategy</span>
+                        </div>
+                        <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Scale Social Growth</a>
+                    </div>
+                    <div class="wd-panel-image">
+                        <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&auto=format&fit=crop" alt="Social Media Ads" loading="lazy">
+                    </div>
+                </div>
+
+                <!-- 3. Organic SEO -->
+                <div class="wd-tab-panel" data-panel="2">
+                    <div class="wd-panel-text">
+                        <h3 class="wd-panel-title">Organic SEO & Traffic</h3>
+                        <p class="wd-panel-desc">Build a sustainable, long-term traffic engine. We combine deep technical SEO audits, high-quality content strategies, and authoritative link building to ensure you dominate the search engine results pages (SERPs) for the keywords that matter most.</p>
+                        <div class="wd-panel-tags">
+                            <span class="wd-type-tag">Technical SEO</span>
+                            <span class="wd-type-tag">On-Page</span>
+                            <span class="wd-type-tag">Local SEO</span>
+                            <span class="wd-type-tag">Link Building</span>
+                        </div>
+                        <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Boost Organic Traffic</a>
+                    </div>
+                    <div class="wd-panel-image">
+                        <img src="https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=800&auto=format&fit=crop" alt="SEO Strategy" loading="lazy">
+                    </div>
+                </div>
+
+                <!-- 4. AEO -->
+                <div class="wd-tab-panel" data-panel="3">
+                    <div class="wd-panel-text">
+                        <h3 class="wd-panel-title">Answer Engine Optimization (AEO)</h3>
+                        <p class="wd-panel-desc">Optimize for voice search and smart assistants. We structure your content using schema markup and direct answers to ensure your brand is the single source of truth for queries posed to Alexa, Siri, and Google Assistant.</p>
+                        <div class="wd-panel-tags">
+                            <span class="wd-type-tag">Voice Search</span>
+                            <span class="wd-type-tag">Schema Markup</span>
+                            <span class="wd-type-tag">Featured Snippets</span>
+                            <span class="wd-type-tag">Knowledge Graph</span>
+                        </div>
+                        <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Dominate Voice Search</a>
+                    </div>
+                    <div class="wd-panel-image">
+                        <img src="https://images.unsplash.com/photo-1588600878108-578307a3cc9d?w=800&auto=format&fit=crop" alt="Answer Engine Optimization" loading="lazy">
+                    </div>
+                </div>
+
+                <!-- 5. GEO -->
+                <div class="wd-tab-panel" data-panel="4">
+                    <div class="wd-panel-text">
+                        <h3 class="wd-panel-title">Generative Engine Optimization</h3>
+                        <p class="wd-panel-desc">Future-proof your business against AI-driven search. As search engines shift toward generative AI (like ChatGPT, Gemini, and Google SGE), we optimize your digital presence so your brand is reliably cited and recommended by AI models.</p>
+                        <div class="wd-panel-tags">
+                            <span class="wd-type-tag">AI Search</span>
+                            <span class="wd-type-tag">Entity Optimization</span>
+                            <span class="wd-type-tag">Brand Authority</span>
+                            <span class="wd-type-tag">SGE Ranking</span>
+                        </div>
+                        <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Prepare for AI Search</a>
+                    </div>
+                    <div class="wd-panel-image">
+                        <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&auto=format&fit=crop" alt="Generative Engine Optimization" loading="lazy">
+                    </div>
+                </div>
+
+                <!-- 6. Content Strategy -->
+                <div class="wd-tab-panel" data-panel="5">
+                    <div class="wd-panel-text">
+                        <h3 class="wd-panel-title">Content Strategy & Blogs</h3>
+                        <p class="wd-panel-desc">Content-driven websites that build authority and organic traffic at scale. We develop comprehensive blog and editorial strategies that answer your customers' most pressing questions, establishing your brand as a thought leader in your industry.</p>
+                        <div class="wd-panel-tags">
+                            <span class="wd-type-tag">Blog Management</span>
+                            <span class="wd-type-tag">Content Creation</span>
+                            <span class="wd-type-tag">Thought Leadership</span>
+                            <span class="wd-type-tag">Copywriting</span>
+                        </div>
+                        <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Start Publishing</a>
+                    </div>
+                    <div class="wd-panel-image">
+                        <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&auto=format&fit=crop" alt="Content Strategy" loading="lazy">
+                    </div>
+                </div>
+
+                <!-- 7. CRO -->
+                <div class="wd-tab-panel" data-panel="6">
+                    <div class="wd-panel-text">
+                        <h3 class="wd-panel-title">Conversion Rate Optimization</h3>
+                        <p class="wd-panel-desc">Traffic means nothing if it doesn't convert. We use data analytics, heatmaps, and continuous A/B testing to identify friction points in your funnel and optimize your landing pages to turn more visitors into paying customers.</p>
+                        <div class="wd-panel-tags">
+                            <span class="wd-type-tag">A/B Testing</span>
+                            <span class="wd-type-tag">UX/UI Audits</span>
+                            <span class="wd-type-tag">Heatmapping</span>
+                            <span class="wd-type-tag">Landing Pages</span>
+                        </div>
+                        <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Improve Conversions</a>
+                    </div>
+                    <div class="wd-panel-image">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop" alt="Conversion Rate Optimization" loading="lazy">
+                    </div>
+                </div>
+
+                <!-- 8. Email Marketing -->
+                <div class="wd-tab-panel" data-panel="7">
+                    <div class="wd-panel-text">
+                        <h3 class="wd-panel-title">Email & SMS Marketing</h3>
+                        <p class="wd-panel-desc">Acquiring a customer is expensive; keeping them shouldn't be. We build automated email flows, personalized newsletters, and SMS campaigns that nurture leads, recover abandoned carts, and turn one-time buyers into loyal brand advocates.</p>
+                        <div class="wd-panel-tags">
+                            <span class="wd-type-tag">Klaviyo / Mailchimp</span>
+                            <span class="wd-type-tag">Automated Flows</span>
+                            <span class="wd-type-tag">Newsletters</span>
+                            <span class="wd-type-tag">SMS Marketing</span>
+                        </div>
+                        <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Boost Retention</a>
+                    </div>
+                    <div class="wd-panel-image">
+                        <img src="https://images.unsplash.com/photo-1596526131083-e8c633c948d2?w=800&auto=format&fit=crop" alt="Email Marketing" loading="lazy">
+                    </div>
+                </div>
+
+                <!-- 9. Branding -->
+                <div class="wd-tab-panel" data-panel="8">
+                    <div class="wd-panel-text">
+                        <h3 class="wd-panel-title">Brand Identity & Strategy</h3>
+                        <p class="wd-panel-desc">Ads work best when they're backed by a strong brand. We craft compelling brand identities, from logo design and visual language to core messaging. We ensure your brand stands out, resonates emotionally, and builds lasting trust with your audience.</p>
+                        <div class="wd-panel-tags">
+                            <span class="wd-type-tag">Brand Strategy</span>
+                            <span class="wd-type-tag">Logo Design</span>
+                            <span class="wd-type-tag">Visual Identity</span>
+                            <span class="wd-type-tag">Positioning</span>
+                        </div>
+                        <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Build Your Brand</a>
+                    </div>
+                    <div class="wd-panel-image">
+                        <img src="https://images.unsplash.com/photo-1545235617-9465d2a55698?w=800&auto=format&fit=crop" alt="Brand Strategy" loading="lazy">
+                    </div>
+                </div>
+
+            </div><!-- /wd-tab-panels -->
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         4. INLINE CTA 1 — Not sure which type?
+    ═══════════════════════════════════════════ -->
+    <section class="wd-cta-band">
+        <div class="wd-cta-band-inner wd-reveal">
+            <div class="wd-cta-band-label">Not sure where to start?</div>
+            <h2 class="wd-cta-band-title">Let Us Find the Right Fit for Your Business</h2>
+            <p class="wd-cta-band-desc">
+                Tell us your idea in 2 minutes. We will assess your goals and recommend the exact type of website that will drive the most impact for your business.
+            </p>
+            <div class="wd-cta-band-btns">
+                <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--white">Book a Free Consultation</a>
+                <a href="https://wa.me/+919999999999" class="wd-btn wd-btn--ghost-white">Chat on WhatsApp</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         4B. CMS & PLATFORMS EXPERTISE
+    ═══════════════════════════════════════════ -->
+    <section class="wd-cms-systems">
+        <div class="wd-cms-inner">
+            <!-- LEFT — Image -->
+            <div class="wd-cms-visual wd-reveal-left">
+                <img 
+                    src="{{ url_for('static', filename='images/services/system-domains.png') }}"
+                    alt="CMS and Platform Technologies"
+                    class="wd-cms-img"
+                >
+            </div>
+
+            <!-- RIGHT — Text -->
+            <div class="wd-cms-text wd-reveal-right">
+                <span class="wd-section-label">Every System Is Different</span>
+                <h2 class="wd-section-title">We Can Do Web Design<br>for Any CMS</h2>
+                <p class="wd-cms-desc">
+                    We are experts in web design and development for all common content management systems, from WordPress to Drupal, and can therefore recommend the CMS that best suits your requirements.
+                </p>
+                <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Learn more</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         5. WHAT MAKES A GOOD WEBSITE
+    ═══════════════════════════════════════════ -->
+    <section class="wd-quality" id="wd-quality">
+        <div class="wd-quality-inner">
+
+            <!-- LEFT — Sticky heading -->
+            <div class="wd-quality-left wd-reveal-left">
+                <span class="wd-section-label">The Nexa Standard</span>
+                <h2 class="wd-section-title">What Makes a Campaign Truly Exceptional?</h2>
+                <p class="wd-section-desc">
+                    Good ad copy is not enough. Every campaign we launch is engineered around six non-negotiable pillars that separate highly profitable ads from wasted spend.
+                </p>
+                <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary" style="margin-top:2rem;">Build the Right Way</a>
+            </div>
+
+            <!-- RIGHT — Pillar list -->
+            <div class="wd-quality-right wd-reveal-right">
+
+                <div class="wd-pillar">
+                    <div class="wd-pillar-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                    </div>
+                    <div class="wd-pillar-body">
+                        <div class="wd-pillar-title">Laser Targeting</div>
+                        <p class="wd-pillar-desc">We don't guess. We use advanced data modeling, lookalike audiences, and retargeting to ensure your ads are only shown to people ready to buy.</p>
+                    </div>
+                </div>
+
+                <div class="wd-pillar">
+                    <div class="wd-pillar-icon">
+                        <!-- Lucide: pen-tool -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="m2 2 7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+                    </div>
+                    <div class="wd-pillar-body">
+                        <div class="wd-pillar-title">High-Converting Creative</div>
+                        <p class="wd-pillar-desc">Thumb-stopping visuals and persuasive copywriting that cuts through the noise and compels the user to take immediate action.</p>
+                    </div>
+                </div>
+
+                <div class="wd-pillar">
+                    <div class="wd-pillar-icon">
+                        <!-- Lucide: layout-template -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="7" rx="2" ry="2"/><rect x="3" y="14" width="7" height="7" rx="2" ry="2"/><rect x="14" y="14" width="7" height="7" rx="2" ry="2"/></svg>
+                    </div>
+                    <div class="wd-pillar-body">
+                        <div class="wd-pillar-title">Optimized Landing Pages</div>
+                        <p class="wd-pillar-desc">Great ads need great destinations. We ensure every click lands on a page optimized for speed, clarity, and maximum conversion rates.</p>
+                    </div>
+                </div>
+
+                <div class="wd-pillar">
+                    <div class="wd-pillar-icon">
+                        <!-- Lucide: bar-chart-2 -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                    </div>
+                    <div class="wd-pillar-body">
+                        <div class="wd-pillar-title">Data-Driven Bidding</div>
+                        <p class="wd-pillar-desc">We leverage AI and algorithmic bidding strategies to acquire customers at the lowest possible cost, maximizing your return on ad spend.</p>
+                    </div>
+                </div>
+
+                <div class="wd-pillar">
+                    <div class="wd-pillar-icon">
+                        <!-- Lucide: repeat -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg>
+                    </div>
+                    <div class="wd-pillar-body">
+                        <div class="wd-pillar-title">Continuous A/B Testing</div>
+                        <p class="wd-pillar-desc">We never set and forget. We constantly test headlines, creatives, audiences, and offers to incrementally improve performance every week.</p>
+                    </div>
+                </div>
+
+                <div class="wd-pillar">
+                    <div class="wd-pillar-icon">
+                        <!-- Lucide: activity -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    </div>
+                    <div class="wd-pillar-body">
+                        <div class="wd-pillar-title">Full-Funnel Tracking</div>
+                        <p class="wd-pillar-desc">Flawless pixel implementation and server-side tracking (CAPI) ensure we measure every dollar generated with 100% accuracy.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Mobile carousel dots -->
+            <div class="wd-pillar-dots" aria-hidden="true">
+                <span class="wd-pillar-dot active"></span>
+                <span class="wd-pillar-dot"></span>
+                <span class="wd-pillar-dot"></span>
+                <span class="wd-pillar-dot"></span>
+                <span class="wd-pillar-dot"></span>
+                <span class="wd-pillar-dot"></span>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         6. INLINE CTA 2 — Ready to start?
+    ═══════════════════════════════════════════ -->
+    <section class="wd-cta-band">
+        <div class="wd-cta-band-inner wd-reveal">
+            <div class="wd-cta-band-label">Zero Obligation</div>
+            <h2 class="wd-cta-band-title">Your Campaigns, Built Right — From Day One</h2>
+            <p class="wd-cta-band-desc">
+                Stop wasting budget on underperforming ads. Tell us your goals and get a custom growth strategy within 24 hours.
+            </p>
+            <div class="wd-cta-band-btns">
+                <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--white">Request a Free Proposal</a>
+                <a href="{{ url_for('work') }}" class="wd-btn wd-btn--ghost-white">View Our Work First</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         8. OUR USP
+    ═══════════════════════════════════════════ -->
+    <section class="wd-usp" id="wd-usp">
+        <div class="wd-usp-inner">
+            <div class="wd-reveal-left">
+                <span class="wd-section-label">Why Choose Nexa</span>
+                <h2 class="wd-section-title">What Sets Us<br>Apart From<br>Everyone Else</h2>
+                <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary" style="margin-top:2.5rem;">Experience the Difference</a>
+            </div>
+
+            <div class="wd-usp-right wd-reveal-right">
+                <div class="wd-usp-card"><h4 class="wd-usp-card-title">Data-Driven Decisions</h4></div>
+                <div class="wd-usp-card"><h4 class="wd-usp-card-title">Omnichannel Expertise</h4></div>
+                <div class="wd-usp-card"><h4 class="wd-usp-card-title">Transparent Reporting</h4></div>
+                <div class="wd-usp-card"><h4 class="wd-usp-card-title">Creative That Converts</h4></div>
+                <div class="wd-usp-card"><h4 class="wd-usp-card-title">Rapid Optimization</h4></div>
+                <div class="wd-usp-card"><h4 class="wd-usp-card-title">True Partnership</h4></div>
+            </div>
+        </div>
+
+        <!-- Full-width Promise Strip -->
+        <div class="wd-promise-strip wd-reveal">
+            <div class="wd-promise-content">
+                <p class="wd-promise-text">"We don't just run ads. We build a predictable, scalable growth engine that generates consistent revenue for your business every single day."</p>
+                <span class="wd-promise-sub">— The Nexa Promise</span>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════
+         9. TECH STACKS
+    ═══════════════════════════════════════════ -->
+    <section class="wd-stacks" id="wd-stacks">
+        <div class="wd-stacks-header wd-reveal">
+            <span class="wd-section-label">Our Platform Arsenal</span>
+            <h2 class="wd-section-title">We Master the Ad Ecosystem</h2>
+            <p class="wd-section-desc" style="margin: 0 auto; text-align:center;">
+                We are channel-agnostic. We deploy your budget wherever your audience is most engaged and the cost to acquire a customer is lowest.
+            </p>
+        </div>
+
+        <div class="wd-stacks-categories">
+
+            <!-- Paid Media -->
+            <div class="wd-stack-category wd-reveal wd-delay-1">
+                <div class="wd-stack-cat-label">Search & Social Platforms</div>
+                <div class="wd-stack-cards">
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo">
+                            <img src="https://cdn.simpleicons.org/google/4285F4" alt="Google Ads Logo">
+                        </div>
+                        <div class="wd-stack-name">Google Ads</div>
+                        <p class="wd-stack-text">Search, Display, YouTube, and PMax campaigns.</p>
+                        <div class="wd-stack-badges">
+                            <span class="wd-stack-badge">Search</span>
+                            <span class="wd-stack-badge">Intent</span>
+                        </div>
+                    </div>
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo">
+                            <img src="https://cdn.simpleicons.org/meta/0668E1" alt="Meta Ads Logo">
+                        </div>
+                        <div class="wd-stack-name">Meta Ads</div>
+                        <p class="wd-stack-text">Highly visual Facebook and Instagram campaigns.</p>
+                        <div class="wd-stack-badges">
+                            <span class="wd-stack-badge">Social</span>
+                            <span class="wd-stack-badge">D2C</span>
+                        </div>
+                    </div>
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo">
+                            <img src="https://cdn.simpleicons.org/linkedin/0A66C2" alt="LinkedIn Ads Logo">
+                        </div>
+                        <div class="wd-stack-name">LinkedIn Ads</div>
+                        <p class="wd-stack-text">Targeted B2B lead generation and brand awareness.</p>
+                        <div class="wd-stack-badges">
+                            <span class="wd-stack-badge">B2B</span>
+                            <span class="wd-stack-badge">Leads</span>
+                        </div>
+                    </div>
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo">
+                            <img src="https://cdn.simpleicons.org/pinterest/E60023" alt="Pinterest Ads Logo">
+                        </div>
+                        <div class="wd-stack-name">Pinterest Ads</div>
+                        <p class="wd-stack-text">Highly visual discovery engine for e-commerce and lifestyle.</p>
+                        <div class="wd-stack-badges">
+                            <span class="wd-stack-badge">Visual</span>
+                            <span class="wd-stack-badge">E-Comm</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics -->
+            <div class="wd-stack-category wd-reveal wd-delay-2">
+                <div class="wd-stack-cat-label">Analytics & Tracking</div>
+                <div class="wd-stack-cards">
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo">
+                            <img src="https://cdn.simpleicons.org/googleanalytics/E37400" alt="Google Analytics Logo">
+                        </div>
+                        <div class="wd-stack-name">Google Analytics 4</div>
+                        <p class="wd-stack-text">Deep insights into user behavior and conversions.</p>
+                        <div class="wd-stack-badges">
+                            <span class="wd-stack-badge">Data</span>
+                            <span class="wd-stack-badge">Events</span>
+                        </div>
+                    </div>
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo">
+                            <img src="https://cdn.simpleicons.org/googletagmanager/246FDB" alt="Google Tag Manager Logo">
+                        </div>
+                        <div class="wd-stack-name">Tag Manager</div>
+                        <p class="wd-stack-text">Advanced tracking pixel and script management.</p>
+                        <div class="wd-stack-badges">
+                            <span class="wd-stack-badge">Tags</span>
+                            <span class="wd-stack-badge">Tracking</span>
+                        </div>
+                    </div>
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo">
+                            <img src="https://cdn.simpleicons.org/hubspot/FF7A59" alt="HubSpot Logo">
+                        </div>
+                        <div class="wd-stack-name">HubSpot</div>
+                        <p class="wd-stack-text">Full-funnel CRM and marketing automation integration.</p>
+                        <div class="wd-stack-badges">
+                            <span class="wd-stack-badge">CRM</span>
+                            <span class="wd-stack-badge">Inbound</span>
+                        </div>
+                    </div>
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo">
+                            <img src="https://cdn.simpleicons.org/hotjar/FD3839" alt="Hotjar Logo">
+                        </div>
+                        <div class="wd-stack-name">Hotjar</div>
+                        <p class="wd-stack-text">Heatmaps and session recordings for CRO.</p>
+                        <div class="wd-stack-badges">
+                            <span class="wd-stack-badge">UX</span>
+                            <span class="wd-stack-badge">CRO</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CRM & Automation -->
+            <div class="wd-stack-category wd-reveal wd-delay-3">
+                <div class="wd-stack-cat-label">CRM & Marketing Automation</div>
+                <div class="wd-stack-cards">
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo">
+                            <img src="https://cdn.simpleicons.org/salesforce/00A1E0" alt="Salesforce Logo">
+                        </div>
+                        <div class="wd-stack-name">Salesforce</div>
+                        <p class="wd-stack-text">Enterprise-grade customer relationship management.</p>
+                        <div class="wd-stack-badges">
+                            <span class="wd-stack-badge">CRM</span>
+                            <span class="wd-stack-badge">Sales</span>
+                        </div>
+                    </div>
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo">
+                            <img src="https://cdn.simpleicons.org/klaviyo/26CC67" alt="Klaviyo Logo">
+                        </div>
+                        <div class="wd-stack-name">Klaviyo</div>
+                        <p class="wd-stack-text">Advanced email and SMS marketing automation.</p>
+                        <div class="wd-stack-badges">
+                            <span class="wd-stack-badge">Email</span>
+                            <span class="wd-stack-badge">SMS</span>
+                        </div>
+                    </div>
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo">
+                            <img src="https://cdn.simpleicons.org/mailchimp/FFE01B" alt="Mailchimp Logo">
+                        </div>
+                        <div class="wd-stack-name">Mailchimp</div>
+                        <p class="wd-stack-text">Industry-leading newsletter and campaign builder.</p>
+                        <div class="wd-stack-badges">
+                            <span class="wd-stack-badge">Campaigns</span>
+                            <span class="wd-stack-badge">Newsletters</span>
+                        </div>
+                    </div>
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo">
+                            <img src="https://cdn.simpleicons.org/activecampaign/356AE6" alt="ActiveCampaign Logo">
+                        </div>
+                        <div class="wd-stack-name">ActiveCampaign</div>
+                        <p class="wd-stack-text">Powerful workflows and lifecycle marketing tools.</p>
+                        <div class="wd-stack-badges">
+                            <span class="wd-stack-badge">Automation</span>
+                            <span class="wd-stack-badge">Lifecycle</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         10. INLINE CTA 3 — Need a specific stack?
+    ═══════════════════════════════════════════ -->
+    <section class="wd-cta-band">
+        <div class="wd-cta-band-inner wd-reveal">
+            <div class="wd-cta-band-label">Need Growth?</div>
+            <h2 class="wd-cta-band-title">Ready to Scale Your Customer Acquisition?</h2>
+            <p class="wd-cta-band-desc">
+                Stop guessing with your ad budget. Let our team run a comprehensive audit of your current campaigns and show you exactly where you're leaving money on the table.
+            </p>
+            <div class="wd-cta-band-btns">
+                <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--white">Request a Free Audit</a>
+                <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--ghost-white">Book a Strategy Call</a>
+            </div>
+        </div>
+    </section>
+
+
+</main>
+
+<script>
+(function () {
+    /* ── Scroll Reveal ── */
+    const revealEls = document.querySelectorAll(
+        '.wd-reveal, .wd-reveal-left, .wd-reveal-right'
+    );
+
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('wd-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.12, rootMargin: '0px 0px -60px 0px' }
+        );
+        revealEls.forEach((el) => observer.observe(el));
+    } else {
+        revealEls.forEach((el) => el.classList.add('wd-visible'));
+    }
+
+    /* ── Counter Animation ── */
+    const counters = document.querySelectorAll('.wd-stat-number[data-count]');
+
+    const countObserver = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                const el = entry.target;
+                const target = parseInt(el.dataset.count, 10);
+                const suffix = el.dataset.suffix || (target === 100 ? '%' : '+');
+                let start = 0;
+                const duration = 1800;
+                const step = Math.ceil(target / (duration / 16));
+
+                const ticker = setInterval(() => {
+                    start = Math.min(start + step, target);
+                    el.textContent = start + suffix;
+                    if (start >= target) clearInterval(ticker);
+                }, 16);
+
+                countObserver.unobserve(el);
+            });
+        },
+        { threshold: 0.5 }
+    );
+
+    counters.forEach((c) => countObserver.observe(c));
+
+    /* ── Tab Switcher ── */
+    const tabs   = document.querySelectorAll('.wd-tab');
+    const panels = document.querySelectorAll('.wd-tab-panel');
+
+    function activateTab(idx) {
+        idx = Math.max(0, Math.min(idx, tabs.length - 1));
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        tabs[idx].classList.add('active');
+        document.querySelector(`.wd-tab-panel[data-panel="${idx}"]`).classList.add('active');
+        tabs[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+
+    tabs.forEach((tab) => {
+        tab.addEventListener('click', () => activateTab(parseInt(tab.dataset.tab)));
+    });
+
+    /* ── Swipe to switch panels (mobile) ── */
+    const panelsWrap = document.querySelector('.wd-tab-panels');
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    panelsWrap.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].clientX;
+        touchStartY = e.changedTouches[0].clientY;
+    }, { passive: true });
+
+    panelsWrap.addEventListener('touchend', (e) => {
+        const dx = touchStartX - e.changedTouches[0].clientX;
+        const dy = touchStartY - e.changedTouches[0].clientY;
+
+        /* ignore if mostly vertical (user scrolling the page) */
+        if (Math.abs(dy) > Math.abs(dx)) return;
+        /* ignore small movements */
+        if (Math.abs(dx) < 50) return;
+
+        const currentIdx = parseInt(document.querySelector('.wd-tab.active').dataset.tab);
+        activateTab(dx > 0 ? currentIdx + 1 : currentIdx - 1);
+    }, { passive: true });
+})();
+
+// Pillar carousel dots sync
+(function () {
+    const track = document.querySelector('.wd-quality-right');
+    const dots = document.querySelectorAll('.wd-pillar-dot');
+    if (!track || !dots.length) return;
+    function updateDots() {
+        const pillars = track.querySelectorAll('.wd-pillar');
+        if (!pillars.length) return;
+        const cardW = pillars[0].offsetWidth + parseInt(getComputedStyle(pillars[0]).marginRight || 0);
+        const idx = Math.round(track.scrollLeft / (cardW || 1));
+        dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    }
+    track.addEventListener('scroll', updateDots, { passive: true });
+    dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => {
+            const pillars = track.querySelectorAll('.wd-pillar');
+            if (pillars[i]) pillars[i].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+        });
+    });
+})();
+
+</script>
+{% endblock %}

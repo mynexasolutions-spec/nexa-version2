@@ -85,6 +85,10 @@ def web_development():
 def app_development():
     return render_template("pages/app-development.html")
 
+@app.route("/services/performance-marketing")
+def performance_marketing():
+    return render_template("pages/performance-marketing.html")
+
 @app.route("/work")
 def work():
     return render_template("work.html")
