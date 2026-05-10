@@ -90,7 +90,7 @@ if (projectItems.length && numberTrack) {
   };
 
   const getProjectActivationLine = () => {
-    return window.innerWidth <= 768 ? window.innerHeight * 0.5 : window.innerHeight * 0.52;
+    return window.innerWidth <= 768 ? window.innerHeight * 0.4 : window.innerHeight * 0.52;
   };
 
   const updateActiveProject = () => {
@@ -129,6 +129,23 @@ if (projectItems.length && numberTrack) {
   requestProjectSync();
   window.addEventListener('scroll', requestProjectSync, { passive: true });
   window.addEventListener('resize', requestProjectSync);
+}
+
+/* ── Reviews slider arrows ── */
+const reviewsGrid = document.querySelector('.reviews-grid');
+const prevArrow = document.querySelector('.reviews-arrow-prev');
+const nextArrow = document.querySelector('.reviews-arrow-next');
+if (reviewsGrid && prevArrow && nextArrow) {
+  const scrollAmount = () => {
+    const card = reviewsGrid.querySelector('.review-card');
+    return card ? card.offsetWidth + 24 : 380;
+  };
+  prevArrow.addEventListener('click', () => {
+    reviewsGrid.scrollBy({ left: -scrollAmount(), behavior: 'smooth' });
+  });
+  nextArrow.addEventListener('click', () => {
+    reviewsGrid.scrollBy({ left: scrollAmount(), behavior: 'smooth' });
+  });
 }
 
 /* ── Why Us horizontal rail (Ultra-Smooth) ── */
@@ -233,6 +250,46 @@ if (whyUsRail) {
   }, { passive: true });
   whyUsRail.addEventListener('touchend', endRailDrag, { passive: true });
   whyUsRail.addEventListener('touchcancel', endRailDrag, { passive: true });
+
+  // Why Us Arrow Listeners
+  const whyPrev = document.querySelector('.why-arrow-prev');
+  const whyNext = document.querySelector('.why-arrow-next');
+  if (whyPrev && whyNext) {
+    const scrollJump = () => {
+      const card = whyUsTrack.querySelector('.why-card');
+      return card ? card.offsetWidth + 30 : 400; // card width + gap
+    };
+
+    whyPrev.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const jump = scrollJump();
+      currentX += jump;
+      const loopWidth = getLoopWidth();
+      if (currentX > 0) currentX -= loopWidth;
+      
+      whyUsTrack.style.transition = 'transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)';
+      whyUsTrack.style.transform = `translate3d(${currentX}px, 0, 0) rotate(-0.5deg)`;
+      setTimeout(() => { whyUsTrack.style.transition = ''; }, 500);
+    });
+
+    whyNext.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const jump = scrollJump();
+      currentX -= jump;
+      const loopWidth = getLoopWidth();
+      if (currentX <= -loopWidth) currentX += loopWidth;
+      
+      whyUsTrack.style.transition = 'transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)';
+      whyUsTrack.style.transform = `translate3d(${currentX}px, 0, 0) rotate(-0.5deg)`;
+      setTimeout(() => { whyUsTrack.style.transition = ''; }, 500);
+    });
+
+    // Pause on arrow interaction
+    [whyPrev, whyNext].forEach(arrow => {
+      arrow.addEventListener('mouseenter', pauseMotion);
+      arrow.addEventListener('mouseleave', resumeMotion);
+    });
+  }
 
   whyUsRaf = window.requestAnimationFrame(animateWhyUsRail);
 }

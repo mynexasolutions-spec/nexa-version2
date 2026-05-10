@@ -14,9 +14,11 @@
 @import 'sections/social-media.css';
 @import 'sections/blog.css';
 @import 'sections/blog-page.css';
+@import 'sections/quill-content.css';
 @import 'sections/reviews.css';
 @import 'sections/contact.css';
 @import 'sections/contact-page.css';
 @import 'sections/footer.css';
+@import 'sections/floating-contact.css';
 @import 'sections/responsive.css';
 @import 'about.css';

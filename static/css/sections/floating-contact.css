@@ -1,0 +1,126 @@
+.floating-contact-wrap {
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.floating-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.floating-btn svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+  position: relative;
+  z-index: 2;
+}
+
+/* WhatsApp Theme */
+.btn-whatsapp {
+  background: #25D366;
+  color: #fff;
+}
+
+.btn-whatsapp::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.2) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btn-whatsapp:hover {
+  transform: translateY(-5px) scale(1.05);
+  background: #20ba5a;
+  box-shadow: 0 15px 30px rgba(37, 211, 102, 0.3);
+}
+
+.btn-whatsapp:hover::before {
+  opacity: 1;
+}
+
+/* Call Theme - Matching Nexa Black/Dark */
+.btn-call {
+  background: #111;
+  color: #fff;
+}
+
+.btn-call::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btn-call:hover {
+  transform: translateY(-5px) scale(1.05);
+  background: #000;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+.btn-call:hover::before {
+  opacity: 1;
+}
+
+/* Label Tooltip (Optional but nice) */
+.floating-btn::after {
+  content: attr(data-label);
+  position: absolute;
+  right: 70px;
+  background: #111;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  transform: translateX(10px);
+}
+
+.floating-btn:hover::after {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@media (max-width: 768px) {
+  .floating-contact-wrap {
+    right: 20px;
+    bottom: 20px;
+    gap: 12px;
+  }
+  
+  .floating-btn {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .floating-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .floating-btn::after {
+    display: none; /* Hide tooltips on mobile */
+  }
+}

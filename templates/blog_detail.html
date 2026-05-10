@@ -1,4 +1,5 @@
 {% extends 'layouts/base.html' %}
+{% block body_class %}blog-detail-page{% endblock %}
 
 {% block title %}{{ post.seo_title or post.title }} | Nexa Solutions{% endblock %}
 
@@ -7,45 +8,62 @@
   <div class="blog-page-hero-inner">
     <p class="blog-page-eyebrow">{{ post.category.name if post.category else 'General' }}</p>
     <h1>{{ post.title }}</h1>
-    <p class="blog-page-sub">By {{ post.author_name }}{% if post.published_at %} · {{ post.published_at.strftime('%d %b %Y') }}{% endif %}</p>
+    <p class="blog-page-sub">
+      By {{ post.author_name }}{% if post.published_at %} &middot; {{ post.published_at.strftime('%d %b %Y') }}{% endif %}
+    </p>
   </div>
 </section>
 
 <section class="blog-page-wrap">
   <div class="blog-page-grid">
-    <article class="blog-main-col">
-      <div class="blog-list-card visible" style="grid-template-columns: 1fr;">
-        {% if post.featured_image %}
-          <div class="blog-list-media" style="min-height: 320px;">
-            <img src="{{ post.featured_image }}" alt="{{ post.title }}" loading="lazy" />
-          </div>
-        {% endif %}
-        <div class="blog-list-content" style="padding: 1.5rem;">
-          <div class="blog-summary" style="white-space: pre-line;">{{ post.content | safe }}</div>
+
+    <article class="blog-article">
+      {% if post.featured_image %}
+        <div class="blog-article-cover">
+          <img src="{{ post.featured_image }}" alt="{{ post.title }}" loading="lazy" />
         </div>
+      {% endif %}
+      <div class="blog-article-body">
+        <div class="blog-summary">{{ post.content | safe }}</div>
       </div>
     </article>
 
     <aside class="blog-side-col">
       <div class="blog-side-sticky">
+
+        {% if popular_posts %}
         <section class="blog-side-card">
           <h3>Popular Posts</h3>
-          <ul class="side-list">
+          <div class="side-list">
             {% for popular in popular_posts %}
-              <li><a href="{{ url_for('blog_detail', slug=popular.slug) }}">{{ popular.title }}</a></li>
+              <a href="{{ url_for('blog_detail', slug=popular.slug) }}" class="side-item">
+                {% if popular.featured_image %}
+                  <img src="{{ popular.featured_image }}" alt="{{ popular.title }}" class="side-thumb">
+                {% endif %}
+                <span class="side-title">{{ popular.title }}</span>
+              </a>
             {% endfor %}
-          </ul>
+          </div>
         </section>
+        {% endif %}
 
+        {% if related_posts %}
         <section class="blog-side-card">
           <h3>Related Posts</h3>
-          <ul class="side-list">
+          <div class="side-list">
             {% for related in related_posts %}
-              <li><a href="{{ url_for('blog_detail', slug=related.slug) }}">{{ related.title }}</a></li>
+              <a href="{{ url_for('blog_detail', slug=related.slug) }}" class="side-item">
+                {% if related.featured_image %}
+                  <img src="{{ related.featured_image }}" alt="{{ related.title }}" class="side-thumb">
+                {% endif %}
+                <span class="side-title">{{ related.title }}</span>
+              </a>
             {% endfor %}
-          </ul>
+          </div>
         </section>
+        {% endif %}
 
+        {% if categories %}
         <section class="blog-side-card">
           <h3>Categories</h3>
           <ul class="categories-list">
@@ -59,8 +77,17 @@
             {% endfor %}
           </ul>
         </section>
+        {% endif %}
+
+        <section class="blog-side-cta">
+          <p class="cta-mini">Ready to grow?</p>
+          <h3>Let's Work Together</h3>
+          <a href="{{ url_for('contact') }}">Get in Touch</a>
+        </section>
+
       </div>
     </aside>
+
   </div>
 </section>
 {% endblock %}

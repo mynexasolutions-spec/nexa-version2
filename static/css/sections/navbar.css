@@ -1,4 +1,4 @@
-﻿  /* â”€â”€ NAVBAR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+  /* â”€â”€ NAVBAR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   .navbar {
     position: fixed;
     top: 0;
@@ -124,9 +124,9 @@
   /* ── TOOLS DROPDOWN ─────────────────────────────── */
   .has-dropdown { position: relative; }
   .dropdown-toggle {
-    display: flex;
+    display: inline-flex !important;
     align-items: center;
-    gap: 0.35rem;
+    gap: 8px;
     cursor: pointer;
   }
   .dropdown-arrow {
@@ -212,6 +212,12 @@
     transform: translateY(-6px);
     min-width: 540px;
     padding: 0.6rem;
+  }
+  /* Override the general translateX(-50%) for services — it uses left:0, not left:50% */
+  .services-dropdown:hover .dropdown-menu,
+  .services-dropdown:focus-within .dropdown-menu,
+  .services-dropdown.open .dropdown-menu {
+    transform: translateY(0);
   }
   .services-dropdown .dropdown-menu li { border: none; padding: 0; }
   .dropdown-grid {

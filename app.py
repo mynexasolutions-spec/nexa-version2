@@ -67,7 +67,17 @@ db.init_app(app)
 # ============================
 @app.route("/")
 def home():
-    return render_template("index.html")
+    try:
+        latest_posts = (
+            BlogPost.query
+            .filter_by(is_published=True)
+            .order_by(BlogPost.published_at.desc())
+            .limit(3)
+            .all()
+        )
+    except Exception:
+        latest_posts = []
+    return render_template("index.html", latest_posts=latest_posts)
 
 @app.route("/services")
 def services():

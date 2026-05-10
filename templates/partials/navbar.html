@@ -5,6 +5,7 @@
     <span class="logo-name">Nexa Solutions</span>
   </a>
   <ul class="nav-links">
+    <li><a href="{{ url_for('home') }}">Home</a></li>
     <li class="has-dropdown services-dropdown">
       <a href="{{ url_for('home') }}#services" class="dropdown-toggle">Services <span class="dropdown-arrow">&#9660;</span></a>
       <ul class="dropdown-menu">
@@ -38,17 +39,17 @@
         </li>
       </ul>
     </li>
-    <li><a href="{{ url_for('work') }}">Work</a></li>
-    <li><a href="{{ url_for('blog') }}">Blog</a></li>
+    {# <li><a href="{{ url_for('work') }}">Work</a></li> #}
+    <li><a href="{{ url_for('blog') }}">Our Blogs</a></li>
     <li><a href="{{ url_for('about') }}">About</a></li>
-    <li class="has-dropdown">
+    {# <li class="has-dropdown">
       <a href="#" class="dropdown-toggle">Tools <span class="dropdown-arrow">&#9660;</span></a>
       <ul class="dropdown-menu">
         <li><a href="#">AI Agent</a></li>
         <li><a href="#">Text to Speech</a></li>
         <li><a href="#">Speech to Text</a></li>
       </ul>
-    </li>
+    </li> #}
     <li><a href="{{ url_for('contact') }}">Contact</a></li>
     <li><a href="{{ url_for('contact') }}" class="nav-cta">Get Started</a></li>
   </ul>

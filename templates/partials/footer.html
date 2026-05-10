@@ -2,7 +2,7 @@
   <div class="footer-top">
     <div class="footer-brand">
       <a href="{{ url_for('home') }}" class="footer-logo">
-        <div class="footer-logo-mark"></div>
+        <img src="{{ url_for('static', filename='images/logo/logo.png') }}" alt="Nexa Solutions" class="footer-logo-img">
         <span class="footer-logo-name">Nexa Solutions</span>
       </a>
       <p>We engineer digital products, AI systems, and growth experiences that elevate brands with clarity and precision.</p>
@@ -21,8 +21,8 @@
       <h4>Company</h4>
       <ul>
         <li><a href="#">About Us</a></li>
-        <li><a href="#">Our Work</a></li>
-        <li><a href="#">Blog</a></li>
+        {# <li><a href="#">Our Work</a></li> #}
+        <li><a href="{{ url_for('blog') }}">Our Blogs</a></li>
         <li><a href="#">Careers</a></li>
         <li><a href="#">Contact</a></li>
       </ul>

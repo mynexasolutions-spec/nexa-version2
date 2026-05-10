@@ -1,57 +1,83 @@
 
   {% extends 'layouts/base.html' %}
 
-  {% block title %}Our Blog | Nexa Solutions{% endblock %}
+    {% block title %}Our Blogs | Nexa Solutions{% endblock %}
 
-  {% block content %}
+    {% block content %}
 
-  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
 
-  <section class="blog-page-hero">
-    <div class="blog-page-hero-inner">
-      <p class="blog-page-eyebrow">Knowledge Hub</p>
-      <h1>Our Blog</h1>
-      <p class="blog-page-sub">Insights, trends, and expert advice on technology</p>
+    <section class="blog-page-hero">
+      <div class="blog-page-hero-inner">
+        <p class="blog-page-eyebrow">Knowledge Hub</p>
+        <h1>Our Blogs</h1>
+        <p class="blog-page-sub">Insights, trends, and expert advice on technology</p>
+      </div>
+    </section>
+
+  <section class="blog-filter-section">
+    <div class="blog-container">
+      <!-- Mobile Filter Toggle -->
+      <button type="button" class="mobile-filter-toggle" onclick="toggleMobileFilter()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
+        <span>Filters</span>
+        <svg class="toggle-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </button>
+
+      <form method="get" action="{{ url_for('blog') }}" class="filter-bar-form" id="filterBarForm">
+        <div class="filter-bar">
+          <!-- Category Filter (Left) -->
+          <div class="filter-group category-group">
+            <div class="category-dropdown-wrapper">
+              <select name="category" class="category-select">
+                <option value="">All Categories</option>
+                {% for category in categories %}
+                  <option value="{{ category.id }}" {% if active_category == category.id %}selected{% endif %}>
+                    {{ category.name }}
+                  </option>
+                {% endfor %}
+              </select>
+              <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+          </div>
+
+          <!-- Search Box (Middle) -->
+          <div class="filter-group search-group">
+            <div class="filter-input-wrapper">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-icon"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="text" name="q" value="{{ search_query }}" placeholder="AI, Cloud..." aria-label="Search topics">
+            </div>
+          </div>
+
+          <!-- Apply Button (Right) -->
+          <div class="filter-group button-group">
+            <button type="submit" class="apply-filter-btn">
+              Apply Filter
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
   </section>
 
   <section class="blog-page-wrap">
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        <div class="blog-page-grid" style="margin-bottom: 0.9rem;">
-          <div class="blog-main-col">
+    <!-- Removed Mobile-only search box -->
+    <div class="blog-container">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="blog-messages">
             {% for category, message in messages %}
-              <div class="blog-side-card" style="border-color: {% if category == 'success' %}rgba(8,120,8,0.25){% else %}rgba(176,40,40,0.25){% endif %};">
-                <p style="margin: 0; color: rgba(0,0,0,0.78);">{{ message }}</p>
+              <div class="blog-alert blog-alert-{{ category }}">
+                <p>{{ message }}</p>
               </div>
             {% endfor %}
           </div>
-        </div>
-      {% endif %}
-    {% endwith %}
+        {% endif %}
+      {% endwith %}
 
-    <div class="blog-container">
-    
-    <div class="category-nav-wrapper">
-      <ul class="category-list-horizontal">
-        <li>
-          <a href="{{ url_for('blog') }}" class="category-item-link {% if not active_category %}active{% endif %}">
-            All Topics ({{ posts.total }})
-          </a>
-        </li>
-        {% for category in categories %}
-        <li>
-          <a href="{{ url_for('blog', category=category.id) }}" class="category-item-link {% if active_category == category.id %}active{% endif %}">
-            {{ category.name }} ({{ category.count }})
-          </a>
-        </li>
-        {% endfor %}
-      </ul>
-    </div>
-
-    <div class="blog-main-grid">
-      <main class="blog-feed">
+      <div class="blog-main-grid">
+        <main class="blog-feed">
         {% if blog_cards %}
           {% for post in blog_cards %}
             <article class="blog-card-custom">
@@ -133,13 +159,6 @@
       </main>
 
       <aside class="sticky-sidebar">
-        <div class="sidebar-widget">
-          <h3>Search Topic</h3>
-          <form method="get" action="{{ url_for('blog') }}" style="display:flex; gap:10px;">
-            <input type="text" name="q" value="{{ search_query }}" placeholder="AI, Cloud..." style="flex:1; border: 1px solid #ddd; padding: 10px; border-radius: 8px;">
-            <button type="submit" class="join-now-btn" style="padding:10px 15px;">Go</button>
-          </form>
-        </div>
 
         <div class="recent-widget">
           <h3>Recent Insights</h3>
@@ -156,8 +175,8 @@
           {% endfor %}
         </div>
 
-        <div class="sidebar-widget" style="background: var(--primary-blue); color: #fff;">
-          <h3 style="color: #fff; border-color: #fff;">Newsletter</h3>
+        <div class="sidebar-widget newsletter-widget">
+          <h3>Newsletter</h3>
           <p style="font-size:0.85rem;">Join 5,000+ tech leaders getting our weekly brief.</p>
           <form action="{{ url_for('newsletter_subscribe') }}" method="POST">
             <input type="email" name="email" placeholder="Email address" class="newsletter-email-input">
@@ -176,31 +195,50 @@
 </section>
 
   <script>
+    // ── Card tilt effect ──
     const cards = document.querySelectorAll(".blog-card-custom");
-
     cards.forEach(card => {
       card.addEventListener("mousemove", (e) => {
         const rect = card.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
-
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-
-        const rotateX = ((y - centerY) / centerY) * -6;
-        const rotateY = ((x - centerX) / centerX) * 6;
-
-        card.style.transform = `
-          perspective(1000px)
-          rotateX(${rotateX}deg)
-          rotateY(${rotateY}deg)
-          scale(1.02)
-        `;
+        const rotateX = ((y - rect.height / 2) / (rect.height / 2)) * -6;
+        const rotateY = ((x - rect.width  / 2) / (rect.width  / 2)) *  6;
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
       });
-
       card.addEventListener("mouseleave", () => {
         card.style.transform = "perspective(1000px) rotateX(0) rotateY(0) scale(1)";
       });
     });
+
+    // ── Equalise columns: extend the feed to match sidebar height ──
+    // This prevents a blank section-background area on the left when
+    // there are few posts but many sidebar widgets.
+    function equaliseColumns() {
+      const feed    = document.querySelector('.blog-feed');
+      const sidebar = document.querySelector('.sticky-sidebar');
+      if (!feed || !sidebar) return;
+
+      feed.style.minHeight = '';          // reset before measuring
+
+      const feedH    = feed.offsetHeight;
+      const sidebarH = sidebar.offsetHeight;
+
+      if (sidebarH > feedH) {
+        // Feed ends before sidebar → stretch feed down to match
+        feed.style.minHeight = sidebarH + 'px';
+      }
+      // If feed is already taller, sticky behaviour handles it correctly
+    }
+
+    window.addEventListener('load',   equaliseColumns);
+    window.addEventListener('resize', equaliseColumns);
+
+    function toggleMobileFilter() {
+      const form = document.getElementById('filterBarForm');
+      const btn = document.querySelector('.mobile-filter-toggle');
+      form.classList.toggle('active');
+      btn.classList.toggle('active');
+    }
   </script>
   {% endblock %}

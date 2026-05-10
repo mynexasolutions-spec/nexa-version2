@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
 from flask_login import login_user, logout_user, login_required
 from models import BlogPost, Category, upload_blog_image
 from .forms import BlogForm
@@ -183,3 +183,21 @@ def delete_category(id):
 
     flash("Category deleted", "success")
     return redirect(url_for("admin.manage_categories"))
+
+# ============================
+# QUILL IMAGE UPLOAD (AJAX)
+# ============================
+@admin_bp.route("/upload-image", methods=["POST"])
+@login_required
+def upload_image():
+    """Upload an image from the Quill editor to Cloudinary."""
+    file = request.files.get("image")
+    if not file:
+        return jsonify({"error": "No image provided"}), 400
+
+    try:
+        url = upload_blog_image(file)
+        return jsonify({"url": url})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+

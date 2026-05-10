@@ -25,8 +25,8 @@
       min-height: 405px;
     }
 
-    .reviews-grid {
-      grid-template-columns: repeat(2, 1fr);
+    .reviews-arrow {
+      display: none;
     }
 
     .blog-grid {
@@ -200,7 +200,7 @@
     .nav-links .dropdown-menu li {
       border-bottom: 1px solid rgba(0, 0, 0, 0.05);
       width: 100%;
-      text-align: center;
+      text-align: left;
     }
 
     .nav-links .dropdown-menu li:last-child {
@@ -211,7 +211,7 @@
       min-height: 50px;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       font-size: 0.95rem;
       padding: 0;
       opacity: 1 !important;
@@ -229,16 +229,33 @@
     }
 
     .dropdown-grid {
-      grid-template-columns: 1fr;
-      padding: 0.5rem 0;
+      display: block;
+      padding: 0.25rem 0;
       gap: 0;
+      width: 100%;
     }
 
-    .dropdown-item {
-      justify-content: center;
-      width: 100%;
-      padding: 0.8rem 1rem;
-      border-radius: 0;
+    .services-dropdown .dropdown-item {
+      display: flex !important;
+      flex-direction: row !important;
+      justify-content: flex-start !important;
+      align-items: center !important;
+      width: 100% !important;
+      padding: 0.75rem 1.5rem !important;
+      border-radius: 0 !important;
+      text-align: left !important;
+      gap: 0.75rem !important;
+    }
+
+    .services-dropdown .dropdown-item img {
+      flex-shrink: 0;
+      width: 36px !important;
+      height: 36px !important;
+    }
+
+    .services-dropdown .dropdown-item span {
+      text-align: left !important;
+      font-size: 0.95rem !important;
     }
 
     .hero {
@@ -275,82 +292,124 @@
       padding: 38px 0 78px;
     }
 
-    /* Projects on mobile â€” restore desktop sticky-scroll effect */
+    /* Projects on mobile — same layout as desktop, proportionally scaled */
     .projects-section {
-      padding: 80px 0;
+      padding: 48px 0 32px;
+    }
+
+    .projects-section .sec-header {
+      margin-bottom: 2rem;
+      padding: 0 1.25rem;
+    }
+
+    .projects-section .sec-header h2 {
+      font-size: clamp(1.8rem, 7vw, 2.6rem);
+    }
+
+    .projects-section .sec-header p {
+      font-size: 0.85rem;
     }
 
     .projects-container {
       display: flex;
       flex-direction: row;
-      gap: 1.5rem;
-      width: calc(100% - 1.5rem);
+      gap: 0.75rem;
+      width: calc(100% - 2.5rem);
       margin: 0 auto;
+      align-items: flex-start;
     }
 
     .projects-left {
-      flex: 0 0 100px; /* Magnified desktop-style sidebar */
+      flex: 0 0 38%;
       position: sticky;
-      top: 110px;
+      top: 140px;
       height: max-content;
       z-index: 5;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      text-align: center;
+      align-items: flex-start;
+      text-align: left;
     }
 
     .projects-copy {
-      display:flex;
-      
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .projects-left h2 {
+      font-size: clamp(1.8rem, 6.5vw, 2.4rem);
+      margin-bottom: 0.35rem;
+      line-height: 1.1;
+      font-family: 'Bebas Neue', sans-serif;
+    }
+
+    .projects-left p {
+      font-size: 0.8rem;
+      line-height: 1.45;
+      color: rgba(255,255,255,0.65);
     }
 
     .project-number-container {
-      height: 110px;
-      font-size: 6.5rem; /* Magnified */
+      height: 68px;
+      font-size: 4.2rem;
       display: block;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
       overflow: hidden;
+      -webkit-text-stroke: 1px rgba(255,255,255,0.15);
     }
 
+    /* Number slides AFTER image starts fading — perceived as simultaneous */
     .project-number-track {
-      align-items: center;
+      align-items: flex-start;
+      transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) 0.15s;
     }
 
     .project-number {
-      height: 110px;
-      font-size: 6.5rem;
-      justify-content: center;
+      height: 68px;
+      font-size: 4.2rem;
+      justify-content: flex-start;
+      transition: color 0.3s ease 0.15s;
     }
 
     .projects-right {
       flex: 1;
-      gap: 0vh; /* Desktop-parity spacing */
-      padding-top: 5vh;
-      padding-bottom: 30vh;
-      
+      min-width: 0;
+      gap: 30vh;
+      padding-top: 0;
+      padding-bottom: 5vh;
     }
 
+    /* Image fades in immediately with no delay */
     .project-item {
-      border-radius: 24px;
-      aspect-ratio: 1 / 1.15; /* Tall magnified cards */
-      height: 80vh;
-      width:55vw;
-      
+      border-radius: 14px;
+      aspect-ratio: 4 / 3;
+      height: auto;
+      width: 100%;
+      transform: scale(0.94);
+      opacity: 0.3;
+      filter: blur(4px);
+      transition: opacity 0.35s ease 0s, transform 0.35s ease 0s, filter 0.35s ease 0s;
+    }
+
+    .project-item.active {
+      opacity: 1;
+      transform: scale(1);
+      filter: blur(0px);
     }
 
     .project-info {
-      padding: 1.8rem;
-      background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent);
+      padding: 0.85rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.88), transparent);
     }
 
     .project-info h3 {
-      font-size: 1.55rem;
-      margin-bottom: 0.5rem;
+      font-size: 1rem;
+      margin-bottom: 0.2rem;
     }
 
     .project-info p {
-      font-size: 1rem;
+      font-size: 0.75rem;
       opacity: 0.85;
     }
 
@@ -396,8 +455,30 @@
       --tilt: 0.75deg;
     }
 
+    .reviews-section {
+      overflow: hidden;
+    }
+
     .reviews-grid {
-      grid-template-columns: 1fr;
+      display: flex;
+      flex-direction: row;
+      grid-template-columns: unset;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      gap: 1rem;
+      padding: 0.5rem 5vw 1.5rem;
+      margin: 0 -5vw;
+    }
+
+    .reviews-grid::-webkit-scrollbar {
+      display: none;
+    }
+
+    .review-card {
+      flex: 0 0 82vw;
+      scroll-snap-align: center;
     }
 
     .blog-card {

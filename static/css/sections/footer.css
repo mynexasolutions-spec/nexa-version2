@@ -24,10 +24,12 @@
     gap: 0.6rem;
     text-decoration: none;
   }
-  .footer-logo-mark {
-    width: 24px; height: 24px;
-    background: #fff;
-    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  .footer-logo-img {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+    display: block;
+    filter: invert(1) brightness(2);
   }
   .footer-logo-name {
     font-family: 'Bebas Neue', sans-serif;
