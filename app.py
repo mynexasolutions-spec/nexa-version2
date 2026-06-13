@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, redirect, url_for, Response
+from flask import Flask, render_template, request, flash, redirect, url_for, Response, send_from_directory
 from flask_mail import Message
 from extensions import db, mail
 from dotenv import load_dotenv
@@ -420,6 +420,15 @@ def contact():
 @app.route("/about")
 def about():
     return render_template("about.html")
+
+
+@app.route("/best-website-development-agency-india/")
+def best_website_development_agency_india():
+    return send_from_directory("ads-pages/best-website-development-agency-india", "index.html")
+
+@app.route("/best-website-development-agency-india/<path:filename>")
+def best_website_development_agency_india_static(filename):
+    return send_from_directory("ads-pages/best-website-development-agency-india", filename)
 
 
 # ============================
