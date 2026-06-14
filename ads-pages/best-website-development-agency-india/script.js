@@ -24,6 +24,8 @@ if (heroLeadForm) {
   heroLeadForm.addEventListener('submit', function(e) {
     e.preventDefault();
     submitToSheets(heroLeadForm, 'Hero Form');
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: 'lead_form_submit' });
     const btn = heroLeadForm.querySelector('button[type="submit"]');
     if (btn) { btn.textContent = 'Submitted ✓'; btn.disabled = true; }
     setTimeout(() => {
@@ -39,6 +41,8 @@ if (popupLeadForm) {
   popupLeadForm.addEventListener('submit', function(e) {
     e.preventDefault();
     submitToSheets(popupLeadForm, 'Popup Form');
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: 'lead_form_submit' });
     const btn = popupLeadForm.querySelector('button[type="submit"]');
     if (btn) { btn.textContent = 'Submitted ✓'; btn.disabled = true; }
     setTimeout(() => {
@@ -475,6 +479,8 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', function(e) {
       e.preventDefault();
       submitToSheets(form, 'Contact Form');
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: 'lead_form_submit' });
 
       if (typeof gtag === 'function') {
         gtag('event', 'generate_lead', { 'event_category': 'engagement' });
