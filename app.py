@@ -422,6 +422,21 @@ def about():
     return render_template("about.html")
 
 
+@app.route("/privacy-policy")
+def privacy_policy():
+    return render_template("pages/privacy-policy.html")
+
+
+@app.route("/terms-of-service")
+def terms_of_service():
+    return render_template("pages/terms-of-service.html")
+
+
+@app.route("/refund-policy")
+def refund_policy():
+    return render_template("pages/refund-policy.html")
+
+
 @app.route("/best-website-development-agency-india/")
 def best_website_development_agency_india():
     return send_from_directory("ads-pages/best-website-development-agency-india", "index.html")
@@ -450,6 +465,9 @@ def sitemap():
         {"loc": base + "/blog",                             "priority": "0.9", "changefreq": "daily"},
         {"loc": base + "/about",                            "priority": "0.6", "changefreq": "yearly"},
         {"loc": base + "/contact",                          "priority": "0.6", "changefreq": "yearly"},
+        {"loc": base + "/privacy-policy",                   "priority": "0.3", "changefreq": "yearly"},
+        {"loc": base + "/terms-of-service",                 "priority": "0.3", "changefreq": "yearly"},
+        {"loc": base + "/refund-policy",                    "priority": "0.3", "changefreq": "yearly"},
     ]
 
     try:
