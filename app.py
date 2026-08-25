@@ -8,22 +8,62 @@ from flask_login import (
     current_user
 )
 from admin.routes import admin_bp
-from employee.routes import EmployeeSessionUser, employee_bp
-from models import BlogPost, Category, ContactLead, Employee, ensure_contact_leads_table
+from models import BlogPost, Category, ContactLead, ensure_contact_leads_table
+import mimetypes
 import os
 import math
 import re
 import uuid
-from datetime import datetime
+from datetime import datetime, timedelta
 from sqlalchemy.exc import ProgrammingError, OperationalError, SQLAlchemyError
 
 load_dotenv()
 
+# Some Windows dev machines have a broken/overridden registry MIME mapping
+# for .js (and occasionally .css/.mjs), which makes Python's mimetypes module
+# report the wrong Content-Type and causes browsers to refuse to execute the
+# scripts under strict MIME checking. Register the correct types explicitly
+# so static file serving doesn't depend on the OS's (possibly wrong) mapping.
+mimetypes.add_type("text/javascript", ".js")
+mimetypes.add_type("text/javascript", ".mjs")
+mimetypes.add_type("text/css", ".css")
+
 app = Flask(__name__)
+
+
+def is_production():
+    return os.getenv("FLASK_ENV") == "production" or os.getenv("APP_ENV") == "production"
+
+
+def env_flag(name, default=False):
+    value = os.getenv(name)
+    if value is None:
+        return default
+    return value.lower() in {"1", "true", "yes", "on"}
+
+
+secret_key = os.getenv("SECRET_KEY")
+if is_production() and not secret_key:
+    raise RuntimeError("SECRET_KEY must be set in production.")
 
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.secret_key = os.getenv("SECRET_KEY", "change-this")
+app.secret_key = secret_key or "dev-only-secret-key-change-before-production"
+app.config["SESSION_COOKIE_HTTPONLY"] = True
+app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
+app.config["SESSION_COOKIE_SECURE"] = env_flag("SESSION_COOKIE_SECURE", is_production())
+app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(hours=8)
+app.config["MAX_CONTENT_LENGTH"] = int(os.getenv("MAX_CONTENT_LENGTH", str(10 * 1024 * 1024)))
+app.config["MAX_FORM_MEMORY_SIZE"] = int(os.getenv("MAX_FORM_MEMORY_SIZE", str(1024 * 1024)))
+app.config["MAX_FORM_PARTS"] = int(os.getenv("MAX_FORM_PARTS", "100"))
+
+trusted_hosts = os.getenv("TRUSTED_HOSTS", "").strip()
+if trusted_hosts:
+    app.config["TRUSTED_HOSTS"] = [
+        host.strip()
+        for host in trusted_hosts.split(",")
+        if host.strip()
+    ]
 
 # ================= MAIL CONFIG =================
 app.config["MAIL_SERVER"] = os.getenv("MAIL_SERVER", "smtp.gmail.com")
@@ -34,6 +74,15 @@ app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")
 app.config["MAIL_PASSWORD"] = (os.getenv("MAIL_PASSWORD") or "").replace(" ", "")
 app.config["MAIL_DEFAULT_SENDER"] = os.getenv("MAIL_USERNAME")  # Just the email, not tuple
 mail.init_app(app)
+
+
+@app.after_request
+def add_security_headers(response):
+    response.headers.setdefault("X-Content-Type-Options", "nosniff")
+    response.headers.setdefault("X-Frame-Options", "SAMEORIGIN")
+    response.headers.setdefault("Referrer-Policy", "strict-origin-when-cross-origin")
+    response.headers.setdefault("Permissions-Policy", "camera=(), microphone=(), geolocation=()")
+    return response
 
 # ============================
 # FLASK-LOGIN SETUP
@@ -51,23 +100,12 @@ def load_user(user_id):
     if user_id == "admin:1" or user_id == "1":
         return AdminUser()
 
-    if user_id and user_id.startswith("employee:"):
-        try:
-            employee_id = int(user_id.split(":", 1)[1])
-        except (IndexError, ValueError):
-            return None
-
-        employee = db.session.get(Employee, employee_id)
-        if employee:
-            return EmployeeSessionUser(employee)
-
     return None
 
 # ============================
 # REGISTER BLUEPRINT
 # ============================
 app.register_blueprint(admin_bp)
-app.register_blueprint(employee_bp)
 
 # ============================
 # DB INIT
@@ -529,5 +567,5 @@ def robots():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5001, debug=True)
+    app.run(host="0.0.0.0", port=5001, debug=env_flag("FLASK_DEBUG", False))
 

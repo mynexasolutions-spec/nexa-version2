@@ -41,11 +41,30 @@
 <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicons/favicon-16x16.png') }}">
 <link rel="manifest" href="{{ url_for('static', filename='images/favicons/site.webmanifest') }}">
 <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicons/favicon.ico') }}">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;700;900&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
-<script src="{{ url_for('static', filename='animations/why-us-animations.js') }}"></script>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+
+<!-- Stylesheets loaded directly (not via @import) so the browser can fetch them all in parallel -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sections/base.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sections/navbar.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sections/hero.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sections/brands.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sections/services.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sections/projects.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sections/utils.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sections/why-us.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sections/social-media.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sections/blog.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sections/blog-page.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sections/quill-content.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sections/reviews.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sections/contact.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sections/contact-page.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sections/footer.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sections/floating-contact.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sections/responsive.css') }}">
 
 <!-- Organization JSON-LD Schema -->
 <script type="application/ld+json">

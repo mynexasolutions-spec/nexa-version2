@@ -12,28 +12,16 @@
         <li>
           <div class="dropdown-grid">
             <a href="{{ url_for('web_development') }}" class="dropdown-item">
-              <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?w=200" alt="Web Development">
+              <img src="{{ url_for('static', filename='images/stock/photo-1547658719-da2b51169166.webp') }}" alt="Web Development">
               <span>Web Development</span>
             </a>
             <a href="{{ url_for('app_development') }}" class="dropdown-item">
-              <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=200" alt="Mobile Apps">
+              <img src="{{ url_for('static', filename='images/stock/photo-1512941937669-90a1b58e7e9c.webp') }}" alt="Mobile Apps">
               <span>Mobile Apps</span>
             </a>
             <a href="{{ url_for('home') }}#services" class="dropdown-item">
-              <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=200" alt="AI Solutions">
-              <span>AI Solutions</span>
-            </a>
-            <a href="{{ url_for('home') }}#services" class="dropdown-item">
-              <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=200" alt="Data Analytics">
-              <span>Data Analytics</span>
-            </a>
-            <a href="{{ url_for('performance_marketing') }}" class="dropdown-item">
-              <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=200" alt="Performance Marketing & Ads">
-              <span>Performance Marketing & Ads</span>
-            </a>
-            <a href="{{ url_for('home') }}#services" class="dropdown-item">
-              <img src="https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?w=200" alt="Automation">
-              <span>Automation</span>
+              <img src="{{ url_for('static', filename='images/stock/photo-1677442135703-1787eea5ce01.webp') }}" alt="AI & Automation">
+              <span>AI & Automation</span>
             </a>
           </div>
         </li>

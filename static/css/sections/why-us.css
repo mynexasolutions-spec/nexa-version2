@@ -1,28 +1,34 @@
   /* â”€â”€ WHY US â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   .why-us-section {
     background: var(--white);
-    padding: 110px 5vw;
+    padding: 80px 5vw 130px;
     position: relative;
     overflow: hidden;
+  }
+
+  .why-us-section .sec-header {
+    margin-bottom: 2.5rem;
   }
 
   .why-bg-text {
     position: absolute;
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 22vw;
+    font-size: 16vw;
     color: #cfcece;
     opacity: 0.9;
     pointer-events: none;
     user-select: none;
-    bottom: -2vw;
-    right: -2vw;
+    bottom: -3vw;
+    right: -1vw;
     line-height: 1;
+    z-index: 0;
   }
 
   .why-us-slider-wrap {
     position: relative;
     max-width: 1300px;
     margin: 0 auto;
+    z-index: 1;
   }
 
   .why-arrow {
@@ -74,7 +80,7 @@
     touch-action: pan-y;
     -webkit-user-select: none;
     user-select: none;
-    padding: 3.5rem 0;
+    padding: 1.25rem 0;
   }
 
   .why-us-rail.dragging {
@@ -87,7 +93,7 @@
 
   .why-us-grid {
     display: flex;
-    gap: 1.8rem;
+    gap: 1.2rem;
     min-width: max-content;
     padding: 0 0.8rem;
     /* translate3d forces GPU acceleration for cinematic smoothness */
@@ -99,11 +105,13 @@
 
   .why-card {
     --tilt: 0deg;
-    flex: 0 0 clamp(310px, 32vw, 430px);
+    flex: 0 0 clamp(225px, 22vw, 290px);
+    min-width: 0;
+    min-height: 300px;
 
     background: #fdfdfc;
-    border-radius: 14px;
-    padding: 1.95rem 1.7rem 0.75rem;
+    border-radius: 12px;
+    padding: 1.3rem 1.1rem 0.65rem;
     border: 1px solid rgba(0, 0, 0, 0.22);
     box-shadow: 0 14px 36px rgba(0, 0, 0, 0.06);
     transform: rotate(var(--tilt));
@@ -155,13 +163,21 @@
     width: 100%;
     aspect-ratio: 16/10;
     background: #050505;
-    border-radius: 18px;
+    border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 1.2rem;
+    margin-bottom: 0.8rem;
     overflow: hidden;
-    padding: 0.45rem;
+    padding: 0.35rem;
+  }
+
+  .why-icon img {
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    object-fit: contain;
+    display: block;
   }
 
   .why-lottie {
@@ -189,11 +205,11 @@
 
   .why-card h3 {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(2.45rem, 4.1vw, 3.35rem);
-    line-height: 0.88;
+    font-size: clamp(1.5rem, 2.3vw, 1.85rem);
+    line-height: 0.9;
     color: var(--black);
     letter-spacing: 0.005em;
-    margin-bottom: 1.05rem;
+    margin-bottom: 0.55rem;
     max-width: 95%;
   }
 
@@ -202,6 +218,6 @@
     margin-top: 0;
     margin-bottom: 0.2rem;
     font-size: 1rem;
-    line-height: 1.24;
-    max-width: 96%;
+    line-height: 1.5;
+    max-width: 98%;
   }

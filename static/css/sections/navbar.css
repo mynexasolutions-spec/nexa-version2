@@ -140,7 +140,8 @@
   .has-dropdown:hover .dropdown-arrow { transform: rotate(180deg); }
   .dropdown-menu {
     position: absolute;
-    top: calc(100% + 10px);
+    top: 100%;
+    padding-top: 10px;
     left: 50%;
     transform: translateX(-50%) translateY(-6px);
     background: rgba(255,255,255,0.98);
@@ -206,11 +207,11 @@
     background: rgba(0,0,0,0.04);
   }
 
-  /* Services dropdown — two-column grid with icon + label */
+  /* Services dropdown — single-column list with icon + label */
   .services-dropdown .dropdown-menu {
     left: 0;
     transform: translateY(-6px);
-    min-width: 540px;
+    min-width: 260px;
     padding: 0.6rem;
   }
   /* Override the general translateX(-50%) for services — it uses left:0, not left:50% */
@@ -222,13 +223,14 @@
   .services-dropdown .dropdown-menu li { border: none; padding: 0; }
   .dropdown-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(140px, 1fr));
-    gap: 0.35rem 0.6rem;
+    grid-template-columns: 1fr;
+    gap: 0.2rem;
     align-items: start;
   }
-  .dropdown-item {
+  .services-dropdown .dropdown-item {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     gap: 0.7rem;
     padding: 0.5rem;
     border-radius: 10px;
@@ -236,13 +238,19 @@
     text-decoration: none;
     transition: background 0.16s, transform 0.06s;
   }
-  .dropdown-item:hover { background: rgba(0,0,0,0.04); transform: translateY(-1px); }
-  .dropdown-item img {
+  .services-dropdown .dropdown-item:hover { background: rgba(0,0,0,0.04); transform: translateY(-1px); }
+  .services-dropdown .dropdown-item img {
     width: 40px;
     height: 40px;
     object-fit: cover;
     border-radius: 6px;
     display: inline-block;
+    flex-shrink: 0;
   }
-  .dropdown-item span { font-size: 0.92rem; font-weight: 600; }
+  .services-dropdown .dropdown-item span {
+    font-size: 0.92rem;
+    font-weight: 600;
+    white-space: nowrap;
+    line-height: 1;
+  }
 

@@ -18,7 +18,7 @@
         <a href="{{ url_for('web_development') }}" class="service-card-btn">Learn More</a>
       </div>
       <div class="service-card-image-wrap">
-        <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?w=800" class="service-card-image" alt="Web Development">
+        <img src="{{ url_for('static', filename='images/services/card-web-development.webp') }}" class="service-card-image" alt="Web Development">
       </div>
     </div>
 
@@ -30,55 +30,19 @@
         <a href="{{ url_for('app_development') }}" class="service-card-btn">Learn More</a>
       </div>
       <div class="service-card-image-wrap">
-        <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800" class="service-card-image" alt="Mobile Apps">
+        <img src="{{ url_for('static', filename='images/services/card-mobile-apps.webp') }}" class="service-card-image" alt="Mobile Apps">
       </div>
     </div>
 
     <!-- 3 -->
     <div class="service-card" data-index="2">
       <div class="service-card-body">
-        <h3>AI Solutions</h3>
-        <p>Intelligent systems and automation powered by machine learning and artificial intelligence. We develop custom AI models that solve complex business problems, enhance decision-making, and drive innovation.</p>
+        <h3>AI &amp; Automation</h3>
+        <p>Intelligent systems and streamlined workflows powered by machine learning and RPA. We develop custom AI models and automation solutions that solve complex business problems, eliminate repetitive processes, and reduce operational costs.</p>
         <a href="#" class="service-card-btn">Learn More</a>
       </div>
       <div class="service-card-image-wrap">
-        <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800" class="service-card-image" alt="AI Solutions">
-      </div>
-    </div>
-
-    <!-- 4 -->
-    <div class="service-card dark" data-index="3">
-      <div class="service-card-body">
-        <h3>Data Analytics</h3>
-        <p>Transform raw data into actionable intelligence with advanced analytics and visualization dashboards. We help you understand customer behavior, market trends, and business metrics for smarter decisions.</p>
-        <a href="#" class="service-card-btn">Learn More</a>
-      </div>
-      <div class="service-card-image-wrap">
-        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800" class="service-card-image" alt="Data Analytics">
-      </div>
-    </div>
-
-    <!-- 5 -->
-    <div class="service-card" data-index="4">
-      <div class="service-card-body">
-        <h3>Performance Marketing &amp; Ads</h3>
-        <p>Drive instant traffic and high-quality leads with targeted advertising campaigns across Google, Meta, and LinkedIn. We optimize your ad spend to ensure maximum ROI and sustainable business growth.</p>
-        <a href="{{ url_for('performance_marketing') }}" class="service-card-btn">Learn More</a>
-      </div>
-      <div class="service-card-image-wrap">
-        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800" class="service-card-image" alt="Performance Marketing &amp; Ads">
-      </div>
-    </div>
-
-    <!-- 6 -->
-    <div class="service-card dark" data-index="5">
-      <div class="service-card-body">
-        <h3>Automation</h3>
-        <p>Streamline workflows and eliminate repetitive processes with intelligent automation. From RPA to custom workflow solutions, we help businesses operate efficiently and reduce operational costs.</p>
-        <a href="#" class="service-card-btn">Learn More</a>
-      </div>
-      <div class="service-card-image-wrap">
-        <img src="https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?w=800" class="service-card-image" alt="Automation">
+        <img src="{{ url_for('static', filename='images/services/card-ai-automation.webp') }}" class="service-card-image" alt="AI &amp; Automation">
       </div>
     </div>
 

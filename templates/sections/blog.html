@@ -14,7 +14,7 @@
           {% if post.featured_image %}
             <img class="blog-card-img" src="{{ post.featured_image }}" alt="{{ post.title }}" loading="lazy">
           {% else %}
-            <img class="blog-card-img" src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=700&q=80&auto=format&fit=crop" alt="{{ post.title }}" loading="lazy">
+            <img class="blog-card-img" src="{{ url_for('static', filename='images/stock/photo-1677442135703-1787eea5ce01.webp') }}" alt="{{ post.title }}" loading="lazy">
           {% endif %}
         </div>
         <div class="blog-card-body">
@@ -28,7 +28,7 @@
     {% else %}
       <div class="blog-card reveal" data-delay="0">
         <div class="blog-img-wrap">
-          <img class="blog-card-img" src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=700&q=80&auto=format&fit=crop" alt="AI blog" loading="lazy">
+          <img class="blog-card-img" src="{{ url_for('static', filename='images/stock/photo-1677442135703-1787eea5ce01.webp') }}" alt="AI blog" loading="lazy">
         </div>
         <div class="blog-card-body">
           <span class="blog-tag">AI &amp; Automation</span>
@@ -39,7 +39,7 @@
       </div>
       <div class="blog-card reveal" data-delay="120">
         <div class="blog-img-wrap">
-          <img class="blog-card-img" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=700&q=80&auto=format&fit=crop" alt="Design blog" loading="lazy">
+          <img class="blog-card-img" src="{{ url_for('static', filename='images/stock/photo-1551288049-bebda4e38f71.webp') }}" alt="Design blog" loading="lazy">
         </div>
         <div class="blog-card-body">
           <span class="blog-tag">UX Design</span>
@@ -50,7 +50,7 @@
       </div>
       <div class="blog-card reveal" data-delay="240">
         <div class="blog-img-wrap">
-          <img class="blog-card-img" src="https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?w=700&q=80&auto=format&fit=crop" alt="Engineering blog" loading="lazy">
+          <img class="blog-card-img" src="{{ url_for('static', filename='images/stock/photo-1518432031352-d6fc5c10da5a.webp') }}" alt="Engineering blog" loading="lazy">
         </div>
         <div class="blog-card-body">
           <span class="blog-tag">Engineering</span>

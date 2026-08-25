@@ -1,10 +1,13 @@
 from flask_wtf import FlaskForm
 from wtforms import (
     StringField, TextAreaField, SelectField,
-    BooleanField, SubmitField, HiddenField, PasswordField, DateField
+    BooleanField, SubmitField, HiddenField, PasswordField, DateField,
+    DecimalField
 )
-from wtforms.validators import DataRequired, Email, EqualTo, Length, Optional, ValidationError
+from wtforms.validators import DataRequired, InputRequired, Length, Optional, ValidationError
 from flask_wtf.file import FileField, FileAllowed
+
+from models import DOCUMENT_TYPE_CHOICES, PROJECT_STATUS_CHOICES
 
 
 class BlogForm(FlaskForm):
@@ -45,27 +48,43 @@ class BlogForm(FlaskForm):
     submit = SubmitField("Save Blog")
 
 
-class EmployeeForm(FlaskForm):
-    full_name = StringField("Full Name", validators=[DataRequired(), Length(max=120)])
-    email = StringField("Email", validators=[DataRequired(), Email(), Length(max=255)])
-    username = StringField("Username", validators=[DataRequired(), Length(max=80)])
-    phone = StringField("Phone", validators=[Optional(), Length(max=50)])
-    role = StringField("Role", validators=[Optional(), Length(max=120)])
-    department = StringField("Department", validators=[Optional(), Length(max=120)])
-    assigned_project_name = StringField(
-        "Assigned Project",
-        validators=[Optional(), Length(max=255)]
-    )
-    account_start_date = DateField("Account Start Date", validators=[DataRequired()])
-    account_expiry_date = DateField("Account Expiry Date", validators=[Optional()])
-    is_active = BooleanField("Account active")
-    password = PasswordField("Password", validators=[Optional(), Length(min=8, max=128)])
-    confirm_password = PasswordField(
-        "Confirm Password",
-        validators=[Optional(), EqualTo("password", message="Passwords must match.")]
-    )
-    submit = SubmitField("Save Employee")
+class AdminLoginForm(FlaskForm):
+    username = StringField("Username", validators=[DataRequired(), Length(max=120)])
+    password = PasswordField("Password", validators=[DataRequired(), Length(max=256)])
+    submit = SubmitField("Login")
 
-    def validate_account_expiry_date(self, field):
-        if field.data and self.account_start_date.data and field.data < self.account_start_date.data:
-            raise ValidationError("Expiry date cannot be before the account start date.")
+
+class DeleteForm(FlaskForm):
+    pass
+
+
+class ProjectForm(FlaskForm):
+    name = StringField("Project Name", validators=[DataRequired(), Length(max=180)])
+    client_name = StringField("Client Name", validators=[DataRequired(), Length(max=180)])
+    description = TextAreaField("Description", validators=[Optional(), Length(max=3000)])
+    start_date = DateField("Start Date", validators=[DataRequired()])
+    expected_end_date = DateField("Expected End Date", validators=[Optional()])
+    status = SelectField("Project Status", choices=PROJECT_STATUS_CHOICES, validators=[DataRequired()])
+    total_value = DecimalField("Total Project Value", places=2, validators=[InputRequired()])
+    advance_received = DecimalField("Advance Received", places=2, validators=[InputRequired()])
+    document_type = SelectField("Document Type", choices=DOCUMENT_TYPE_CHOICES, validators=[Optional()])
+    document_file = FileField(
+        "Upload Document",
+        validators=[FileAllowed(["pdf", "doc", "docx", "jpg", "jpeg", "png", "webp"], "Supported documents only")]
+    )
+    submit = SubmitField("Save Project")
+
+    def validate_expected_end_date(self, field):
+        if field.data and self.start_date.data and field.data < self.start_date.data:
+            raise ValidationError("Expected end date cannot be before the start date.")
+
+    def validate_total_value(self, field):
+        if field.data is not None and field.data < 0:
+            raise ValidationError("Total project value cannot be negative.")
+
+    def validate_advance_received(self, field):
+        if field.data is not None and field.data < 0:
+            raise ValidationError("Advance received cannot be negative.")
+
+        if field.data is not None and self.total_value.data is not None and field.data > self.total_value.data:
+            raise ValidationError("Advance received cannot exceed total project value.")
