@@ -16,9 +16,11 @@
 
 .about-hero h1 {
   max-width: 590px;
-  color: var(--about-black);
-  font-size: clamp(4rem, 6.2vw, 6rem);
-  line-height: 0.92;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3.2rem, 6vw, 5.6rem);
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+  color: #0a0a0a;
 }
 
 .about-hero .sec-eyebrow {
@@ -43,9 +45,10 @@
 .about-hero-lede {
   max-width: 690px;
   margin: 24px 0 0;
-  color: rgba(8, 8, 8, 0.72);
-  font-size: 1.03rem;
-  line-height: 1.65;
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: #444;
+  line-height: 1.72;
 }
 
 .about-hero-visual {

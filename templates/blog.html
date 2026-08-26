@@ -80,7 +80,7 @@
         <main class="blog-feed">
         {% if blog_cards %}
           {% for post in blog_cards %}
-            <article class="blog-card-custom">
+            <article class="blog-card-custom" onclick="window.location.href='{{ url_for('blog_detail', slug=post.slug) }}'" style="cursor: pointer;">
                 <div class="card-lottie-container">
                     <lottie-player 
                         src="{{ url_for('static', filename='animations/click-black.json') }}" 

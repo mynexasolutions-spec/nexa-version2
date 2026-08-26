@@ -33,7 +33,13 @@
     <li class="has-dropdown tools-dropdown">
       <a href="#" class="dropdown-toggle">Tools <span class="dropdown-arrow">&#9660;</span></a>
       <ul class="dropdown-menu">
-        <li><a href="{{ url_for('converter') }}">WebP Converter</a></li>
+        <li>
+          <div class="dropdown-grid">
+            <a href="{{ url_for('converter') }}" class="dropdown-item">
+              <span>WebP Converter</span>
+            </a>
+          </div>
+        </li>
       </ul>
     </li>
     <li><a href="{{ url_for('contact') }}">Contact</a></li>

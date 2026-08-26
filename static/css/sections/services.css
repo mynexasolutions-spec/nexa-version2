@@ -48,10 +48,11 @@
 
 .services-header .section-desc {
   font-family: 'DM Sans', sans-serif;
-  font-size: 1rem;
-  line-height: 1.7;
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.65;
   color: #111;
-  max-width: 680px;
+  max-width: 600px;
   margin: 0 auto;
 }
 

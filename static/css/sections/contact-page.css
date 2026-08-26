@@ -2,9 +2,10 @@
 .contact-page-hero {
   background: #080808;
   color: #fff;
-  padding: 6.2rem 5vw 2.4rem;
+  padding: 8.4rem 5vw 3.4rem;
   position: relative;
   overflow: hidden;
+  min-height: 400px;
 }
 
 .contact-page-hero::before {
@@ -204,13 +205,14 @@
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(0,0,0,0.6);
+  color: #111;
 }
 
 .cp-form-group input,
-.cp-form-group textarea {
+.cp-form-group textarea,
+.cp-form-group select {
   background: #fdfdfd;
-  border: 1px solid rgba(0,0,0,0.1);
+  border: 1px solid #111;
   border-radius: 12px;
   padding: 1rem 1.2rem;
   font-family: 'DM Sans', sans-serif;
@@ -227,7 +229,8 @@
 }
 
 .cp-form-group input:focus,
-.cp-form-group textarea:focus {
+.cp-form-group textarea:focus,
+.cp-form-group select:focus {
   border-color: #111;
   background: #fff;
   box-shadow: 0 4px 12px rgba(0,0,0,0.03);

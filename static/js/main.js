@@ -186,9 +186,15 @@ if (whyUsRail) {
     whyUsTrack.dataset.loopReady = 'true';
   }
 
+  let cachedLoopWidth = 0;
+  window.addEventListener('resize', () => { cachedLoopWidth = 0; });
+
   const getLoopWidth = () => {
     if (!whyUsTrack) return 0;
-    return whyUsTrack.scrollWidth / 2;
+    if (cachedLoopWidth === 0) {
+      cachedLoopWidth = whyUsTrack.scrollWidth / 2;
+    }
+    return cachedLoopWidth;
   };
 
   const animateWhyUsRail = (ts) => {
@@ -206,7 +212,7 @@ if (whyUsRail) {
       currentX -= dt * 0.07; // Peppier speed as requested
       if (currentX <= -loopWidth) currentX += loopWidth;
       if (currentX > 0) currentX -= loopWidth;
-      whyUsTrack.style.transform = `translate3d(${currentX}px, 0, 0) rotate(-0.5deg)`;
+      whyUsTrack.style.transform = `translate3d(${currentX}px, 0, 0)`;
     }
 
     whyUsRaf = window.requestAnimationFrame(animateWhyUsRail);
@@ -227,7 +233,7 @@ if (whyUsRail) {
     const loopWidth = getLoopWidth();
     if (currentX <= -loopWidth) currentX += loopWidth;
     if (currentX > 0) currentX -= loopWidth;
-    whyUsTrack.style.transform = `translate3d(${currentX}px, 0, 0) rotate(-0.5deg)`;
+    whyUsTrack.style.transform = `translate3d(${currentX}px, 0, 0)`;
   };
 
   const endRailDrag = () => {

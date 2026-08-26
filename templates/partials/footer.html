@@ -8,28 +8,26 @@
       <p>We engineer digital products, AI systems, and growth experiences that elevate brands with clarity and precision.</p>
     </div>
     <div class="footer-col">
-      <h4>Services</h4>
+      <h4 style="color: white;">Services</h4>
       <ul>
-        <li><a href="#">Web Development</a></li>
+        <li><a href="{{ url_for('web_development') }}">Web Development</a></li>
         <li><a href="{{ url_for('best_website_development_agency_india') }}">Website Development Agency India</a></li>
-        <li><a href="#">Mobile Apps</a></li>
-        <li><a href="#">AI Solutions</a></li>
-        <li><a href="#">Data Analytics</a></li>
-        <li><a href="#">SEO &amp; Growth</a></li>
+        <li><a href="{{ url_for('app_development') }}">Mobile Apps</a></li>
+        <li><a href="{{ url_for('home') }}#services">AI &amp; Automation</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <h4>Company</h4>
+      <h4 style="color: white;">Company</h4>
       <ul>
-        <li><a href="#">About Us</a></li>
+        <li><a href="{{ url_for('about') }}">About Us</a></li>
         {# <li><a href="#">Our Work</a></li> #}
         <li><a href="{{ url_for('blog') }}">Our Blogs</a></li>
         <li><a href="#">Careers</a></li>
-        <li><a href="#">Contact</a></li>
+        <li><a href="{{ url_for('contact') }}">Contact</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <h4>Legal</h4>
+      <h4 style="color: white;">Legal</h4>
       <ul>
         <li><a href="{{ url_for('privacy_policy') }}">Privacy Policy</a></li>
         <li><a href="{{ url_for('terms_of_service') }}">Terms of Service</a></li>

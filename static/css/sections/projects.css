@@ -20,7 +20,7 @@
 }
 
 .projects-section .sec-header p {
-  color: rgba(255,255,255,0.72);
+  color: var(--white);
 }
 
 .projects-container {
@@ -85,8 +85,9 @@
 }
 
 .projects-left p {
-  color: rgba(255,255,255,0.72);
-  font-size: 1.02rem;
+  color: var(--white);
+  font-size: 0.95rem;
+  font-weight: 300;
   line-height: 1.65;
 }
 

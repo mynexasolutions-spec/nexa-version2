@@ -17,9 +17,9 @@
     left: -1vw;
     line-height: 1;
   }
-  .blog-section .sec-header p { color: rgba(255,255,255,0.52); }
+  .blog-section .sec-header p { color: var(--white); }
   .blog-section .sec-header h2 { color: var(--white); }
-  .blog-section .sec-eyebrow { color: rgba(255,255,255,0.45); }
+  .blog-section .sec-eyebrow { color: rgba(255,255,255,0.7); }
   .blog-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -85,7 +85,7 @@
     overflow: hidden;
   }
   .blog-section .blog-card p {
-    color: rgba(255,255,255,0.52);
+    color: var(--white);
     font-size: 0.9rem;
     line-height: 1.62;
     margin-bottom: 1.2rem;

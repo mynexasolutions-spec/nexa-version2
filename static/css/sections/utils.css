@@ -1,4 +1,4 @@
-﻿  /* â”€â”€ FILLER SECTION â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+  /* â”€â”€ FILLER SECTION â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   .section {
     width: 100%;
     min-height: 80vh;
@@ -52,8 +52,10 @@
     margin-bottom: 1rem;
   }
   .sec-header p {
-    font-size: 1rem;
-    line-height: 1.7;
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.65;
+    color: #111;
     max-width: 600px;
     margin: 0 auto;
   }
