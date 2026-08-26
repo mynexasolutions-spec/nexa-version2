@@ -30,14 +30,12 @@
     {# <li><a href="{{ url_for('work') }}">Work</a></li> #}
     <li><a href="{{ url_for('blog') }}">Our Blogs</a></li>
     <li><a href="{{ url_for('about') }}">About</a></li>
-    {# <li class="has-dropdown">
+    <li class="has-dropdown tools-dropdown">
       <a href="#" class="dropdown-toggle">Tools <span class="dropdown-arrow">&#9660;</span></a>
       <ul class="dropdown-menu">
-        <li><a href="#">AI Agent</a></li>
-        <li><a href="#">Text to Speech</a></li>
-        <li><a href="#">Speech to Text</a></li>
+        <li><a href="{{ url_for('converter') }}">WebP Converter</a></li>
       </ul>
-    </li> #}
+    </li>
     <li><a href="{{ url_for('contact') }}">Contact</a></li>
     <li><a href="{{ url_for('contact') }}" class="nav-cta">Get Started</a></li>
   </ul>

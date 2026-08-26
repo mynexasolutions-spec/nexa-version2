@@ -14,7 +14,10 @@ import os
 import math
 import re
 import uuid
+import gzip
 from datetime import datetime, timedelta
+from functools import wraps
+from time import monotonic
 from sqlalchemy.exc import ProgrammingError, OperationalError, SQLAlchemyError
 
 load_dotenv()
@@ -46,8 +49,16 @@ secret_key = os.getenv("SECRET_KEY")
 if is_production() and not secret_key:
     raise RuntimeError("SECRET_KEY must be set in production.")
 
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
+database_url = os.getenv("DATABASE_URL")
+app.config["SQLALCHEMY_DATABASE_URI"] = database_url
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+if database_url and not database_url.startswith("sqlite"):
+    app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+        "pool_pre_ping": True,
+        "pool_recycle": int(os.getenv("SQLALCHEMY_POOL_RECYCLE", "280")),
+        "pool_size": int(os.getenv("SQLALCHEMY_POOL_SIZE", "5")),
+        "max_overflow": int(os.getenv("SQLALCHEMY_MAX_OVERFLOW", "5")),
+    }
 app.secret_key = secret_key or "dev-only-secret-key-change-before-production"
 app.config["SESSION_COOKIE_HTTPONLY"] = True
 app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
@@ -56,6 +67,31 @@ app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(hours=8)
 app.config["MAX_CONTENT_LENGTH"] = int(os.getenv("MAX_CONTENT_LENGTH", str(10 * 1024 * 1024)))
 app.config["MAX_FORM_MEMORY_SIZE"] = int(os.getenv("MAX_FORM_MEMORY_SIZE", str(1024 * 1024)))
 app.config["MAX_FORM_PARTS"] = int(os.getenv("MAX_FORM_PARTS", "100"))
+
+
+def ttl_cache(seconds=60, maxsize=64):
+    def decorator(func):
+        cache = {}
+
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            key = (args, tuple(sorted(kwargs.items())))
+            now = monotonic()
+            cached = cache.get(key)
+            if cached and now - cached[0] < seconds:
+                return cached[1]
+
+            value = func(*args, **kwargs)
+            if len(cache) >= maxsize:
+                oldest_key = min(cache, key=lambda item: cache[item][0])
+                cache.pop(oldest_key, None)
+            cache[key] = (now, value)
+            return value
+
+        wrapper.cache_clear = cache.clear
+        return wrapper
+
+    return decorator
 
 trusted_hosts = os.getenv("TRUSTED_HOSTS", "").strip()
 if trusted_hosts:
@@ -82,6 +118,31 @@ def add_security_headers(response):
     response.headers.setdefault("X-Frame-Options", "SAMEORIGIN")
     response.headers.setdefault("Referrer-Policy", "strict-origin-when-cross-origin")
     response.headers.setdefault("Permissions-Policy", "camera=(), microphone=(), geolocation=()")
+    if request.path.startswith("/static/"):
+        response.headers.setdefault("Cache-Control", "public, max-age=31536000, immutable")
+    elif (
+        request.method == "GET"
+        and not request.path.startswith("/admin/")
+        and not request.path.startswith("/blog/")
+        and request.path not in {"/contact", "/newsletter/subscribe"}
+    ):
+        response.headers.setdefault("Cache-Control", "public, max-age=60, stale-while-revalidate=300")
+
+    should_compress = (
+        "gzip" in request.headers.get("Accept-Encoding", "").lower()
+        and response.status_code < 300
+        and not response.headers.get("Content-Encoding")
+        and not request.path.startswith("/admin/")
+        and response.mimetype in {"text/html", "text/css", "text/javascript", "application/javascript", "application/json"}
+    )
+    if should_compress:
+        response.direct_passthrough = False
+        body = response.get_data()
+        if len(body) > 1024:
+            response.set_data(gzip.compress(body, compresslevel=6))
+            response.headers["Content-Encoding"] = "gzip"
+            response.headers["Vary"] = "Accept-Encoding"
+            response.headers["Content-Length"] = str(len(response.get_data()))
     return response
 
 # ============================
@@ -161,12 +222,9 @@ def work():
 def converter():
     return render_template("pages/converter.html")
 
-@app.route("/blog")
-def blog():
-    page = request.args.get("page", 1, type=int)
-    search_query = request.args.get("q", "", type=str).strip()
-    active_category = request.args.get("category", "", type=str).strip()
 
+@ttl_cache(seconds=45, maxsize=128)
+def fetch_blog_listing_data(page, search_query, active_category):
     posts_query = BlogPost.query.filter(BlogPost.is_published == True)
 
     if search_query:
@@ -181,42 +239,45 @@ def blog():
         )
 
     if active_category:
-        try:
-            posts_query = posts_query.filter(BlogPost.category_id == uuid.UUID(active_category))
-        except ValueError:
-            active_category = ""
+        posts_query = posts_query.filter(BlogPost.category_id == uuid.UUID(active_category))
 
-    def fetch_blog_listing_data():
-        featured = (
-            BlogPost.query
-            .filter_by(is_published=True)
-            .order_by(BlogPost.published_at.desc())
-            .first()
-        )
+    featured = (
+        BlogPost.query
+        .filter_by(is_published=True)
+        .order_by(BlogPost.published_at.desc())
+        .first()
+    )
 
-        paginated_posts = (
-            posts_query
-            .order_by(BlogPost.published_at.desc())
-            .paginate(page=page, per_page=8, error_out=False)
-        )
+    paginated_posts = (
+        posts_query
+        .order_by(BlogPost.published_at.desc())
+        .paginate(page=page, per_page=8, error_out=False)
+    )
 
-        category_rows = (
-            db.session.query(Category, db.func.count(BlogPost.id))
-            .outerjoin(BlogPost, db.and_(BlogPost.category_id == Category.id, BlogPost.is_published == True))
-            .group_by(Category.id)
-            .order_by(Category.name.asc())
-            .all()
-        )
+    category_rows = (
+        db.session.query(Category, db.func.count(BlogPost.id))
+        .outerjoin(BlogPost, db.and_(BlogPost.category_id == Category.id, BlogPost.is_published == True))
+        .group_by(Category.id)
+        .order_by(Category.name.asc())
+        .all()
+    )
 
-        recent = (
-            BlogPost.query
-            .filter_by(is_published=True)
-            .order_by(BlogPost.published_at.desc())
-            .limit(6)
-            .all()
-        )
+    recent = (
+        BlogPost.query
+        .filter_by(is_published=True)
+        .order_by(BlogPost.published_at.desc())
+        .limit(6)
+        .all()
+    )
 
-        return featured, paginated_posts, category_rows, recent
+    return featured, paginated_posts, category_rows, recent
+
+
+@app.route("/blog")
+def blog():
+    page = request.args.get("page", 1, type=int)
+    search_query = request.args.get("q", "", type=str).strip()
+    active_category = request.args.get("category", "", type=str).strip()
 
     def ensure_blog_tables():
         try:
@@ -227,11 +288,11 @@ def blog():
             return False
 
     try:
-        featured_post, posts, categories, recent_posts = fetch_blog_listing_data()
+        featured_post, posts, categories, recent_posts = fetch_blog_listing_data(page, search_query, active_category)
     except (ProgrammingError, OperationalError):
         db.session.rollback()
         if ensure_blog_tables():
-            featured_post, posts, categories, recent_posts = fetch_blog_listing_data()
+            featured_post, posts, categories, recent_posts = fetch_blog_listing_data(page, search_query, active_category)
         else:
             class EmptyPagination:
                 items = []

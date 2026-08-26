@@ -57,6 +57,23 @@
               <div class="table-muted">
                 Due {{ project.expected_end_date.strftime("%d %b %Y") if project.expected_end_date else "Not set" }}
               </div>
+              {% if project.actual_completion_date %}
+                <div class="table-muted">Done {{ project.actual_completion_date.strftime("%d %b %Y") }}</div>
+              {% elif project.is_overdue() %}
+                <span class="badge danger">Overdue</span>
+              {% elif project.is_due_soon() %}
+                <span class="badge warning">Due soon</span>
+              {% endif %}
+              {% if project.next_payment_due_date %}
+                <div class="table-muted">
+                  Payment {{ project.next_payment_due_date.strftime("%d %b %Y") }}
+                </div>
+                {% if project.is_payment_overdue() %}
+                  <span class="badge danger">Payment overdue</span>
+                {% elif project.is_payment_due_soon() %}
+                  <span class="badge warning">Payment due</span>
+                {% endif %}
+              {% endif %}
             </td>
             <td class="actions">
               <a href="{{ url_for('admin.edit_project', project_id=project.id) }}">Edit</a>

@@ -53,3 +53,8 @@ htmlcov/
 
 # Ads source/dev material (not needed on server)
 nexa-ads-webpage/
+
+
+.playwright-mcp
+
+docs

@@ -2,7 +2,7 @@
 .contact-page-hero {
   background: #080808;
   color: #fff;
-  padding: 8.4rem 5vw 3.4rem;
+  padding: 6.2rem 5vw 2.4rem;
   position: relative;
   overflow: hidden;
 }
@@ -53,7 +53,7 @@
 
 .contact-page-hero h1 {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(2.5rem, 8vw, 5.6rem);
+  font-size: clamp(2.3rem, 7vw, 4.8rem);
   letter-spacing: 0.03em;
   line-height: 1;
   margin-bottom: 0.55rem;
@@ -69,7 +69,7 @@
 
 .contact-page-wrap {
   background: #f6f6f4;
-  padding: 4rem 5vw 6rem;
+  padding: 3.2rem 5vw 5rem;
 }
 
 .contact-messages {
@@ -107,7 +107,7 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1.5fr;
-  gap: 4rem;
+  gap: 3.2rem;
   align-items: start;
 }
 
@@ -175,7 +175,7 @@
 
 .contact-form-col {
   background: #fff;
-  padding: 3rem;
+  padding: 2.4rem;
   border-radius: 24px;
   box-shadow: 0 20px 40px rgba(0,0,0,0.04);
   border: 1px solid rgba(0,0,0,0.06);
@@ -184,7 +184,7 @@
 .contact-page-form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 .cp-form-row {
@@ -271,15 +271,15 @@
 
 @media (max-width: 600px) {
   .contact-page-hero {
-    padding: 7.2rem 1.2rem 2.6rem;
+    padding: 6.2rem 1.2rem 2rem;
   }
   
   .contact-page-wrap {
-    padding: 3rem 1.2rem 4rem;
+    padding: 2.4rem 1.2rem 4rem;
   }
   
   .contact-form-col {
-    padding: 2rem 1.5rem;
+    padding: 1.6rem 1.2rem;
   }
 
   .cp-form-row {

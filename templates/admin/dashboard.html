@@ -1,88 +1,169 @@
 {% extends "layouts/base_admin.html" %}
 
+{% block admin_title %}Dashboard{% endblock %}
+
 {% block content %}
 <div class="admin-container">
 
-  <h1>Dashboard</h1>
+  <div class="dashboard-hero">
+    <div>
+      <span class="admin-kicker">Command center</span>
+      <h1>Dashboard</h1>
+    </div>
+    <div class="dashboard-hero-actions">
+      <a href="{{ url_for('admin.create_project') }}" class="btn-primary">New project</a>
+      <a href="{{ url_for('admin.create_blog') }}" class="btn-secondary">New blog</a>
+    </div>
+  </div>
 
   <div class="dashboard-stats">
-    <div class="stat-card">
-      <h3>Total Blogs</h3>
-      <p>{{ blog_count }}</p>
-    </div>
-    <div class="stat-card">
-      <h3>Categories</h3>
-      <p>{{ category_count }}</p>
-    </div>
-    <div class="stat-card">
-      <h3>Leads</h3>
-      <p>{{ lead_count }}</p>
-    </div>
-    <div class="stat-card">
-      <h3>Projects</h3>
-      <p>{{ project_count }}</p>
-    </div>
-    <div class="stat-card">
-      <h3>Active Projects</h3>
-      <p>{{ active_project_count }}</p>
-    </div>
-    <div class="stat-card">
-      <h3>Completed Projects</h3>
-      <p>{{ completed_project_count }}</p>
-    </div>
-    <div class="stat-card">
-      <h3>Outstanding</h3>
-      <p class="stat-text">{{ outstanding_amount }}</p>
-    </div>
+    <div class="stat-card"><h3>Total projects</h3><p>{{ project_count }}</p><span class="stat-graph" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="stat-change">{{ project_change }}</span></div>
+    <div class="stat-card"><h3>Active projects</h3><p>{{ active_project_count }}</p><span class="stat-graph" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="stat-change">{{ active_project_change }}</span></div>
+    <div class="stat-card"><h3>Completed</h3><p>{{ completed_project_count }}</p><span class="stat-graph" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="stat-change">{{ completed_project_change }}</span></div>
+    <div class="stat-card"><h3>Leads</h3><p>{{ lead_count }}</p><span class="stat-graph" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="stat-change">{{ lead_change }}</span></div>
+    <div class="stat-card"><h3>Total value</h3><p class="stat-text">{{ total_project_value }}</p><span class="stat-graph" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="stat-change">{{ total_value_change }}</span></div>
+    <div class="stat-card"><h3>Revenue collected</h3><p class="stat-text">{{ revenue_collected }}</p><span class="stat-graph" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="stat-change">{{ revenue_change }}</span></div>
+    <div class="stat-card stat-card-accent"><h3>Outstanding</h3><p class="stat-text">{{ outstanding_amount }}</p><span class="stat-graph" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="stat-change">{{ outstanding_change }}</span></div>
+    <div class="stat-card"><h3>Content</h3><p class="stat-text">{{ blog_count }} blogs</p><div class="table-muted">{{ category_count }} categories</div><span class="stat-graph" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="stat-change">{{ content_change }}</span></div>
   </div>
 
-  <div class="dashboard-actions">
-    <a href="{{ url_for('admin.project_list') }}" class="btn-primary">Manage Projects</a>
-    <a href="{{ url_for('admin.project_dashboard') }}" class="btn-secondary">Project Dashboard</a>
-    <a href="{{ url_for('admin.blog_list') }}" class="btn-primary">Manage Blogs</a>
-    <a href="{{ url_for('admin.manage_categories') }}" class="btn-secondary">Manage Categories</a>
-    <a href="{{ url_for('admin.lead_list') }}" class="btn-secondary">View Leads</a>
-    <a href="{{ url_for('admin.logout') }}" class="btn-danger">Logout</a>
-  </div>
+  <div class="dashboard-grid dashboard-grid-wide">
+    <section class="admin-section dashboard-panel">
+      <div class="admin-header">
+        <div>
+          <span class="admin-kicker">Revenue</span>
+          <h2>Monthly revenue</h2>
+        </div>
+        <div class="period-selector" aria-label="Reporting period">
+          <a class="{{ 'active' if period == '6m' else '' }}" href="{{ url_for('admin.dashboard', period='6m') }}">6 months</a>
+          <a class="{{ 'active' if period == '12m' else '' }}" href="{{ url_for('admin.dashboard', period='12m') }}">12 months</a>
+          <a class="{{ 'active' if period == 'year' else '' }}" href="{{ url_for('admin.dashboard', period='year') }}">Year</a>
+        </div>
+      </div>
+      <div class="bar-chart">
+        {% for month in monthly_revenue %}
+          {% set height = ((month.amount / monthly_revenue_max) * 100) if monthly_revenue_max > 0 else 0 %}
+          <div class="bar-chart-item">
+            <div class="bar-chart-track">
+              <div class="bar-chart-fill" style="height: {{ height }}%;" title="{{ month.label }}: {{ month.amount_label }}"></div>
+            </div>
+            <span>{{ month.label.split(" ")[0] }}</span>
+          </div>
+        {% endfor %}
+      </div>
+    </section>
 
-  <div class="admin-section">
-    <div class="admin-header">
-      <h2>Recent Leads</h2>
-      <a href="{{ url_for('admin.lead_list') }}">View all</a>
-    </div>
-
-    {% if recent_leads %}
-      <table class="admin-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Subject</th>
-            <th>Received</th>
-            <th>Email</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for lead in recent_leads %}
-            <tr>
-              <td>{{ lead.name }}</td>
-              <td><a href="mailto:{{ lead.email }}">{{ lead.email }}</a></td>
-              <td>{{ lead.subject }}</td>
-              <td>{{ lead.created_at.strftime("%d %b %Y, %H:%M") }}</td>
-              <td>
-                {% if lead.email_sent %}
-                  <span class="badge published">Sent</span>
-                {% else %}
-                  <span class="badge draft">Saved</span>
-                {% endif %}
-              </td>
-            </tr>
+    <section class="admin-section dashboard-panel">
+      <div class="admin-header">
+        <div>
+          <span class="admin-kicker">Pipeline</span>
+          <h2>Status distribution</h2>
+        </div>
+      </div>
+      <div class="status-chart">
+        <div class="donut-chart" style="background: conic-gradient({% for item in status_distribution %}{{ item.color }} {{ item.range }}{{ ',' if not loop.last else '' }}{% endfor %});">
+          <span>{{ project_count }}</span>
+        </div>
+        <div class="status-legend">
+          {% for item in status_distribution %}
+            <div><span style="background: {{ item.color }};"></span>{{ item.label }} <strong>{{ item.count }}</strong></div>
           {% endfor %}
-        </tbody>
-      </table>
-    {% else %}
-      <p style="color: var(--text-muted); margin-top: 1rem;">No leads yet.</p>
-    {% endif %}
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="dashboard-grid">
+    <section class="admin-section dashboard-panel">
+      <div class="admin-header">
+        <div><span class="admin-kicker">Lead inbox</span><h2>Recent leads</h2></div>
+        <a href="{{ url_for('admin.lead_list') }}">View all</a>
+      </div>
+      {% if recent_leads %}
+        <div class="table-wrap">
+          <table class="admin-table compact-table">
+            <thead><tr><th>Name</th><th>Subject</th><th>Received</th><th>Status</th></tr></thead>
+            <tbody>
+              {% for lead in recent_leads %}
+                <tr>
+                  <td><strong>{{ lead.name }}</strong><div class="table-muted">{{ lead.email }}</div></td>
+                  <td>{{ lead.subject }}</td>
+                  <td>{{ lead.created_at.strftime("%d %b %Y") }}</td>
+                  <td><span class="badge {{ 'published' if lead.email_sent else 'draft' }}">{{ "Sent" if lead.email_sent else "Saved" }}</span></td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <p class="empty-state">No leads yet.</p>
+      {% endif %}
+    </section>
+
+    <section class="admin-section dashboard-panel">
+      <div class="admin-header">
+        <div><span class="admin-kicker">Projects</span><h2>Recent projects</h2></div>
+        <a href="{{ url_for('admin.project_list') }}">View all</a>
+      </div>
+      {% if recent_projects %}
+        <div class="project-mini-list">
+          {% for project in recent_projects %}
+            <a href="{{ url_for('admin.project_detail', project_id=project.id) }}">
+              <span><strong>{{ project.name }}</strong><small>{{ project.client_name }}</small></span>
+              <span class="badge {{ 'published' if project.status in ['active', 'completed'] else 'draft' }}">{{ project.status_label }}</span>
+            </a>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="empty-state">No projects yet.</p>
+      {% endif %}
+    </section>
+  </div>
+
+  <div class="dashboard-grid dashboard-grid-three">
+    <section class="admin-section dashboard-panel">
+      <div class="admin-header"><div><span class="admin-kicker">Dates</span><h2>Due soon</h2></div></div>
+      {% if projects_due_soon %}
+        <div class="risk-list">
+          {% for project in projects_due_soon %}
+            <a href="{{ url_for('admin.project_detail', project_id=project.id) }}">{{ project.name }}<span>{{ project.expected_end_date.strftime("%d %b") }}</span></a>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="empty-state">No project deadlines in the next 14 days.</p>
+      {% endif %}
+    </section>
+
+    <section class="admin-section dashboard-panel">
+      <div class="admin-header"><div><span class="admin-kicker">Risk</span><h2>Overdue projects</h2></div></div>
+      {% if overdue_projects %}
+        <div class="risk-list">
+          {% for project in overdue_projects %}
+            <a href="{{ url_for('admin.project_detail', project_id=project.id) }}">{{ project.name }}<span>{{ project.expected_end_date.strftime("%d %b") }}</span></a>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="empty-state">No overdue projects.</p>
+      {% endif %}
+    </section>
+
+    <section class="admin-section dashboard-panel shortcut-panel">
+      <div><span class="admin-kicker">Cashflow</span><h2>Payments due soon</h2></div>
+      {% if payments_due_soon %}
+        <div class="risk-list">
+          {% for project in payments_due_soon %}
+            <a href="{{ url_for('admin.project_detail', project_id=project.id) }}">{{ project.name }}<span>{{ project.next_payment_due_date.strftime("%d %b") }}</span></a>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="empty-state">No upcoming payment due dates.</p>
+      {% endif %}
+      <div class="shortcut-list">
+        <a href="{{ url_for('admin.project_list') }}">Manage projects</a>
+        <a href="{{ url_for('admin.blog_list') }}">Manage blogs</a>
+        <a href="{{ url_for('admin.lead_list') }}">Review leads</a>
+      </div>
+    </section>
   </div>
 
 </div>

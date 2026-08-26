@@ -1,5 +1,7 @@
 {% extends "layouts/base_admin.html" %}
 
+{% block admin_title %}Project Detail{% endblock %}
+
 {% block content %}
 <div class="admin-container">
   <div class="admin-header">
@@ -9,6 +11,13 @@
     </div>
     <div class="dashboard-actions" style="margin-bottom: 0;">
       <a href="{{ url_for('admin.edit_project', project_id=project.id) }}" class="btn-primary">Edit</a>
+      <form method="POST"
+            action="{{ url_for('admin.delete_project', project_id=project.id) }}"
+            onsubmit="return confirm('Delete this project?');"
+            style="display:inline;">
+        {{ delete_form.hidden_tag() }}
+        <button type="submit" class="btn-danger">Delete</button>
+      </form>
       <a href="{{ url_for('admin.project_list') }}" class="btn-secondary">Back</a>
     </div>
   </div>
@@ -23,8 +32,9 @@
       <p class="stat-text">{{ project.total_value_label }}</p>
     </div>
     <div class="stat-card">
-      <h3>Advance Received</h3>
-      <p class="stat-text">{{ project.advance_received_label }}</p>
+      <h3>Collected</h3>
+      <p class="stat-text">{{ project.collected_amount_label }}</p>
+      <div class="table-muted">Legacy advance {{ project.advance_received_label }}</div>
     </div>
     <div class="stat-card">
       <h3>Remaining</h3>
@@ -46,11 +56,81 @@
           <td>{{ project.expected_end_date.strftime("%d %b %Y") if project.expected_end_date else "Not set" }}</td>
         </tr>
         <tr>
+          <th>Actual Completion</th>
+          <td>{{ project.actual_completion_date.strftime("%d %b %Y") if project.actual_completion_date else "Not set" }}</td>
+        </tr>
+        <tr>
+          <th>Next Payment Due</th>
+          <td>
+            {{ project.next_payment_due_date.strftime("%d %b %Y") if project.next_payment_due_date else "Not set" }}
+            {% if project.is_payment_overdue() %}
+              <span class="badge danger">Overdue</span>
+            {% elif project.is_payment_due_soon() %}
+              <span class="badge warning">Due soon</span>
+            {% endif %}
+          </td>
+        </tr>
+        <tr>
           <th>Description</th>
           <td>{{ project.description or "No description" }}</td>
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <div class="admin-section">
+    <div class="admin-header"><h2>Payments</h2></div>
+    <form method="POST" action="{{ url_for('admin.create_project_payment', project_id=project.id) }}" class="payment-form">
+      {{ payment_form.hidden_tag() }}
+      <div class="form-grid payment-form-grid">
+        <div class="form-group">
+          {{ payment_form.amount.label }}
+          {{ payment_form.amount(class="input") }}
+        </div>
+        <div class="form-group">
+          {{ payment_form.paid_on.label }}
+          {{ payment_form.paid_on(class="input") }}
+        </div>
+        <div class="form-group">
+          {{ payment_form.note.label }}
+          {{ payment_form.note(class="input", placeholder="Optional") }}
+        </div>
+        <button type="submit" class="btn-primary">Add Payment</button>
+      </div>
+    </form>
+
+    {% if project.payments %}
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Note</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for payment in project.payments %}
+            <tr>
+              <td>{{ payment.paid_on.strftime("%d %b %Y") }}</td>
+              <td>{{ payment.amount_label }}</td>
+              <td>{{ payment.note or "-" }}</td>
+              <td>
+                <form method="POST"
+                      action="{{ url_for('admin.delete_project_payment', project_id=project.id, payment_id=payment.id) }}"
+                      onsubmit="return confirm('Delete this payment?');"
+                      style="display:inline;">
+                  {{ delete_form.hidden_tag() }}
+                  <button type="submit" class="link-danger">Delete</button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="empty-state">No payment records yet. Legacy advance remains available for totals.</p>
+    {% endif %}
   </div>
 
   <div class="admin-section">

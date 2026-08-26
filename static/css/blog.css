@@ -303,11 +303,11 @@
     border: 1px solid #fff;
   }
 
-  /* --- STICKY SIDEBAR --- */
+  /* --- SIDEBAR --- */
   .sticky-sidebar {
     flex: 0 0 350px; /* Fixed width of 350px */
-    position: sticky;
-    top: 20px; /* Distance from top while scrolling */
+    position: static !important;
+    top: auto !important;
   }
 
   .sidebar-widget {
@@ -408,7 +408,8 @@
     .sticky-sidebar {
         flex: 1 1 auto;
         width: 100%;
-        position: static;
+        position: static !important;
+        top: auto !important;
     }
 
     .blog-feed {

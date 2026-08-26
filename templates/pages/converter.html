@@ -167,6 +167,26 @@
     .info-bar svg { flex-shrink: 0; margin-top: 1px; }
     .info-bar.green { background: var(--green-soft); border: 1px solid rgba(34,197,94,0.2); color: #86efac; }
     .info-bar.yellow { background: var(--yellow-soft); border: 1px solid rgba(245,158,11,0.2); color: #fcd34d; }
+    .limit-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #bae6fd;
+      background: rgba(56,189,248,0.1);
+      border: 1px solid rgba(56,189,248,0.24);
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      width: fit-content;
+      margin-bottom: 18px;
+    }
+    #batch-message {
+      min-height: 1.2em;
+      color: #fcd34d;
+      font-size: 0.8rem;
+      line-height: 1.5;
+    }
 
     .action-btns { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
 
@@ -236,6 +256,7 @@
       </svg>
       <h2>Drag &amp; drop images here</h2>
       <p>JPG · PNG · AVIF · JFIF · GIF · BMP · TIFF · WebP and more</p>
+      <div class="limit-note">Up to 100 images per batch</div>
       <button class="btn btn-primary" id="browse-btn" type="button">
         <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.3">
           <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
@@ -256,6 +277,8 @@
         </div>
         <span style="font-size:0.78rem;color:var(--muted)" id="mode-desc">Automatically finds the best quality to hit your size limit.</span>
       </div>
+
+      <p id="batch-message" role="status" aria-live="polite"></p>
 
       <div class="controls-row">
 
@@ -361,10 +384,12 @@
     const presetGroup   = document.getElementById('preset-group');
     const targetGroup   = document.getElementById('target-group');
     const modeDesc      = document.getElementById('mode-desc');
+    const batchMessage  = document.getElementById('batch-message');
 
     let mode = 'target';           // 'preset' | 'target'
     let selectedQuality = 0.82;
     const items = [];
+    const MAX_IMAGES = 100;
 
     // ── Mode switch ───────────────────────────────────────────
     modePresetBtn.addEventListener('click', () => setMode('preset'));
@@ -428,8 +453,15 @@
     function handleFiles(fileList) {
       const accepted = Array.from(fileList).filter(f => f.type.startsWith('image/'));
       if (!accepted.length) return;
-      accepted.forEach(addItem);
+      const availableSlots = Math.max(0, MAX_IMAGES - items.length);
+      const acceptedBatch = accepted.slice(0, availableSlots);
+      acceptedBatch.forEach(addItem);
       controls.style.display = 'flex';
+      if (accepted.length > acceptedBatch.length) {
+        batchMessage.textContent = `Only ${MAX_IMAGES} images can be queued at once. Added ${acceptedBatch.length}; skipped ${accepted.length - acceptedBatch.length}.`;
+      } else {
+        batchMessage.textContent = `${items.length} image${items.length === 1 ? '' : 's'} queued. Conversion runs one image at a time to keep the browser responsive.`;
+      }
     }
 
     const stemName = n => n.replace(/\.[^.]+$/, '') || n;
@@ -504,6 +536,7 @@
       convertAllBtn.disabled = true;
       progressWrap.style.display = 'block';
       progressBar.style.width = '0%';
+      batchMessage.textContent = `Converting ${pending.length} image${pending.length === 1 ? '' : 's'} sequentially. Keep this tab open.`;
 
       for (let j = 0; j < pending.length; j++) {
         progressLabel.textContent = `Converting ${j + 1} / ${pending.length}…`;
@@ -518,6 +551,8 @@
 
       progressBar.style.width = '100%';
       progressLabel.textContent = `Done — ${pending.length} image${pending.length > 1 ? 's' : ''} converted.`;
+      const doneCount = items.filter(it => it.status === 'done').length;
+      batchMessage.textContent = `Done. ${doneCount} image${doneCount === 1 ? '' : 's'} ready to download.`;
       convertAllBtn.disabled = false;
       updateZipBar();
     }
@@ -707,6 +742,7 @@
       progressWrap.style.display = 'none';
       zipBar.style.display = 'none';
       fileInput.value = '';
+      batchMessage.textContent = '';
     });
 
   })();

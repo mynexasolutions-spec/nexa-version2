@@ -26,25 +26,21 @@
   <section class="about-hero">
     <div class="about-shell about-hero-grid">
       <div class="about-hero-copy reveal">
-        <p class="sec-eyebrow">About Nexa Solutions</p>
-        <h1>Nexa Solutions</h1>
+        <p class="sec-eyebrow">Technology Solutions</p>
+        <h1>Smart Solutions.<br><span class="about-hero-title-accent">Stronger Results.</span></h1>
         <p class="about-hero-lede">
-          We are a focused technology team building clean websites, scalable software, and intelligent digital systems for businesses that need dependable execution.
+          Nexa Solutions builds clean, scalable, and intelligent digital products that help businesses grow with confidence.
         </p>
         <div class="about-hero-actions">
           <a href="{{ url_for('contact') }}" class="btn btn-primary">Start a Project</a>
-          <a href="#about-team" class="btn btn-secondary">Meet the Team</a>
+          <a href="{{ url_for('work') }}" class="btn btn-secondary">View Our Work</a>
         </div>
       </div>
 
-      <div class="about-hero-panel reveal" data-delay="120" aria-label="Nexa Solutions company profile">
-        <div class="about-mark-wrap">
-          <img src="{{ url_for('static', filename='images/logo/logo.png') }}" alt="Nexa Solutions logo" class="about-mark">
-        </div>
-        <div class="about-panel-content">
-          <span class="about-panel-label">Built with intent</span>
-          <p>Strategy, design, engineering, and long-term support under one practical delivery process.</p>
-        </div>
+      <div class="about-hero-visual reveal" data-delay="120">
+        <img src="{{ url_for('static', filename='images/about page image.webp') }}"
+             alt="Nexa Solutions workspace with a laptop displaying a digital product"
+             class="about-hero-image">
       </div>
     </div>
   </section>

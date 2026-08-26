@@ -58,12 +58,25 @@ class DeleteForm(FlaskForm):
     pass
 
 
+class ProjectPaymentForm(FlaskForm):
+    amount = DecimalField("Payment Amount", places=2, validators=[InputRequired()])
+    paid_on = DateField("Payment Date", validators=[DataRequired()])
+    note = StringField("Note", validators=[Optional(), Length(max=255)])
+    submit = SubmitField("Add Payment")
+
+    def validate_amount(self, field):
+        if field.data is not None and field.data <= 0:
+            raise ValidationError("Payment amount must be greater than zero.")
+
+
 class ProjectForm(FlaskForm):
     name = StringField("Project Name", validators=[DataRequired(), Length(max=180)])
     client_name = StringField("Client Name", validators=[DataRequired(), Length(max=180)])
     description = TextAreaField("Description", validators=[Optional(), Length(max=3000)])
     start_date = DateField("Start Date", validators=[DataRequired()])
     expected_end_date = DateField("Expected End Date", validators=[Optional()])
+    actual_completion_date = DateField("Actual Completion Date", validators=[Optional()])
+    next_payment_due_date = DateField("Next Payment Due Date", validators=[Optional()])
     status = SelectField("Project Status", choices=PROJECT_STATUS_CHOICES, validators=[DataRequired()])
     total_value = DecimalField("Total Project Value", places=2, validators=[InputRequired()])
     advance_received = DecimalField("Advance Received", places=2, validators=[InputRequired()])
@@ -77,6 +90,10 @@ class ProjectForm(FlaskForm):
     def validate_expected_end_date(self, field):
         if field.data and self.start_date.data and field.data < self.start_date.data:
             raise ValidationError("Expected end date cannot be before the start date.")
+
+    def validate_actual_completion_date(self, field):
+        if field.data and self.start_date.data and field.data < self.start_date.data:
+            raise ValidationError("Actual completion date cannot be before the start date.")
 
     def validate_total_value(self, field):
         if field.data is not None and field.data < 0:

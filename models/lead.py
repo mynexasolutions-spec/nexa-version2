@@ -1,8 +1,11 @@
+import os
 from datetime import datetime
 
 from sqlalchemy import Boolean, Column, DateTime, Index, Integer, String, Text, inspect, text
 
 from extensions import db
+
+_CONTACT_LEADS_TABLE_READY_FOR = None
 
 
 class ContactLead(db.Model):
@@ -34,7 +37,20 @@ class ContactLead(db.Model):
 
 
 def ensure_contact_leads_table():
+    global _CONTACT_LEADS_TABLE_READY_FOR
+
+    database_key = str(db.engine.url)
+    if _CONTACT_LEADS_TABLE_READY_FOR == database_key:
+        return
+
+    auto_migrate = os.getenv("ADMIN_AUTO_MIGRATE", "").lower() in {"1", "true", "yes", "on"}
+    if db.engine.dialect.name != "sqlite" and not auto_migrate:
+        _CONTACT_LEADS_TABLE_READY_FOR = database_key
+        return
+
     ContactLead.__table__.create(bind=db.engine, checkfirst=True)
+    for index in ContactLead.__table__.indexes:
+        index.create(bind=db.engine, checkfirst=True)
 
     inspector = inspect(db.engine)
     existing_columns = {
@@ -56,6 +72,7 @@ def ensure_contact_leads_table():
     missing_columns = set(column_sql) - existing_columns
 
     if not missing_columns:
+        _CONTACT_LEADS_TABLE_READY_FOR = database_key
         return
 
     with db.engine.begin() as connection:
@@ -63,3 +80,5 @@ def ensure_contact_leads_table():
             if column_name not in missing_columns:
                 continue
             connection.execute(text(column_sql[column_name]))
+
+    _CONTACT_LEADS_TABLE_READY_FOR = database_key

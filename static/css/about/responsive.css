@@ -10,7 +10,7 @@
   }
 
   .about-hero h1 {
-    font-size: 5rem;
+    font-size: 4.8rem;
   }
 
   .about-section-heading h2,
@@ -72,33 +72,19 @@
   }
 
   .about-hero h1 {
-    font-size: 4rem;
+    font-size: 3.8rem;
   }
 
   .about-hero-lede {
     font-size: 1rem;
   }
 
-  .about-hero-panel {
-    min-height: 330px;
+  .about-hero-grid {
+    gap: 34px;
   }
 
-  .about-mark-wrap {
-    top: 42px;
-    right: 42px;
-    width: 92px;
-    height: 92px;
-  }
-
-  .about-mark {
-    width: 60px;
-    height: 60px;
-  }
-
-  .about-panel-content {
-    left: 30px;
-    right: 30px;
-    bottom: 30px;
+  .about-hero-visual {
+    width: 100%;
   }
 
   .about-story,
@@ -182,7 +168,7 @@
 
 @media (max-width: 460px) {
   .about-hero h1 {
-    font-size: 3.25rem;
+    font-size: 3.05rem;
   }
 
   .about-section-heading h2,

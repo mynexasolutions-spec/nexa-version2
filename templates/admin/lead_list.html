@@ -1,5 +1,7 @@
 {% extends "layouts/base_admin.html" %}
 
+{% block admin_title %}Contact Leads{% endblock %}
+
 {% block content %}
 <div class="admin-container">
   <div class="admin-header">
@@ -17,6 +19,7 @@
           <th>Subject</th>
           <th>Message</th>
           <th>Email</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -38,6 +41,15 @@
               {% else %}
                 <span class="badge draft" title="{{ lead.email_error or 'Email notification was not sent' }}">Saved</span>
               {% endif %}
+            </td>
+            <td class="actions">
+              <form method="POST"
+                    action="{{ url_for('admin.delete_lead', lead_id=lead.id) }}"
+                    onsubmit="return confirm('Delete this lead?');"
+                    style="display:inline;">
+                {{ delete_form.hidden_tag() }}
+                <button type="submit" class="link-danger">Delete</button>
+              </form>
             </td>
           </tr>
         {% endfor %}

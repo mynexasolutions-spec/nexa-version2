@@ -1,5 +1,7 @@
 {% extends "layouts/base_admin.html" %}
 
+{% block admin_title %}{{ "Edit Blog" if is_edit else "Create Blog" }}{% endblock %}
+
 {% block styles %}
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 {% endblock %}
@@ -39,8 +41,20 @@
     <label for="author_name">Author Name</label>
     {{ form.author_name(class="input") }}
 
-    <label for="category_id">Category</label>
-    {{ form.category_id(class="input") }}
+    <div class="category-inline">
+      <div>
+        <label for="category_id">Category</label>
+        {{ form.category_id(class="input") }}
+      </div>
+      <div>
+        <label for="new-category-name">Add category</label>
+        <div class="inline-control">
+          <input type="text" id="new-category-name" class="input" placeholder="New category name">
+          <button type="button" class="btn-secondary" id="add-category-btn">Add</button>
+        </div>
+        <p class="inline-status" id="category-status" role="status" aria-live="polite"></p>
+      </div>
+    </div>
 
     <label>Featured Image</label>
     {% if is_edit and form.featured_image.data %}
@@ -140,6 +154,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var form        = document.getElementById("blog-form");
     var wordCountEl = document.getElementById("word-count");
     var charCountEl = document.getElementById("char-count");
+    var csrfTokenEl = document.querySelector('#blog-form input[name="csrf_token"]');
 
     // Existing content for edit mode (read before Quill takes over the DOM)
     var existingContent = document.getElementById("hidden-content")
@@ -336,6 +351,60 @@ document.addEventListener("DOMContentLoaded", function () {
     if (seoDescInput)  seoDescInput.addEventListener("input",  updateSeoPreview);
     if (slugInput)     slugInput.addEventListener("input",     updateSeoPreview);
     if (seoKwInput)    seoKwInput.addEventListener("input",    renderKeywordTags);
+
+    var addCategoryBtn = document.getElementById("add-category-btn");
+    var newCategoryInput = document.getElementById("new-category-name");
+    var categorySelect = document.getElementById("category_id");
+    var categoryStatus = document.getElementById("category-status");
+
+    function setCategoryStatus(message, type) {
+        if (!categoryStatus) return;
+        categoryStatus.textContent = message || "";
+        categoryStatus.className = "inline-status" + (type ? " " + type : "");
+    }
+
+    if (addCategoryBtn && newCategoryInput && categorySelect) {
+        addCategoryBtn.addEventListener("click", function () {
+            var name = newCategoryInput.value.trim();
+            if (!name) {
+                setCategoryStatus("Enter a category name.", "error");
+                return;
+            }
+
+            addCategoryBtn.disabled = true;
+            setCategoryStatus("Adding category...", "");
+
+            fetch("{{ url_for('admin.create_category_inline') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": csrfTokenEl ? csrfTokenEl.value : ""
+                },
+                body: JSON.stringify({ name: name })
+            })
+            .then(function (response) {
+                return response.json().then(function (data) {
+                    if (!response.ok) throw data;
+                    return data;
+                });
+            })
+            .then(function (data) {
+                var option = document.createElement("option");
+                option.value = data.id;
+                option.textContent = data.name;
+                option.selected = true;
+                categorySelect.appendChild(option);
+                newCategoryInput.value = "";
+                setCategoryStatus("Category added and selected.", "success");
+            })
+            .catch(function (error) {
+                setCategoryStatus(error && error.error ? error.error : "Could not add category.", "error");
+            })
+            .finally(function () {
+                addCategoryBtn.disabled = false;
+            });
+        });
+    }
 
     // Init on page load (edit mode)
     updateSeoPreview();
