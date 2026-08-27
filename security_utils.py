@@ -39,5 +39,5 @@ def login_ip_key(prefix, remote_addr):
     return f"{prefix}:ip:{normalized_addr}"
 
 
-admin_login_limiter = LoginRateLimiter()
-admin_ip_login_limiter = LoginRateLimiter(max_attempts=20, window_seconds=900)
+admin_login_limiter = LoginRateLimiter(max_attempts=10, window_seconds=900)
+admin_ip_login_limiter = LoginRateLimiter(max_attempts=40, window_seconds=900)

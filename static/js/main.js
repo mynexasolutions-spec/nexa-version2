@@ -378,3 +378,10 @@ if (typeof lottie !== 'undefined' && document.getElementById('lottie-bg')) {
     path: '/static/animations/hero-wireframe.json'
   });
 }
+
+document.addEventListener("click", (event) => {
+  const closeBtn = event.target.closest(".flash-close");
+  if (!closeBtn) return;
+  const alertBox = closeBtn.closest(".contact-alert, .blog-alert");
+  if (alertBox) alertBox.remove();
+});

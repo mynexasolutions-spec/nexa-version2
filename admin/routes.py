@@ -4,6 +4,7 @@ from models import (
     BlogPost,
     Category,
     ContactLead,
+    INITIAL_ADVANCE_NOTE,
     Project,
     ProjectDocument,
     ProjectPayment,
@@ -29,6 +30,7 @@ admin_bp = Blueprint("admin", __name__, url_prefix="/admin")
 
 ALLOWED_PROJECT_DOCUMENT_EXTENSIONS = {"pdf", "doc", "docx", "jpg", "jpeg", "png", "webp"}
 PROJECTS_PER_PAGE = 20
+BLOGS_PER_PAGE = 6
 _ADMIN_CONTENT_TABLES_READY_FOR = None
 
 
@@ -322,17 +324,18 @@ def build_monthly_revenue(period, today, projects=None):
 
     for project in projects:
         for payment in project.payments:
+            if payment.is_initial_advance:
+                continue
             if payment.paid_on < months[0]:
                 continue
             month = payment.paid_on.replace(day=1)
             if month in revenue_by_month:
                 revenue_by_month[month] += decimal_value(payment.amount)
 
-    # Legacy projects only contribute when no payment rows exist for that project.
+    # The advance is stored on the project; generated initial-advance rows above
+    # are excluded so the same receipt is not counted twice.
     for project in projects:
         if project.advance_received <= 0:
-            continue
-        if project.payments:
             continue
         month_source = project.start_date or project.created_at.date()
         month = month_source.replace(day=1)
@@ -382,6 +385,177 @@ def build_status_distribution(projects):
     return distribution
 
 
+# ---- Project Metrics (dashboard) aggregation helpers -----------------------
+
+PROJECT_METRIC_COLORS = {
+    "active": "#3B82F6",
+    "completed": "#20B978",
+    "on_hold": "#F59E0B",
+    "cancelled": "#EF4444",
+}
+
+METRIC_CLIENT_PALETTE = [
+    "#3B82F6", "#20B978", "#8B5CF6", "#F59E0B", "#EC4899", "#14B8A6", "#6366F1", "#F97316",
+]
+
+MONTH_SHORT = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+STATUS_KEYS = ("active", "completed", "on_hold", "cancelled")
+
+
+def metric_month_series(year, projects):
+    """Cumulative per-month counts of projects started within a year, split by status."""
+    series = {key: [0] * 12 for key in STATUS_KEYS}
+    for project in projects:
+        base = _project_effective_date(project)
+        if base is None or base.year != year:
+            continue
+        start_index = base.month - 1
+        status = project.status if project.status in STATUS_KEYS else "active"
+        for m in range(start_index, 12):
+            series[status][m] += 1
+    max_value = max((max(values) for values in series.values()), default=0)
+    return series, max_value
+
+
+def _project_effective_date(project):
+    if project.created_at:
+        return project.created_at.date()
+    return project.start_date
+
+
+def metric_value_series(year, projects):
+    """Per-month collected (payments) and remaining (outstanding) amounts."""
+    collected = [Decimal("0.00")] * 12
+    remaining = [Decimal("0.00")] * 12
+    for project in projects:
+        for payment in project.payments:
+            if payment.paid_on.year == year:
+                collected[payment.paid_on.month - 1] += decimal_value(payment.amount)
+        advance_date = project.start_date or _project_effective_date(project)
+        if advance_date is not None and advance_date.year == year and project.advance_received:
+            collected[advance_date.month - 1] += decimal_value(project.advance_received)
+        due_date = project.expected_end_date or _project_effective_date(project)
+        if due_date is not None and due_date.year == year:
+            remaining[due_date.month - 1] += project.remaining_amount
+    max_value = max((float(max(collected)), float(max(remaining))), default=0.0) or 1.0
+    return collected, remaining, max_value
+
+
+def build_status_metric_distribution(projects):
+    total = len(projects) or 1
+    labels = {"active": "In Progress", "completed": "Completed", "on_hold": "On Hold", "cancelled": "Cancelled"}
+    raw = []
+    for status in STATUS_KEYS:
+        count = len([p for p in projects if p.status == status])
+        raw.append((status, count))
+    raw.sort(key=lambda item: item[1], reverse=True)
+    distribution = []
+    start = 0.0
+    for status, count in raw:
+        percent = percentage_of(len(projects), count)
+        end = start + percent
+        distribution.append({
+            "key": status,
+            "label": labels[status],
+            "count": count,
+            "percent": percent,
+            "color": PROJECT_METRIC_COLORS[status],
+            "range": f"{start}% {end}%",
+        })
+        start = end
+    return {"total": len(projects), "segments": distribution}
+
+
+def build_client_metric_distribution(projects):
+    counts = {}
+    for project in projects:
+        key = (project.client_name or "Unnamed").strip() or "Unnamed"
+        counts[key] = counts.get(key, 0) + 1
+    ordered = sorted(counts.items(), key=lambda item: item[1], reverse=True)
+    top = ordered[:5]
+    rest = sum(count for _, count in ordered[5:])
+    segments = []
+    overall = len(projects) or 1
+    if rest:
+        top.append(("Other", rest))
+    for index, (name, count) in enumerate(top):
+        segments.append({
+            "label": name,
+            "count": count,
+            "percent": percentage_of(len(projects), count),
+            "color": METRIC_CLIENT_PALETTE[index % len(METRIC_CLIENT_PALETTE)],
+            "range": f"{sum(s['percent'] for s in segments)}% {(sum(s['percent'] for s in segments) + percentage_of(len(projects), count))}%",
+        })
+    return {"total": len(projects), "segments": segments}
+
+
+def percentage_of(total, count):
+    return round((count / total) * 100, 1) if total else 0.0
+
+
+def cumulative_growth(current, previous):
+    if not previous or previous <= 0:
+        return None
+    return round(((current - previous) / previous) * 100, 1)
+
+
+def _status_pill_tone(status):
+    return {
+        "active": "green",
+        "completed": "purple",
+        "on_hold": "orange",
+        "cancelled": "gray",
+    }.get(status, "gray")
+
+
+def _project_average_duration(projects):
+    durations = []
+    for project in projects:
+        start = project.start_date
+        end = project.actual_completion_date or project.expected_end_date
+        if start and end and end >= start:
+            durations.append((end - start).days)
+    if not durations:
+        return 0
+    return round(sum(durations) / len(durations))
+
+
+def _build_gantt_rows(projects, year):
+    palette = [
+        {"bg": "#F3E8FF", "text": "#7C3AED", "bar": "#8B5CF6"},
+        {"bg": "#E8F8F0", "text": "#16803C", "bar": "#34B87C"},
+        {"bg": "#FFF6E5", "text": "#B45309", "bar": "#F59E0B"},
+        {"bg": "#EEF5FF", "text": "#2563EB", "bar": "#60A5FA"},
+        {"bg": "#FFF0F1", "text": "#DC2626", "bar": "#F87171"},
+        {"bg": "#EAF0FF", "text": "#4338CA", "bar": "#6366F1"},
+    ]
+    rows = []
+    for index, project in enumerate(sorted(projects, key=lambda p: p.start_date or date(year, 1, 1))[:7]):
+        start = project.start_date or _project_effective_date(project) or date(year, 1, 1)
+        end = project.expected_end_date or project.actual_completion_date
+        if end is None:
+            end = today_end = date.today() if project.status != "completed" else start
+        start_month = max(0, start.month - 1)
+        end_month = min(11, end.month - 1) if end else start_month
+        if end_month < start_month:
+            end_month = start_month
+        tone = palette[index % len(palette)]
+        label = f"{MONTH_SHORT[start.month - 1]} - {MONTH_SHORT[end.month - 1]}"
+        rows.append({
+            "name": project.name,
+            "start": start_month,
+            "end": end_month,
+            "start_month_index": start_month,
+            "end_month_index": end_month,
+            "label": label,
+            "color": tone["bar"],
+            "bg": tone["bg"],
+            "text": tone["text"],
+        })
+    return rows
+
+
 @admin_bp.route("/projects")
 @login_required
 def project_list():
@@ -389,6 +563,8 @@ def project_list():
     status_filter = request.args.get("status", "").strip()
     payment_filter = request.args.get("payment", "").strip()
     page = request.args.get("page", 1, type=int)
+    search_query = request.args.get("q", "").strip()
+    sort = request.args.get("sort", "newest").strip()
     query = Project.query.options(selectinload(Project.payments))
 
     if status_filter:
@@ -397,11 +573,35 @@ def project_list():
     if payment_filter:
         query = apply_project_payment_filter(query, payment_filter)
 
-    pagination = query.order_by(Project.created_at.desc()).paginate(
+    if search_query:
+        like = f"%{search_query}%"
+        query = query.filter(
+            db.or_(Project.name.ilike(like), Project.client_name.ilike(like))
+        )
+
+    sort_orders = {
+        "oldest": Project.created_at.asc(),
+        "value_high": Project.total_value.desc(),
+        "name": Project.name.asc(),
+    }
+    order_clause = sort_orders.get(sort, Project.created_at.desc())
+    pagination = query.order_by(order_clause).paginate(
         page=page,
         per_page=PROJECTS_PER_PAGE,
         error_out=False,
     )
+
+    all_projects = Project.query.options(selectinload(Project.payments)).all()
+    now = datetime.now()
+    month_start = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+    stats = {
+        "total": len(all_projects),
+        "active": sum(1 for p in all_projects if p.status == "active"),
+        "completed": sum(1 for p in all_projects if p.status == "completed"),
+        "on_hold": sum(1 for p in all_projects if p.status == "on_hold"),
+        "awaiting": sum(1 for p in all_projects if p.payment_status == "unpaid"),
+        "new_this_month": sum(1 for p in all_projects if p.created_at and p.created_at >= month_start),
+    }
 
     return render_template(
         "admin/project_list.html",
@@ -409,6 +609,9 @@ def project_list():
         pagination=pagination,
         status_filter=status_filter,
         payment_filter=payment_filter,
+        search_query=search_query,
+        sort=sort,
+        stats=stats,
         delete_form=DeleteForm(),
     )
 
@@ -418,31 +621,129 @@ def project_list():
 def project_dashboard():
     ensure_project_tables()
     today = date.today()
-    month_start = today.replace(day=1)
-    if month_start.month == 12:
-        next_month_start = month_start.replace(year=month_start.year + 1, month=1)
-    else:
-        next_month_start = month_start.replace(month=month_start.month + 1)
+    year = request.args.get("year", type=int) or today.year
+    status_filter = request.args.get("status", "").strip()
+    client_filter = request.args.get("client", "").strip()
 
-    projects = Project.query.options(selectinload(Project.payments)).order_by(Project.created_at.desc()).all()
+    all_projects = Project.query.options(selectinload(Project.payments)).all()
+    projects = all_projects
+    if status_filter:
+        projects = [p for p in projects if p.status == status_filter]
+    if client_filter:
+        projects = [p for p in projects if (p.client_name or "").strip() == client_filter]
+
+    client_options = sorted({(p.client_name or "").strip() for p in all_projects if (p.client_name or "").strip()})
+    year_options = [today.year - offset for offset in range(0, 4)]
+
+    total_projects = len(projects)
+    active_projects = len([p for p in projects if p.status == "active"])
+    completed_projects = len([p for p in projects if p.status == "completed"])
+    on_hold_projects = len([p for p in projects if p.status == "on_hold"])
+    cancelled_projects = len([p for p in projects if p.status == "cancelled"])
+
+    total_value = sum((decimal_value(p.total_value) for p in projects), Decimal("0.00"))
+    collected_amount = sum((p.collected_amount for p in projects), Decimal("0.00"))
+    outstanding_amount = sum((p.remaining_amount for p in projects), Decimal("0.00"))
+
+    # --- KPI change notes (real data, no fabrication) ---
+    cum_end = {y: len([p for p in projects if (_project_effective_date(p) or today) <= date(y, 12, 31)]) for y in (year - 1, year)}
+    total_growth = cumulative_growth(cum_end[year], cum_end[year - 1])
+    if total_growth is not None:
+        total_note = f"{'+' if total_growth > 0 else ''}{total_growth}% vs last year"
+        total_direction = "up" if total_growth >= 0 else "down"
+        total_tone = "green" if total_growth >= 0 else "red"
+    else:
+        total_note = f"+{cum_end[year] - (cum_end[year - 1] or 0)} this year"
+        total_direction = "up"
+        total_tone = "green"
+
+    value_this_year = sum((decimal_value(p.total_value) for p in projects if (_project_effective_date(p) or today).year == year), Decimal("0.00"))
+    value_last_year = sum((decimal_value(p.total_value) for p in projects if (_project_effective_date(p) or today).year == year - 1), Decimal("0.00"))
+    value_growth = cumulative_growth(float(value_this_year), float(value_last_year))
+    if value_growth is not None:
+        value_note = f"{'+' if value_growth > 0 else ''}{value_growth}% vs last year"
+        value_direction = "up" if value_growth >= 0 else "down"
+        value_tone = "green" if value_growth >= 0 else "red"
+    else:
+        value_note = f"+{format_money(value_this_year)} this year"
+        value_direction = "up"
+        value_tone = "green"
+
+    def status_note(count):
+        return f"{percentage_of(total_projects, count)}% of total"
+
+    # --- Charts ---
+    trend_series, trend_max = metric_month_series(year, projects)
+    value_collected, value_remaining, value_max = metric_value_series(year, projects)
+    value_collected = [float(v) for v in value_collected]
+    value_remaining = [float(v) for v in value_remaining]
+    status_metric = build_status_metric_distribution(projects)
+    client_metric = build_client_metric_distribution(projects)
+
+    # --- Secondary KPIs ---
+    completion_rate = percentage_of(total_projects, completed_projects)
+    duration_days = _project_average_duration(projects)
+    overdue = [p for p in projects if p.is_overdue(today)]
+    overdue_count = len(overdue)
+
+    # --- Top performing projects (by collection progress) ---
+    top_projects = sorted(projects, key=lambda p: p.payment_percent, reverse=True)[:5]
+    top_rows = [{
+        "id": p.id,
+        "name": p.name,
+        "client": p.client_name,
+        "progress": p.payment_percent,
+        "value_label": p.total_value_label,
+        "status_label": p.status_label,
+        "status_tone": _status_pill_tone(p.status),
+        "link": url_for("admin.project_detail", project_id=p.id),
+    } for p in top_projects]
+
+    # --- Gantt timeline (real start/end dates) ---
+    gantt_rows = _build_gantt_rows(projects, year)
+
+    kpis = [
+        {"key": "total", "label": "Total Projects", "value": total_projects, "tone": "green",
+         "note": total_note, "direction": total_direction, "note_tone": total_tone},
+        {"key": "completed", "label": "Completed", "value": completed_projects, "tone": "blue",
+         "note": status_note(completed_projects), "direction": "none", "note_tone": "muted"},
+        {"key": "in_progress", "label": "In Progress", "value": active_projects, "tone": "purple",
+         "note": status_note(active_projects), "direction": "none", "note_tone": "muted"},
+        {"key": "on_hold", "label": "On Hold", "value": on_hold_projects, "tone": "orange",
+         "note": status_note(on_hold_projects), "direction": "none", "note_tone": "muted"},
+        {"key": "value", "label": "Total Value", "value": format_money(total_value), "tone": "red",
+         "note": value_note, "direction": value_direction, "note_tone": value_tone},
+    ]
+
+    metrics = {
+        "kpis": kpis,
+        "total_value_label": format_money(total_value),
+        "collected_label": format_money(collected_amount),
+        "outstanding_label": format_money(outstanding_amount),
+        "trend": {"series": trend_series, "max": trend_max},
+        "status": status_metric,
+        "clients": client_metric,
+        "value": {"collected": value_collected, "remaining": value_remaining, "max": value_max},
+        "completion_rate": completion_rate,
+        "avg_duration_days": duration_days,
+        "overdue_count": overdue_count,
+        "overdue_link": url_for("admin.project_list"),
+        "top_rows": top_rows,
+        "gantt": {"rows": gantt_rows, "start_month": 0, "end_month": 11},
+    }
 
     return render_template(
         "admin/project_dashboard.html",
-        total_projects=Project.query.count(),
-        active_projects=Project.query.filter_by(status="active").count(),
-        completed_projects=Project.query.filter_by(status="completed").count(),
-        on_hold_projects=Project.query.filter_by(status="on_hold").count(),
-        cancelled_projects=Project.query.filter_by(status="cancelled").count(),
-        awaiting_payment_count=project_outstanding_filter(Project.query).count(),
-        completed_pending_count=project_outstanding_filter(Project.query.filter_by(status="completed")).count(),
-        monthly_projects=Project.query
-            .filter(Project.start_date >= month_start)
-            .filter(Project.start_date < next_month_start)
-            .count(),
-        total_value=format_money(sum((decimal_value(project.total_value) for project in projects), Decimal("0.00"))),
-        collected_amount=format_money(sum((project.collected_amount for project in projects), Decimal("0.00"))),
-        outstanding_amount=format_money(sum((project.remaining_amount for project in projects), Decimal("0.00"))),
-        recent_projects=projects[:6],
+        metrics=metrics,
+        MONTH_MONTH=MONTH_SHORT,
+        date_start=f"Jan 01, {year}",
+        date_end=f"Dec 31, {year}",
+        year=year,
+        current_year=today.year,
+        status_filter=status_filter,
+        client_filter=client_filter,
+        client_options=client_options,
+        year_options=year_options,
     )
 
 
@@ -657,7 +958,7 @@ def create_initial_project_payment(project, amount, paid_on):
         project=project,
         amount=amount,
         paid_on=paid_on or date.today(),
-        note="Initial advance",
+        note=INITIAL_ADVANCE_NOTE,
     ))
 
 
@@ -688,8 +989,63 @@ def validate_project_document_file(file, file_name):
 @admin_bp.route("/blogs")
 @login_required
 def blog_list():
-    posts = BlogPost.query.order_by(BlogPost.created_at.desc()).all()
-    return render_template("admin/blog_list.html", blogs=posts)
+    q = request.args.get("q", "").strip()
+    category = request.args.get("category", "").strip()
+    status = request.args.get("status", "").strip()
+    sort = request.args.get("sort", "latest").strip()
+    page = request.args.get("page", 1, type=int)
+    query = BlogPost.query.options(selectinload(BlogPost.category))
+
+    if q:
+        like = f"%{q}%"
+        query = query.filter(
+            db.or_(
+                BlogPost.title.ilike(like),
+                BlogPost.summary.ilike(like),
+                BlogPost.author_name.ilike(like),
+            )
+        )
+
+    if category:
+        query = query.filter(BlogPost.category_id == category)
+
+    if status == "published":
+        query = query.filter(BlogPost.is_published == True)
+    if status == "draft":
+        query = query.filter(BlogPost.is_published == False)
+
+    sort_orders = {
+        "oldest": BlogPost.created_at.asc(),
+        "title": BlogPost.title.asc(),
+        "views": BlogPost.view_count.desc(),
+    }
+    order_clause = sort_orders.get(sort, BlogPost.created_at.desc())
+    pagination = query.order_by(order_clause).paginate(
+        page=page,
+        per_page=BLOGS_PER_PAGE,
+        error_out=False,
+    )
+
+    total = BlogPost.query.count()
+    published = BlogPost.query.filter_by(is_published=True).count()
+    drafts = BlogPost.query.filter_by(is_published=False).count()
+    views = int(db.session.query(db.func.coalesce(db.func.sum(BlogPost.view_count), 0)).scalar() or 0)
+    views_label = f"{views/1000:.1f}K" if views >= 1000 else str(views)
+    stats = {"total": total, "published": published, "drafts": drafts, "views": views, "views_label": views_label}
+
+    categories = Category.query.order_by(Category.name).all()
+
+    return render_template(
+        "admin/blog_list.html",
+        blogs=pagination.items,
+        pagination=pagination,
+        categories=categories,
+        category_filter=category,
+        status_filter=status,
+        search_query=q,
+        sort=sort,
+        stats=stats,
+    )
 
 # ============================
 # CREATE BLOG 

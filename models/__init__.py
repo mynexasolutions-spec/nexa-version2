@@ -12,6 +12,7 @@ from .blog import (
 )
 from .project import (
     DOCUMENT_TYPE_CHOICES,
+    INITIAL_ADVANCE_NOTE,
     PROJECT_STATUS_CHOICES,
     Project,
     ProjectDocument,
@@ -32,6 +33,7 @@ __all__ = [
     "ProjectPayment",
     "ContactLead",
     "DOCUMENT_TYPE_CHOICES",
+    "INITIAL_ADVANCE_NOTE",
     "PROJECT_STATUS_CHOICES",
     "ensure_project_tables",
     "format_money",

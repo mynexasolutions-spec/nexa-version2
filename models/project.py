@@ -1,6 +1,6 @@
 import os
 from datetime import date, datetime, timedelta
-from decimal import Decimal
+from decimal import Decimal, ROUND_HALF_UP
 
 from sqlalchemy import (
     Column,
@@ -20,6 +20,7 @@ from sqlalchemy.orm import relationship
 from extensions import db
 
 _PROJECT_TABLES_READY_FOR = None
+INITIAL_ADVANCE_NOTE = "Initial advance"
 
 
 class Project(db.Model):
@@ -61,15 +62,28 @@ class Project(db.Model):
 
     @property
     def collected_amount(self):
-        payment_total = sum((decimal_or_zero(payment.amount) for payment in self.payments), Decimal("0.00"))
-        if payment_total > 0:
-            return payment_total
-        return decimal_or_zero(self.advance_received)
+        subsequent_payments = sum(
+            (
+                decimal_or_zero(payment.amount)
+                for payment in self.payments
+                if not payment.is_initial_advance
+            ),
+            Decimal("0.00"),
+        )
+        return decimal_or_zero(self.advance_received) + subsequent_payments
 
     @property
     def remaining_amount(self):
         remaining = decimal_or_zero(self.total_value) - self.collected_amount
         return max(Decimal("0.00"), remaining)
+
+    @property
+    def payment_percent(self):
+        total = decimal_or_zero(self.total_value)
+        if total <= 0:
+            return 0
+        percent = (self.collected_amount / total) * Decimal("100")
+        return int(percent.quantize(Decimal("1"), rounding=ROUND_HALF_UP))
 
     @property
     def total_value_label(self):
@@ -151,6 +165,10 @@ class ProjectPayment(db.Model):
     @property
     def amount_label(self):
         return format_money(self.amount)
+
+    @property
+    def is_initial_advance(self):
+        return (self.note or "").strip().casefold() == INITIAL_ADVANCE_NOTE.casefold()
 
 
 class ProjectDocument(db.Model):

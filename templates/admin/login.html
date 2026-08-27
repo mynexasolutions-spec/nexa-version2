@@ -20,7 +20,10 @@
       {% if messages %}
         <div class="flash-container">
           {% for category, message in messages %}
-            <div class="flash flash-{{ category }}">{{ message }}</div>
+            <div class="flash flash-{{ category }}">
+              <span class="flash-text">{{ message }}</span>
+              <button type="button" class="flash-close" aria-label="Dismiss message">&times;</button>
+            </div>
           {% endfor %}
         </div>
       {% endif %}
@@ -44,5 +47,12 @@
       </form>
     </div>
   </main>
+  <script>
+    document.querySelectorAll(".flash-close").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        btn.closest(".flash")?.remove();
+      });
+    });
+  </script>
 </body>
 </html>

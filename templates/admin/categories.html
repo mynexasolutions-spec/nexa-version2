@@ -3,9 +3,17 @@
 {% block content %}
 <div class="admin-container">
 
-  <h1>Manage Categories</h1>
+  <div class="dashboard-hero">
+    <div>
+      <span class="admin-kicker">Taxonomy</span>
+      <h1>Categories</h1>
+    </div>
+    <div class="dashboard-hero-actions">
+      <a href="#category-add-form" class="btn-primary">New Category</a>
+    </div>
+  </div>
 
-  <form method="POST" class="category-add-form">
+  <form method="POST" class="category-add-form" id="category-add-form">
     <input type="text" name="name" placeholder="New category name" required />
     <button type="submit" class="btn-primary">Add Category</button>
   </form>

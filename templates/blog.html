@@ -70,6 +70,7 @@
             {% for category, message in messages %}
               <div class="blog-alert blog-alert-{{ category }}">
                 <p>{{ message }}</p>
+                <button type="button" class="flash-close" aria-label="Dismiss message">&times;</button>
               </div>
             {% endfor %}
           </div>

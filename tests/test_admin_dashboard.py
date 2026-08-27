@@ -50,8 +50,8 @@ def test_dashboard_uses_payment_revenue_and_monthly_grouping(client):
     assert response.status_code == 200
     html = response.get_data(as_text=True)
     assert "1,500.00" in html
-    assert "800.00" in html
-    assert "700.00" in html
+    assert "900.00" in html
+    assert "600.00" in html
     assert "Storefront" in html
     assert "Payments due soon" in html
     assert "Aug" in html
@@ -63,4 +63,3 @@ def test_admin_logo_has_no_added_background():
     logo_block = css.split(".admin-nav-brand img", 1)[1].split("}", 1)[0]
     assert "background: transparent" in logo_block
     assert "background: #fff" not in logo_block
-

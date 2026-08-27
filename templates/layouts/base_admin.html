@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
   {% block styles %}{% endblock %}
 </head>
-<body>
+<body class="{% block admin_body_class %}{% endblock %}">
   <svg class="admin-icon-sprite" aria-hidden="true" focusable="false">
     <symbol id="icon-dashboard" viewBox="0 0 24 24">
       <path d="M4 13h7V4H4v9Zm0 7h7v-5H4v5Zm9 0h7v-9h-7v9Zm0-16v5h7V4h-7Z"/>
@@ -45,7 +45,10 @@
       <div class="admin-sidebar-head">
         <a href="{{ url_for('admin.dashboard') }}" class="admin-nav-brand">
           <img src="{{ url_for('static', filename='images/logo/logo.png') }}" alt="Nexa Solutions">
-          <span>Nexa Admin</span>
+          <span class="admin-nav-brand-text">
+            <span class="admin-nav-brand-title">Nexa Admin</span>
+            <span class="admin-nav-brand-sub">Manage · Analyze · Grow</span>
+          </span>
         </a>
         <button class="admin-menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" data-admin-menu-toggle>
           <span></span><span></span><span></span>
@@ -58,6 +61,15 @@
         <a href="{{ url_for('admin.project_dashboard') }}" class="{{ 'active' if request.endpoint == 'admin.project_dashboard' else '' }}"><span class="nav-icon"><svg><use href="#icon-metrics"></use></svg></span>Project Metrics</a>
         <a href="{{ url_for('admin.lead_list') }}" class="{{ 'active' if request.endpoint == 'admin.lead_list' else '' }}"><span class="nav-icon"><svg><use href="#icon-leads"></use></svg></span>Leads</a>
       </nav>
+      <div class="admin-promo" aria-hidden="true">
+        <div class="admin-promo-body">
+          <span class="admin-promo-title">Build Better.</span>
+          <span class="admin-promo-title">Grow Faster.</span>
+          <span class="admin-promo-sub">Powered by Nexa</span>
+        </div>
+        <span class="admin-promo-shape admin-promo-shape-1"></span>
+        <span class="admin-promo-shape admin-promo-shape-2"></span>
+      </div>
       <div class="admin-sidebar-footer" data-admin-menu>
         <a href="/" target="_blank" rel="noopener noreferrer"><span class="nav-icon"><svg><use href="#icon-site"></use></svg></span>View site</a>
         <a href="{{ url_for('admin.logout') }}" class="nav-logout"><span class="nav-icon"><svg><use href="#icon-logout"></use></svg></span>Logout</a>
@@ -65,11 +77,28 @@
     </aside>
 
     <main class="admin-main">
+      <div class="admin-utilitybar">
+        <button type="button" class="admin-utilitybar-icon" aria-label="Search">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+        <button type="button" class="admin-utilitybar-icon" aria-label="Notifications">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        </button>
+        <div class="admin-utilitybar-user">
+          <span class="admin-utilitybar-avatar" aria-hidden="true">A</span>
+          <span class="admin-utilitybar-name">Admin</span>
+          <svg class="admin-utilitybar-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+      </div>
+
       {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
           <div class="flash-container">
             {% for category, message in messages %}
-              <div class="flash flash-{{ category }}">{{ message }}</div>
+              <div class="flash flash-{{ category }}">
+                <span class="flash-text">{{ message }}</span>
+                <button type="button" class="flash-close" aria-label="Dismiss message">&times;</button>
+              </div>
             {% endfor %}
           </div>
         {% endif %}
@@ -90,6 +119,11 @@
         adminMenus.forEach((menu) => menu.classList.toggle("is-open", !isOpen));
       });
     }
+    document.querySelectorAll(".flash-close").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        btn.closest(".flash")?.remove();
+      });
+    });
   </script>
 </body>
 </html>

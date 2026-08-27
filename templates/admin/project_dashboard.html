@@ -1,62 +1,361 @@
 {% extends "layouts/base_admin.html" %}
 
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin-project-metrics.css') }}">
+{% endblock %}
+
+{% block admin_body_class %}admin-project-metrics-page{% endblock %}
+
 {% block content %}
-<div class="admin-container">
-  <div class="admin-header">
-    <h1>Project Dashboard</h1>
-    <div class="dashboard-actions" style="margin-bottom: 0;">
-      <a href="{{ url_for('admin.project_list') }}" class="btn-secondary">Projects</a>
-      <a href="{{ url_for('admin.create_project') }}" class="btn-primary">+ New Project</a>
+{% set trend = metrics.trend %}
+{% set m = trend.max if trend.max and trend.max > 0 else 1 %}
+{% set series_order = [
+  {'key':'completed','label':'Completed','color':'#20B978'},
+  {'key':'active','label':'In Progress','color':'#3B82F6'},
+  {'key':'on_hold','label':'On Hold','color':'#F59E0B'},
+  {'key':'cancelled','label':'Cancelled','color':'#EF4444'}
+] %}
+{% set L = 44 %}{% set R = 14 %}{% set T = 14 %}{% set B = 36 %}
+{% set plotW = 560 - L - R %}
+{% set plotH = 240 - T - B %}
+{% set baseY = 240 - B %}
+{% set step = plotW / 11 %}
+
+<div class="pm-page">
+
+  <div class="dashboard-hero">
+    <div>
+      <span class="admin-kicker">Analytics</span>
+      <h1>Project Metrics</h1>
+    </div>
+    <div class="dashboard-hero-actions">
+      <details class="pm-dd pm-range-dd" id="pmRangeDd">
+        <summary class="pm-range-btn">
+          <svg class="pm-range-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span class="pm-range-text">{{ date_start }} - {{ date_end }}</span>
+          <svg class="pm-range-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="pm-dd-menu">
+          <div class="pm-dd-heading">Reporting year</div>
+          {% for y in year_options %}
+          <a class="{{ 'is-active' if y == year else '' }}" href="{{ url_for('admin.project_dashboard', year=y, status=status_filter or none, client=client_filter or none) }}">{{ y }}{% if y == current_year %} (This year){% endif %}</a>
+          {% endfor %}
+        </div>
+      </details>
+
+      <details class="pm-dd pm-filter-dd" id="pmFilterDd">
+        <summary class="pm-filter-btn">
+          <svg class="pm-filter-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+          Filter
+          {% set filter_count = (1 if status_filter else 0) + (1 if client_filter else 0) %}
+          {% if filter_count %}<span class="pm-filter-count">{{ filter_count }}</span>{% endif %}
+        </summary>
+        <div class="pm-dd-menu pm-dd-menu-wide">
+          <div class="pm-dd-heading">Status</div>
+          <a class="{{ 'is-active' if not status_filter else '' }}" href="{{ url_for('admin.project_dashboard', year=year, status=none, client=client_filter or none) }}">All Status</a>
+          <a class="{{ 'is-active' if status_filter == 'active' else '' }}" href="{{ url_for('admin.project_dashboard', year=year, status='active', client=client_filter or none) }}">Active</a>
+          <a class="{{ 'is-active' if status_filter == 'completed' else '' }}" href="{{ url_for('admin.project_dashboard', year=year, status='completed', client=client_filter or none) }}">Completed</a>
+          <a class="{{ 'is-active' if status_filter == 'on_hold' else '' }}" href="{{ url_for('admin.project_dashboard', year=year, status='on_hold', client=client_filter or none) }}">On Hold</a>
+          <a class="{{ 'is-active' if status_filter == 'cancelled' else '' }}" href="{{ url_for('admin.project_dashboard', year=year, status='cancelled', client=client_filter or none) }}">Cancelled</a>
+          {% if client_options %}
+          <div class="pm-dd-heading">Client</div>
+          <a class="{{ 'is-active' if not client_filter else '' }}" href="{{ url_for('admin.project_dashboard', year=year, status=status_filter or none, client=none) }}">All Clients</a>
+          {% for cl in client_options %}
+          <a class="{{ 'is-active' if client_filter == cl else '' }}" href="{{ url_for('admin.project_dashboard', year=year, status=status_filter or none, client=cl) }}">{{ cl }}</a>
+          {% endfor %}
+          {% endif %}
+        </div>
+      </details>
     </div>
   </div>
 
-  <div class="dashboard-stats">
-    <div class="stat-card"><h3>Total Projects</h3><p>{{ total_projects }}</p></div>
-    <div class="stat-card"><h3>Active</h3><p>{{ active_projects }}</p></div>
-    <div class="stat-card"><h3>Completed</h3><p>{{ completed_projects }}</p></div>
-    <div class="stat-card"><h3>On Hold</h3><p>{{ on_hold_projects }}</p></div>
-    <div class="stat-card"><h3>Cancelled</h3><p>{{ cancelled_projects }}</p></div>
-    <div class="stat-card"><h3>Awaiting Payment</h3><p>{{ awaiting_payment_count }}</p></div>
-    <div class="stat-card"><h3>Completed Pending</h3><p>{{ completed_pending_count }}</p></div>
-    <div class="stat-card"><h3>This Month</h3><p>{{ monthly_projects }}</p></div>
-    <div class="stat-card"><h3>Total Value</h3><p class="stat-text">{{ total_value }}</p></div>
-    <div class="stat-card"><h3>Collected</h3><p class="stat-text">{{ collected_amount }}</p></div>
-    <div class="stat-card"><h3>Outstanding</h3><p class="stat-text">{{ outstanding_amount }}</p></div>
+  <div class="pm-kpis">
+    {% for kpi in metrics.kpis %}
+    <div class="pm-kpi-card">
+      <div class="pm-kpi-top">
+        <div class="pm-kpi-icon is-{{ kpi.tone }}">
+          {% if kpi.key == 'total' %}
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          {% elif kpi.key == 'completed' %}
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+          {% elif kpi.key == 'in_progress' %}
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          {% elif kpi.key == 'on_hold' %}
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          {% else %}
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          {% endif %}
+        </div>
+        <div class="pm-kpi-text">
+          <div class="pm-kpi-value">{{ kpi.value }}</div>
+          <div class="pm-kpi-label">{{ kpi.label }}</div>
+        </div>
+      </div>
+      <div class="pm-kpi-note is-{{ kpi.note_tone }}">
+        {% if kpi.direction == 'up' %}<span class="pm-kpi-arrow">↑</span>
+        {% elif kpi.direction == 'down' %}<span class="pm-kpi-arrow">↓</span>{% endif %}
+        <span>{{ kpi.note }}</span>
+      </div>
+    </div>
+    {% endfor %}
   </div>
 
-  <div class="admin-section">
-    <div class="admin-header">
-      <h2>Recent Projects</h2>
-      <a href="{{ url_for('admin.project_list') }}">View all</a>
+  <div class="pm-grid pm-grid-analytics">
+    <div class="pm-card pm-progress-card">
+      <div class="pm-card-head">
+        <h3 class="pm-card-title">Project Progress Overview</h3>
+        <div class="pm-seg" role="tablist" aria-label="Date range for progress chart">
+          <button type="button" class="pm-seg-btn" aria-selected="false">3 Months</button>
+          <button type="button" class="pm-seg-btn" aria-selected="false">6 Months</button>
+          <button type="button" class="pm-seg-btn is-active" aria-selected="true">1 Year</button>
+        </div>
+      </div>
+      <div class="pm-line-chart-wrap">
+        <svg class="pm-line-chart" viewBox="0 0 560 240" role="img" aria-label="Project progress overview line chart by month">
+          {% for g in range(5) %}
+            {% set gv = (m / 4) * g %}
+            {% set gy = baseY - (gv / m) * plotH %}
+            <line x1="{{ L }}" y1="{{ gy | round(1) }}" x2="{{ L + plotW }}" y2="{{ gy | round(1) }}" stroke="#EDF1F6" stroke-width="1"/>
+            <text x="{{ L - 8 }}" y="{{ (gy + 3) | round(1) }}" text-anchor="end" font-size="9" fill="#94A3B8">{{ gv | round(0) | int }}</text>
+          {% endfor %}
+          {% for s in series_order %}
+            {% set vals = trend.series[s.key] %}
+            <polyline points="{% for i in range(12) %}{{ (L + i * step) | round(2) }},{{ (baseY - (vals[i] / m) * plotH) | round(2) }}{% if not loop.last %} {% endif %}{% endfor %}" fill="none" stroke="{{ s.color }}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+            <g class="pm-chart-line-dots">
+              {% for i in range(12) %}
+              <circle cx="{{ (L + i * step) | round(2) }}" cy="{{ (baseY - (vals[i] / m) * plotH) | round(2) }}" r="3" fill="{{ s.color }}" stroke="#fff" stroke-width="1.4" class="pm-chart-dot" tabindex="0" role="img" data-status="{{ s.label }}" data-month="{{ MONTH_MONTH[i] }}" data-value="{{ vals[i] }}"/>
+              {% endfor %}
+            </g>
+          {% endfor %}
+          {% for i in range(12) %}
+          <text x="{{ (L + i * step) | round(2) }}" y="230" text-anchor="middle" font-size="9" fill="#94A3B8">{{ MONTH_MONTH[i] }}</text>
+          {% endfor %}
+        </svg>
+        <div class="pm-chart-tooltip" id="pmLineTooltip" hidden></div>
+      </div>
+      <div class="pm-chart-legend">
+        {% for s in series_order %}<span class="pm-legend-item"><span class="pm-legend-dot" style="background:{{ s.color }}"></span>{{ s.label }}</span>{% endfor %}
+      </div>
     </div>
 
-    {% if recent_projects %}
-      <table class="admin-table">
-        <thead>
-          <tr>
-            <th>Project</th>
-            <th>Status</th>
-            <th>Payment</th>
-            <th>Remaining</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for project in recent_projects %}
+    <div class="pm-card pm-donut-card">
+      <div class="pm-card-head">
+        <h3 class="pm-card-title">Projects by Status</h3>
+      </div>
+      <div class="pm-donut-wrap">
+        <div class="pm-donut" style="background: conic-gradient({% for seg in metrics.status.segments %}{{ seg.color }} {{ seg.range }}{% if not loop.last %}, {% endif %}{% endfor %})">
+          <div class="pm-donut-center">
+            <div class="pm-donut-total">{{ metrics.status.total }}</div>
+            <div class="pm-donut-label">Total</div>
+          </div>
+        </div>
+        <div class="pm-legend-list">
+          {% for seg in metrics.status.segments %}
+          <div class="pm-legend-row">
+            <span class="pm-legend-dot" style="background:{{ seg.color }}"></span>
+            <span class="pm-legend-name">{{ seg.label }}</span>
+            <span class="pm-legend-count">{{ seg.count }} <span class="pm-legend-pct">({{ seg.percent }}%)</span></span>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="pm-card pm-donut-card">
+      <div class="pm-card-head">
+        <h3 class="pm-card-title">Projects by Client</h3>
+      </div>
+      <div class="pm-donut-wrap">
+        <div class="pm-donut" style="background: conic-gradient({% for seg in metrics.clients.segments %}{{ seg.color }} {{ seg.range }}{% if not loop.last %}, {% endif %}{% endfor %})">
+          <div class="pm-donut-center">
+            <div class="pm-donut-total">{{ metrics.clients.total }}</div>
+            <div class="pm-donut-label">Total</div>
+          </div>
+        </div>
+        <div class="pm-legend-list">
+          {% for seg in metrics.clients.segments %}
+          <div class="pm-legend-row">
+            <span class="pm-legend-dot" style="background:{{ seg.color }}"></span>
+            <span class="pm-legend-name">{{ seg.label }}</span>
+            <span class="pm-legend-count">{{ seg.count }} <span class="pm-legend-pct">({{ seg.percent }}%)</span></span>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pm-grid pm-grid-value">
+    <div class="pm-card pm-bars-card">
+      <div class="pm-card-head">
+        <h3 class="pm-card-title">Project Value Overview</h3>
+        <div class="pm-seg" role="tablist" aria-label="Date range for value chart">
+          <button type="button" class="pm-seg-btn" aria-selected="false">3 Months</button>
+          <button type="button" class="pm-seg-btn" aria-selected="false">6 Months</button>
+          <button type="button" class="pm-seg-btn is-active" aria-selected="true">1 Year</button>
+          <button type="button" class="pm-seg-btn" aria-selected="false">Monthly</button>
+        </div>
+      </div>
+      <div class="pm-bars-wrap">
+        <div class="pm-bars-axis">
+          {% for pct in [100, 75, 50, 25, 0] %}
+            {% set av = metrics.value.max * pct / 100 %}
+            <span>{% if av >= 1000 %}{{ (av / 1000) | round(0) | int }}K{% else %}{{ av | round(0) | int }}{% endif %}</span>
+          {% endfor %}
+        </div>
+        <div class="pm-bars">
+          {% for i in range(12) %}
+          <div class="pm-bar-col">
+            <div class="pm-bar-group" role="img" aria-label="{{ MONTH_MONTH[i] }} collected {{ metrics.value.collected[i] | round(0) | int }}, remaining {{ metrics.value.remaining[i] | round(0) | int }}">
+              <div class="pm-bar is-remaining" style="height: {{ (metrics.value.remaining[i] / metrics.value.max * 100) | round(1) }}%" data-month="{{ MONTH_MONTH[i] }}" data-kind="Remaining" data-value="{{ metrics.value.remaining[i] | round(0) | int }}"></div>
+              <div class="pm-bar is-collected" style="height: {{ (metrics.value.collected[i] / metrics.value.max * 100) | round(1) }}%" data-month="{{ MONTH_MONTH[i] }}" data-kind="Collected" data-value="{{ metrics.value.collected[i] | round(0) | int }}"></div>
+            </div>
+            <span class="pm-bar-label">{{ MONTH_MONTH[i] }}</span>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="pm-chart-legend">
+        <span class="pm-legend-item"><span class="pm-legend-dot" style="background:#20B978"></span>Collected Amount</span>
+        <span class="pm-legend-item"><span class="pm-legend-dot" style="background:#3B82F6"></span>Remaining Amount</span>
+      </div>
+    </div>
+
+    <div class="pm-card pm-kpi-block">
+      <div class="pm-kpi-block-title">Project Completion Rate</div>
+      <div class="pm-kpi-block-value">{{ metrics.completion_rate | round | int }}<span class="pm-kpi-block-unit">%</span></div>
+      <div class="pm-kpi-block-label">Overall Completion Rate</div>
+      <div class="pm-progress"><div class="pm-progress-fill is-green" style="width: {{ metrics.completion_rate }}%"></div></div>
+      <div class="pm-kpi-block-note note-green">↑ {{ metrics.completion_rate | round | int }}% of projects completed</div>
+    </div>
+
+    <div class="pm-card pm-kpi-block">
+      <div class="pm-kpi-block-title">Average Project Duration</div>
+      <div class="pm-kpi-block-value">{{ metrics.avg_duration_days }}<span class="pm-kpi-block-unit">Days</span></div>
+      <div class="pm-kpi-block-label">Avg time to complete</div>
+      <div class="pm-kpi-block-note note-muted">Across {{ metrics.kpis[0].value }} projects</div>
+    </div>
+
+    <div class="pm-card pm-kpi-block pm-overdue-block">
+      <div class="pm-kpi-block-title">Overdue Projects</div>
+      <div class="pm-kpi-block-value is-red">{{ metrics.overdue_count }}</div>
+      <div class="pm-kpi-block-label">Projects</div>
+      <div class="pm-kpi-block-note note-red">Require immediate attention</div>
+      <a class="pm-overdue-btn" href="{{ metrics.overdue_link }}">View Overdue Projects</a>
+    </div>
+  </div>
+
+  <div class="pm-grid pm-grid-bottom">
+    <div class="pm-card pm-table-card">
+      <div class="pm-card-head">
+        <h3 class="pm-card-title">Top Performing Projects</h3>
+      </div>
+      {% if metrics.top_rows %}
+      <div class="pm-table-wrap">
+        <table class="pm-table">
+          <thead>
+            <tr><th>Project</th><th>Client</th><th>Progress</th><th>Value</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            {% for row in metrics.top_rows %}
             <tr>
               <td>
-                <a href="{{ url_for('admin.project_detail', project_id=project.id) }}">{{ project.name }}</a>
-                <div class="table-muted">{{ project.client_name }}</div>
+                <div class="pm-proj-cell">
+                  {% set words = row.name.split() %}
+                  {% if words|length == 1 or words[0]|length <= 2 %}
+                    {% set initials = words[0][:2] | upper %}
+                  {% else %}
+                    {% set initials = (words[0][:1] ~ words[1][:1]) | upper %}
+                  {% endif %}
+                  <span class="pm-proj-avatar av-{{ loop.index0 % 5 }}">{{ initials }}</span>
+                  <a class="pm-proj-name" href="{{ row.link }}">{{ row.name }}</a>
+                </div>
               </td>
-              <td><span class="badge draft">{{ project.status_label }}</span></td>
-              <td><span class="badge draft">{{ project.payment_status_label }}</span></td>
-              <td>{{ project.remaining_amount_label }}</td>
+              <td>{{ row.client }}</td>
+              <td>
+                <div class="pm-progress-row">
+                  <div class="pm-progress is-thin"><div class="pm-progress-fill is-green" style="width: {{ row.progress }}%"></div></div>
+                  <span class="pm-progress-pct">{{ row.progress }}%</span>
+                </div>
+              </td>
+              <td>{{ row.value_label }}</td>
+              <td><span class="pill pill-{{ row.status_tone }}"><span class="pill-dot"></span>{{ row.status_label }}</span></td>
             </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    {% else %}
-      <p style="color: var(--text-muted); margin-top: 1rem;">No projects yet. <a href="{{ url_for('admin.create_project') }}">Create the first project.</a></p>
-    {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="pm-empty">No projects to rank yet.</div>
+      {% endif %}
+    </div>
+
+    <div class="pm-card pm-gantt-card">
+      <div class="pm-card-head">
+        <h3 class="pm-card-title">Projects Timeline <span class="pm-card-title-sub">(Gantt Overview)</span></h3>
+      </div>
+      <div class="pm-gantt">
+        <div class="pm-gantt-row is-head">
+          <div class="pm-gantt-proj">Project</div>
+          <div class="pm-gantt-months">
+            {% for mt in MONTH_MONTH %}<span class="pm-gantt-mlabel">{{ mt }}</span>{% endfor %}
+          </div>
+        </div>
+        {% for row in metrics.gantt.rows %}
+        <div class="pm-gantt-row">
+          <div class="pm-gantt-proj">{{ row.name }}</div>
+          <div class="pm-gantt-months">
+            {% for i in range(12) %}<span class="pm-gantt-cell"></span>{% endfor %}
+            <span class="pm-gantt-bar" style="left: {{ (row.start / 12 * 100) | round(2) }}%; width: {{ ((row.end - row.start + 1) / 12 * 100) | round(2) }}%; background: {{ row.color }}; color: {{ row.text }};" title="{{ row.name }}: {{ row.label }}">{{ row.label }}</span>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
   </div>
+
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  (function () {
+    const ttp = document.getElementById("pmLineTooltip");
+    const moveTip = function (txt, evt) {
+      if (!ttp) return;
+      ttp.innerHTML = txt;
+      ttp.hidden = false;
+      ttp.style.left = (evt.clientX + 12) + "px";
+      ttp.style.top = (evt.clientY - 12) + "px";
+    };
+    const hideTip = function () { if (ttp) ttp.hidden = true; };
+    document.querySelectorAll(".pm-chart-dot").forEach(function (dot) {
+      dot.addEventListener("mousemove", function (e) {
+        moveTip("<strong>" + dot.dataset.status + "</strong> · " + dot.dataset.month + ": <strong>" + dot.dataset.value + "</strong>", e);
+      });
+      dot.addEventListener("mouseleave", hideTip);
+    });
+    document.querySelectorAll(".pm-bar").forEach(function (bar) {
+      bar.addEventListener("mousemove", function (e) {
+        moveTip(bar.dataset.kind + " (" + bar.dataset.month + "): <strong>" + bar.dataset.value + "</strong>", e);
+      });
+      bar.addEventListener("mouseleave", hideTip);
+    });
+    document.querySelectorAll(".pm-seg-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        btn.parentElement.querySelectorAll(".pm-seg-btn").forEach(function (b) { b.classList.remove("is-active"); b.setAttribute("aria-selected", "false"); });
+        btn.classList.add("is-active");
+        btn.setAttribute("aria-selected", "true");
+      });
+    });
+    const pmDds = document.querySelectorAll(".pm-header-actions .pm-dd");
+    pmDds.forEach(function (dd) {
+      dd.addEventListener("toggle", function () {
+        if (dd.open) {
+          pmDds.forEach(function (o) { if (o !== dd) o.open = false; });
+        }
+      });
+    });
+  })();
+</script>
 {% endblock %}

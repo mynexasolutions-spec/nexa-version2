@@ -1,53 +1,212 @@
 {% extends "layouts/base_admin.html" %}
 
-{% block content %}
-<div class="admin-container">
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin-blogs.css') }}">
+{% endblock %}
 
-  <div class="admin-header">
-    <h1>Blogs</h1>
-    <a href="{{ url_for('admin.create_blog') }}" class="btn-primary blog-create-button">+ New Blog</a>
+{% block admin_body_class %}admin-blogs-page{% endblock %}
+
+{% block content %}
+<div class="bl-page">
+
+  <div class="dashboard-hero">
+    <div>
+      <span class="admin-kicker">Content</span>
+      <h1>Blogs</h1>
+    </div>
+    <div class="dashboard-hero-actions">
+      <a class="btn-primary" href="{{ url_for('admin.create_blog') }}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5l4 4L7 21l-4 1 1-4L16.5 3.5z"/></svg>
+        New Blog
+      </a>
+    </div>
   </div>
 
-  {% if blogs %}
-  <table class="admin-table">
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Category</th>
-        <th>Status</th>
-        <th>Published</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for blog in blogs %}
-      <tr>
-        <td>{{ blog.title }}</td>
-        <td>{{ blog.category.name if blog.category else '—' }}</td>
-        <td>
-          {% if blog.is_published %}
-            <span class="badge published">Published</span>
-          {% else %}
-            <span class="badge draft">Draft</span>
-          {% endif %}
-        </td>
-        <td>{{ blog.published_at.strftime('%b %d, %Y') if blog.published_at else '—' }}</td>
-        <td class="actions">
-          <a href="{{ url_for('admin.edit_blog', blog_id=blog.id) }}">Edit</a>
-          <form method="POST"
-                action="{{ url_for('admin.delete_blog', blog_id=blog.id) }}"
-                onsubmit="return confirm('Delete this blog?');"
-                style="display:inline;">
-            <button type="submit" class="link-danger">Delete</button>
-          </form>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  {% else %}
-    <p style="color: var(--text-muted); margin-top: 1rem;">No blogs yet. <a href="{{ url_for('admin.create_blog') }}">Create the first one.</a></p>
-  {% endif %}
+  <div class="bl-stats">
+    <div class="bl-stat-card">
+      <div class="bl-stat-icon is-blue">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      </div>
+      <div>
+        <div class="bl-stat-value">{{ stats.total }}</div>
+        <div class="bl-stat-label">Total Blogs</div>
+      </div>
+    </div>
 
+    <div class="bl-stat-card">
+      <div class="bl-stat-icon is-green">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      </div>
+      <div>
+        <div class="bl-stat-value">{{ stats.published }}</div>
+        <div class="bl-stat-label">Published</div>
+      </div>
+    </div>
+
+    <div class="bl-stat-card">
+      <div class="bl-stat-icon is-orange">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </div>
+      <div>
+        <div class="bl-stat-value">{{ stats.drafts }}</div>
+        <div class="bl-stat-label">Drafts</div>
+      </div>
+    </div>
+
+    <div class="bl-stat-card">
+      <div class="bl-stat-icon is-purple">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      </div>
+      <div>
+        <div class="bl-stat-value">{{ stats.views_label }}</div>
+        <div class="bl-stat-label">Total Views</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bl-card">
+    <form class="bl-toolbar" method="GET" action="{{ url_for('admin.blog_list') }}">
+      <div class="bl-search">
+        <svg class="bl-search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" name="q" value="{{ search_query }}" placeholder="Search blogs by title, category...">
+      </div>
+      <div class="bl-filters">
+        <div class="bl-select-wrap">
+          <svg class="bl-select-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+          <select class="bl-select" name="category" onchange="this.form.submit()">
+            <option value="" {{ 'selected' if category_filter == '' else '' }}>All Categories</option>
+            {% for c in categories %}<option value="{{ c.id }}" {{ 'selected' if category_filter == (c.id|string) else '' }}>{{ c.name }}</option>{% endfor %}
+          </select>
+        </div>
+        <div class="bl-select-wrap">
+          <svg class="bl-select-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+          <select class="bl-select" name="status" onchange="this.form.submit()">
+            <option value="" {{ 'selected' if status_filter == '' else '' }}>All Status</option>
+            <option value="published" {{ 'selected' if status_filter == 'published' else '' }}>Published</option>
+            <option value="draft" {{ 'selected' if status_filter == 'draft' else '' }}>Draft</option>
+          </select>
+        </div>
+        <div class="bl-select-wrap">
+          <svg class="bl-select-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></svg>
+          <select class="bl-select" name="sort" onchange="this.form.submit()">
+            <option value="latest" {{ 'selected' if sort == 'latest' else '' }}>Latest First</option>
+            <option value="oldest" {{ 'selected' if sort == 'oldest' else '' }}>Oldest First</option>
+            <option value="title" {{ 'selected' if sort == 'title' else '' }}>Title (A-Z)</option>
+            <option value="views" {{ 'selected' if sort == 'views' else '' }}>Most Viewed</option>
+          </select>
+        </div>
+      </div>
+    </form>
+
+    {% if blogs %}
+    <div class="bl-table-wrap">
+      <table class="bl-table">
+        <thead>
+          <tr><th class="bl-th-title">Blog Title</th><th>Category</th><th>Status</th><th>Published</th><th class="bl-th-actions">Actions</th></tr>
+        </thead>
+        <tbody>
+          {% for blog in blogs %}
+          <tr>
+            <td>
+              <div class="bl-blog-cell">
+                {% if blog.featured_image %}
+                <img class="bl-thumb" src="{{ blog.featured_image }}" alt="{{ blog.featured_image_alt or blog.title }}" loading="lazy">
+                {% else %}
+                <div class="bl-thumb bl-thumb-placeholder">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                </div>
+                {% endif %}
+                <div>
+                  <div class="bl-blog-title">{{ blog.title }}</div>
+                  <div class="bl-blog-excerpt">{{ blog.summary }}</div>
+                </div>
+              </div>
+            </td>
+            <td>
+              {% if blog.category %}
+                {% set cat_name = blog.category.name|lower %}
+                {% if 'ai' in cat_name or 'startup' in cat_name %}
+                  <span class="bl-category-badge pill-purple">{{ blog.category.name }}</span>
+                {% elif 'web' in cat_name or 'development' in cat_name or 'design' in cat_name %}
+                  <span class="bl-category-badge pill-blue">{{ blog.category.name }}</span>
+                {% elif 'market' in cat_name or 'seo' in cat_name or 'social' in cat_name or 'content' in cat_name %}
+                  <span class="bl-category-badge pill-orange">{{ blog.category.name }}</span>
+                {% else %}
+                  <span class="bl-category-badge pill-blue">{{ blog.category.name }}</span>
+                {% endif %}
+              {% else %}
+                <span class="bl-muted">—</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if blog.is_published %}
+              <span class="bl-status is-published">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                Published
+              </span>
+              {% else %}
+              <span class="bl-status is-draft">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                Draft
+              </span>
+              {% endif %}
+            </td>
+            <td>
+              <div class="bl-date">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                <span>{{ blog.published_at.strftime('%b %d, %Y') if blog.published_at else '—' }}</span>
+              </div>
+            </td>
+            <td class="bl-actions">
+              <a class="bl-icon-btn" href="{{ url_for('admin.edit_blog', blog_id=blog.id) }}" aria-label="Edit blog">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5l4 4L7 21l-4 1 1-4L16.5 3.5z"/></svg>
+              </a>
+              <form method="POST" action="{{ url_for('admin.delete_blog', blog_id=blog.id) }}" onsubmit="return confirm('Delete this blog?');" style="margin:0;">
+                <button type="submit" class="bl-icon-btn is-danger" aria-label="Delete blog">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+                </button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="bl-foot">
+      <span class="bl-showing">Showing {{ pagination.page * pagination.per_page - pagination.per_page + 1 }} to {{ pagination.page * pagination.per_page - pagination.per_page + (blogs|length) }} of {{ pagination.total }} blogs</span>
+      {% if pagination.pages > 1 %}
+      <nav class="bl-pages">
+        {% if pagination.has_prev %}
+        <a class="bl-page-btn" href="{{ url_for('admin.blog_list', category=category_filter or none, status=status_filter or none, q=search_query or none, sort=sort or none, page=pagination.prev_num) }}">‹</a>
+        {% else %}
+        <span class="bl-page-btn is-disabled">‹</span>
+        {% endif %}
+        {% for p in pagination.iter_pages(left_edge=1, left_current=2, right_current=2, right_edge=1) %}
+          {% if p %}
+            {% if p == pagination.page %}
+            <span class="bl-page-btn is-active">{{ p }}</span>
+            {% else %}
+            <a class="bl-page-btn" href="{{ url_for('admin.blog_list', category=category_filter or none, status=status_filter or none, q=search_query or none, sort=sort or none, page=p) }}">{{ p }}</a>
+            {% endif %}
+          {% else %}
+          <span class="bl-page-ellipsis">…</span>
+          {% endif %}
+        {% endfor %}
+        {% if pagination.has_next %}
+        <a class="bl-page-btn" href="{{ url_for('admin.blog_list', category=category_filter or none, status=status_filter or none, q=search_query or none, sort=sort or none, page=pagination.next_num) }}">›</a>
+        {% else %}
+        <span class="bl-page-btn is-disabled">›</span>
+        {% endif %}
+      </nav>
+      {% endif %}
+    </div>
+    {% else %}
+    <div class="bl-empty">
+      <p>No blogs found.</p>
+      <a href="{{ url_for('admin.create_blog') }}" class="btn-new-blog">New Blog</a>
+    </div>
+    {% endif %}
+  </div>
 </div>
 {% endblock %}

@@ -1,109 +1,247 @@
 {% extends "layouts/base_admin.html" %}
 
 {% block content %}
-<div class="admin-container">
-  <div class="admin-header">
-    <h1>Projects</h1>
-    <div class="dashboard-actions" style="margin-bottom: 0;">
-      <a href="{{ url_for('admin.project_dashboard') }}" class="btn-secondary">Dashboard</a>
-      <a href="{{ url_for('admin.create_project') }}" class="btn-primary">+ New Project</a>
+<div class="pl-page">
+  <div class="dashboard-hero">
+    <div>
+      <span class="admin-kicker">Portfolio</span>
+      <h1>Projects</h1>
+    </div>
+    <div class="dashboard-hero-actions">
+      <details class="pl-filters-wrap">
+        <summary class="btn-filters">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+          Filters
+        </summary>
+        <div class="pl-filters-menu">
+          <a href="{{ url_for('admin.project_list', q=search_query or none, sort=sort or none) }}">All</a>
+          <a href="{{ url_for('admin.project_list', status='active', q=search_query or none, sort=sort or none) }}">Active</a>
+          <a href="{{ url_for('admin.project_list', status='completed', q=search_query or none, sort=sort or none) }}">Completed</a>
+          <a href="{{ url_for('admin.project_list', status='on_hold', q=search_query or none, sort=sort or none) }}">On Hold</a>
+          <a href="{{ url_for('admin.project_list', payment='partial', q=search_query or none, sort=sort or none) }}">Partial</a>
+          <a href="{{ url_for('admin.project_list', payment='unpaid', q=search_query or none, sort=sort or none) }}">Awaiting</a>
+        </div>
+      </details>
+      <a href="{{ url_for('admin.create_project') }}" class="btn-primary">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+        New Project
+      </a>
     </div>
   </div>
 
-  <div class="dashboard-actions">
-    <a href="{{ url_for('admin.project_list') }}" class="btn-secondary">All</a>
-    <a href="{{ url_for('admin.project_list', status='active') }}" class="btn-secondary">Active</a>
-    <a href="{{ url_for('admin.project_list', status='completed') }}" class="btn-secondary">Completed</a>
-    <a href="{{ url_for('admin.project_list', status='on_hold') }}" class="btn-secondary">On Hold</a>
-    <a href="{{ url_for('admin.project_list', payment='partial') }}" class="btn-secondary">Partial Payment</a>
-    <a href="{{ url_for('admin.project_list', payment='unpaid') }}" class="btn-secondary">Awaiting Payment</a>
+  {% set active_pct = (stats.active * 100 / stats.total) | round | int if stats.total else 0 %}
+  {% set completed_pct = (stats.completed * 100 / stats.total) | round | int if stats.total else 0 %}
+  {% set on_hold_pct = (stats.on_hold * 100 / stats.total) | round | int if stats.total else 0 %}
+  {% set awaiting_pct = (stats.awaiting * 100 / stats.total) | round | int if stats.total else 0 %}
+
+  <div class="pl-stats">
+    <div class="pl-stat-card">
+      <div class="pl-stat-top">
+        <div class="pl-stat-icon is-green">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        </div>
+        <div>
+          <div class="pl-stat-value">{{ stats.total }}</div>
+          <div class="pl-stat-label">Total Projects</div>
+        </div>
+      </div>
+      <div class="pl-stat-note note-green">+{{ stats.new_this_month }} this month</div>
+    </div>
+
+    <div class="pl-stat-card">
+      <div class="pl-stat-top">
+        <div class="pl-stat-icon is-blue">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+        </div>
+        <div>
+          <div class="pl-stat-value">{{ stats.active }}</div>
+          <div class="pl-stat-label">Active</div>
+        </div>
+      </div>
+      <div class="pl-stat-note note-blue">{{ active_pct }}% of total</div>
+    </div>
+
+    <div class="pl-stat-card">
+      <div class="pl-stat-top">
+        <div class="pl-stat-icon is-purple">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div>
+          <div class="pl-stat-value">{{ stats.completed }}</div>
+          <div class="pl-stat-label">Completed</div>
+        </div>
+      </div>
+      <div class="pl-stat-note note-purple">{{ completed_pct }}% of total</div>
+    </div>
+
+    <div class="pl-stat-card">
+      <div class="pl-stat-top">
+        <div class="pl-stat-icon is-orange">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+        </div>
+        <div>
+          <div class="pl-stat-value">{{ stats.on_hold }}</div>
+          <div class="pl-stat-label">On Hold</div>
+        </div>
+      </div>
+      <div class="pl-stat-note note-orange">{{ on_hold_pct }}% of total</div>
+    </div>
+
+    <div class="pl-stat-card">
+      <div class="pl-stat-top">
+        <div class="pl-stat-icon is-red">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div>
+          <div class="pl-stat-value">{{ stats.awaiting }}</div>
+          <div class="pl-stat-label">Awaiting Payment</div>
+        </div>
+      </div>
+      <div class="pl-stat-note note-red">{{ awaiting_pct }}% of total</div>
+    </div>
   </div>
 
-  {% if projects %}
-    <table class="admin-table">
-      <thead>
-        <tr>
-          <th>Project</th>
-          <th>Status</th>
-          <th>Value</th>
-          <th>Payment</th>
-          <th>Timeline</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for project in projects %}
+  <div class="pl-card">
+    <div class="pl-toolbar">
+      <nav class="pl-tabs">
+        <a class="pl-tab {{ 'is-active' if not status_filter and not payment_filter }}" href="{{ url_for('admin.project_list', q=search_query or none, sort=sort or none) }}">All Projects</a>
+        <a class="pl-tab {{ 'is-active' if status_filter == 'active' }}" href="{{ url_for('admin.project_list', status='active', payment=payment_filter or none, q=search_query or none, sort=sort or none) }}">Active</a>
+        <a class="pl-tab {{ 'is-active' if status_filter == 'completed' }}" href="{{ url_for('admin.project_list', status='completed', payment=payment_filter or none, q=search_query or none, sort=sort or none) }}">Completed</a>
+        <a class="pl-tab {{ 'is-active' if status_filter == 'on_hold' }}" href="{{ url_for('admin.project_list', status='on_hold', payment=payment_filter or none, q=search_query or none, sort=sort or none) }}">On Hold</a>
+        <a class="pl-tab {{ 'is-active' if payment_filter == 'partial' }}" href="{{ url_for('admin.project_list', status=status_filter or none, payment='partial', q=search_query or none, sort=sort or none) }}">Partial Payment</a>
+        <a class="pl-tab {{ 'is-active' if payment_filter == 'unpaid' }}" href="{{ url_for('admin.project_list', status=status_filter or none, payment='unpaid', q=search_query or none, sort=sort or none) }}">Awaiting Payment</a>
+      </nav>
+      <div class="pl-tools">
+        <form class="pl-search" method="GET" action="{{ url_for('admin.project_list') }}">
+          {% if status_filter %}<input type="hidden" name="status" value="{{ status_filter }}">{% endif %}
+          {% if payment_filter %}<input type="hidden" name="payment" value="{{ payment_filter }}">{% endif %}
+          <input type="text" name="q" value="{{ search_query }}" placeholder="Search projects...">
+          <button type="submit" class="pl-search-btn" aria-label="Search">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </button>
+        </form>
+        <form class="pl-sort" method="GET" action="{{ url_for('admin.project_list') }}">
+          {% if status_filter %}<input type="hidden" name="status" value="{{ status_filter }}">{% endif %}
+          {% if payment_filter %}<input type="hidden" name="payment" value="{{ payment_filter }}">{% endif %}
+          {% if search_query %}<input type="hidden" name="q" value="{{ search_query }}">{% endif %}
+          <select name="sort" onchange="this.form.submit()">
+            <option value="newest" {{ 'selected' if sort != 'oldest' and sort != 'value_high' and sort != 'name' }}>Newest</option>
+            <option value="oldest" {{ 'selected' if sort == 'oldest' }}>Oldest</option>
+            <option value="value_high" {{ 'selected' if sort == 'value_high' }}>Value (High to Low)</option>
+            <option value="name" {{ 'selected' if sort == 'name' }}>Name (A-Z)</option>
+          </select>
+        </form>
+      </div>
+    </div>
+
+    {% if projects %}
+    <div class="pl-table-wrap">
+      <table class="pl-table">
+        <thead>
+          <tr><th>Project</th><th>Status</th><th>Value</th><th>Payment</th><th>Timeline</th><th class="pl-th-actions">Actions</th></tr>
+        </thead>
+        <tbody>
+          {% for project in projects %}
           <tr>
             <td>
-              <a href="{{ url_for('admin.project_detail', project_id=project.id) }}">{{ project.name }}</a>
-              <div class="table-muted">{{ project.client_name }}</div>
-            </td>
-            <td>
-              <span class="badge {{ 'published' if project.status in ['active', 'completed'] else 'draft' }}">
-                {{ project.status_label }}
-              </span>
-            </td>
-            <td>
-              {{ project.total_value_label }}
-              <div class="table-muted">Remaining {{ project.remaining_amount_label }}</div>
-            </td>
-            <td>
-              <span class="badge {{ 'published' if project.payment_status == 'paid' else 'draft' }}">
-                {{ project.payment_status_label }}
-              </span>
-            </td>
-            <td>
-              {{ project.start_date.strftime("%d %b %Y") }}
-              <div class="table-muted">
-                Due {{ project.expected_end_date.strftime("%d %b %Y") if project.expected_end_date else "Not set" }}
-              </div>
-              {% if project.actual_completion_date %}
-                <div class="table-muted">Done {{ project.actual_completion_date.strftime("%d %b %Y") }}</div>
-              {% elif project.is_overdue() %}
-                <span class="badge danger">Overdue</span>
-              {% elif project.is_due_soon() %}
-                <span class="badge warning">Due soon</span>
-              {% endif %}
-              {% if project.next_payment_due_date %}
-                <div class="table-muted">
-                  Payment {{ project.next_payment_due_date.strftime("%d %b %Y") }}
-                </div>
-                {% if project.is_payment_overdue() %}
-                  <span class="badge danger">Payment overdue</span>
-                {% elif project.is_payment_due_soon() %}
-                  <span class="badge warning">Payment due</span>
+              <div class="pl-proj-cell">
+                {% set words = project.name.split() %}
+                {% if words|length == 1 or words[0]|length <= 2 %}
+                  {% set initials = (words[0][:2] | upper) %}
+                {% else %}
+                  {% set initials = ((words[0][:1] ~ words[1][:1]) | upper) %}
                 {% endif %}
+                <div class="pl-avatar av-{{ loop.index0 % 5 }}">{{ initials }}</div>
+                <div>
+                  <a class="proj-name" href="{{ url_for('admin.project_detail', project_id=project.id) }}">{{ project.name }}</a>
+                  <div class="proj-client">{{ project.client_name }}</div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="pill pill-{{ 'green' if project.status == 'active' else 'purple' if project.status == 'completed' else 'orange' if project.status == 'on_hold' else 'gray' }}">
+                <span class="pill-dot"></span>{{ project.status_label }}
+              </span>
+            </td>
+            <td>
+              <div class="pl-value">{{ project.total_value_label }}</div>
+              <div class="pl-muted">Remaining {{ project.remaining_amount_label }}</div>
+            </td>
+            <td>
+              <span class="pill pill-{{ 'green' if project.payment_status == 'paid' else 'yellow' if project.payment_status == 'partial' else 'red' }}">{{ project.payment_status_label }}</span>
+              <div class="pl-muted">{{ project.payment_percent }}% Paid</div>
+            </td>
+            <td>
+              <div class="pl-timeline">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                <span>{{ project.start_date.strftime("%d %b %Y") if project.start_date else "—" }}</span>
+              </div>
+              <div class="pl-muted">Due {{ project.expected_end_date.strftime("%d %b %Y") if project.expected_end_date else "not set" }}</div>
+              {% if project.is_overdue() %}
+              <span class="pill pill-red mini">Overdue</span>
+              {% elif project.is_due_soon() %}
+              <span class="pill pill-yellow mini">Due soon</span>
               {% endif %}
             </td>
-            <td class="actions">
-              <a href="{{ url_for('admin.edit_project', project_id=project.id) }}">Edit</a>
-              <form method="POST"
-                    action="{{ url_for('admin.delete_project', project_id=project.id) }}"
-                    onsubmit="return confirm('Delete this project?');"
-                    style="display:inline;">
-                {{ delete_form.hidden_tag() }}
-                <button type="submit" class="link-danger">Delete</button>
-              </form>
+            <td class="pl-actions">
+              <a class="btn-edit" href="{{ url_for('admin.edit_project', project_id=project.id) }}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5l4 4L7 21l-4 1 1-4L16.5 3.5z"/></svg>
+                Edit
+              </a>
+              <details class="row-menu">
+                <summary class="row-menu-btn" aria-label="More actions">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="19" r="1.5" fill="currentColor" stroke="none"/></svg>
+                </summary>
+                <div class="row-menu-list">
+                  <a href="{{ url_for('admin.project_detail', project_id=project.id) }}">View</a>
+                  <a href="{{ url_for('admin.edit_project', project_id=project.id) }}">Edit</a>
+                  <form method="POST" action="{{ url_for('admin.delete_project', project_id=project.id) }}" onsubmit="return confirm('Delete this project?');">
+                    {{ delete_form.hidden_tag() }}
+                    <button type="submit" class="row-menu-danger">Delete</button>
+                  </form>
+                </div>
+              </details>
             </td>
           </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    {% if pagination.pages > 1 %}
-      <div class="dashboard-actions" style="justify-content: center; margin-top: 1rem;">
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pl-foot">
+      <span class="pl-showing">Showing {{ pagination.page * pagination.per_page - pagination.per_page + 1 }} to {{ pagination.page * pagination.per_page - pagination.per_page + (projects|length) }} of {{ pagination.total }} projects</span>
+      {% if pagination.pages > 1 %}
+      <nav class="pl-pages">
         {% if pagination.has_prev %}
-          <a class="btn-secondary" href="{{ url_for('admin.project_list', status=status_filter, payment=payment_filter, page=pagination.prev_num) }}">Previous</a>
+        <a class="pl-page-btn" href="{{ url_for('admin.project_list', status=status_filter or none, payment=payment_filter or none, q=search_query or none, sort=sort or none, page=pagination.prev_num) }}">←</a>
+        {% else %}
+        <span class="pl-page-btn is-disabled">←</span>
         {% endif %}
-        <span class="table-muted">Page {{ pagination.page }} of {{ pagination.pages }}</span>
+        {% for p in pagination.iter_pages(left_edge=1, left_current=2, right_current=2, right_edge=1) %}
+          {% if p %}
+            {% if p == pagination.page %}
+            <span class="pl-page-btn is-active">{{ p }}</span>
+            {% else %}
+            <a class="pl-page-btn" href="{{ url_for('admin.project_list', status=status_filter or none, payment=payment_filter or none, q=search_query or none, sort=sort or none, page=p) }}">{{ p }}</a>
+            {% endif %}
+          {% else %}
+          <span class="pl-page-ellipsis">…</span>
+          {% endif %}
+        {% endfor %}
         {% if pagination.has_next %}
-          <a class="btn-secondary" href="{{ url_for('admin.project_list', status=status_filter, payment=payment_filter, page=pagination.next_num) }}">Next</a>
+        <a class="pl-page-btn" href="{{ url_for('admin.project_list', status=status_filter or none, payment=payment_filter or none, q=search_query or none, sort=sort or none, page=pagination.next_num) }}">→</a>
+        {% else %}
+        <span class="pl-page-btn is-disabled">→</span>
         {% endif %}
-      </div>
+      </nav>
+      {% endif %}
+    </div>
+    {% else %}
+    <div class="pl-empty">
+      <p>No projects found.</p>
+      <a href="{{ url_for('admin.create_project') }}" class="btn-new-project">+ New Project</a>
+    </div>
     {% endif %}
-  {% else %}
-    <p style="color: var(--text-muted); margin-top: 1rem;">
-      No projects found. <a href="{{ url_for('admin.create_project') }}">Create the first project.</a>
-    </p>
-  {% endif %}
+  </div>
 </div>
 {% endblock %}

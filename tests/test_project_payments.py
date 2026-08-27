@@ -1,6 +1,8 @@
 import importlib
 from datetime import date, timedelta
 
+from decimal import Decimal
+
 
 def test_project_date_fields_and_due_helpers(client):
     app_module = importlib.import_module("app")
@@ -63,8 +65,8 @@ def test_payment_create_and_delete_updates_project_totals(client):
 
         project = app_module.db.session.get(Project, project_id)
         payment = ProjectPayment.query.filter_by(project_id=project_id).one()
-        assert project.collected_amount_label == "250.00"
-        assert project.remaining_amount_label == "750.00"
+        assert project.collected_amount_label == "350.00"
+        assert project.remaining_amount_label == "650.00"
         payment_id = payment.id
 
     deleted = client.post(
@@ -82,3 +84,37 @@ def test_payment_create_and_delete_updates_project_totals(client):
         assert project.collected_amount_label == "100.00"
         assert project.remaining_amount_label == "900.00"
 
+
+def test_advance_and_later_payments_are_combined_without_double_counting(client):
+    app_module = importlib.import_module("app")
+    with app_module.app.app_context():
+        from models import INITIAL_ADVANCE_NOTE, Project, ProjectPayment
+
+        project = Project(
+            name="SD Sign Studio",
+            client_name="SD",
+            status="active",
+            total_value=Decimal("14000.00"),
+            advance_received=Decimal("8000.00"),
+        )
+        app_module.db.session.add(project)
+        app_module.db.session.flush()
+        app_module.db.session.add_all([
+            ProjectPayment(
+                project=project,
+                amount=Decimal("8000.00"),
+                paid_on=date(2026, 6, 29),
+                note=INITIAL_ADVANCE_NOTE,
+            ),
+            ProjectPayment(
+                project=project,
+                amount=Decimal("2000.00"),
+                paid_on=date(2026, 8, 26),
+                note="For Domain Hosting",
+            ),
+        ])
+        app_module.db.session.commit()
+
+        assert project.collected_amount_label == "10,000.00"
+        assert project.remaining_amount_label == "4,000.00"
+        assert project.payment_percent == 71
