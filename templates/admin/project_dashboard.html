@@ -100,7 +100,7 @@
     {% endfor %}
   </div>
 
-  <div class="pm-grid pm-grid-analytics">
+  <div class="pm-grid pm-grid-charts">
     <div class="pm-card pm-progress-card">
       <div class="pm-card-head">
         <h3 class="pm-card-title">Project Progress Overview</h3>
@@ -138,54 +138,6 @@
       </div>
     </div>
 
-    <div class="pm-card pm-donut-card">
-      <div class="pm-card-head">
-        <h3 class="pm-card-title">Projects by Status</h3>
-      </div>
-      <div class="pm-donut-wrap">
-        <div class="pm-donut" style="background: conic-gradient({% for seg in metrics.status.segments %}{{ seg.color }} {{ seg.range }}{% if not loop.last %}, {% endif %}{% endfor %})">
-          <div class="pm-donut-center">
-            <div class="pm-donut-total">{{ metrics.status.total }}</div>
-            <div class="pm-donut-label">Total</div>
-          </div>
-        </div>
-        <div class="pm-legend-list">
-          {% for seg in metrics.status.segments %}
-          <div class="pm-legend-row">
-            <span class="pm-legend-dot" style="background:{{ seg.color }}"></span>
-            <span class="pm-legend-name">{{ seg.label }}</span>
-            <span class="pm-legend-count">{{ seg.count }} <span class="pm-legend-pct">({{ seg.percent }}%)</span></span>
-          </div>
-          {% endfor %}
-        </div>
-      </div>
-    </div>
-
-    <div class="pm-card pm-donut-card">
-      <div class="pm-card-head">
-        <h3 class="pm-card-title">Projects by Client</h3>
-      </div>
-      <div class="pm-donut-wrap">
-        <div class="pm-donut" style="background: conic-gradient({% for seg in metrics.clients.segments %}{{ seg.color }} {{ seg.range }}{% if not loop.last %}, {% endif %}{% endfor %})">
-          <div class="pm-donut-center">
-            <div class="pm-donut-total">{{ metrics.clients.total }}</div>
-            <div class="pm-donut-label">Total</div>
-          </div>
-        </div>
-        <div class="pm-legend-list">
-          {% for seg in metrics.clients.segments %}
-          <div class="pm-legend-row">
-            <span class="pm-legend-dot" style="background:{{ seg.color }}"></span>
-            <span class="pm-legend-name">{{ seg.label }}</span>
-            <span class="pm-legend-count">{{ seg.count }} <span class="pm-legend-pct">({{ seg.percent }}%)</span></span>
-          </div>
-          {% endfor %}
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="pm-grid pm-grid-value">
     <div class="pm-card pm-bars-card">
       <div class="pm-card-head">
         <h3 class="pm-card-title">Project Value Overview</h3>
@@ -220,7 +172,57 @@
         <span class="pm-legend-item"><span class="pm-legend-dot" style="background:#3B82F6"></span>Remaining Amount</span>
       </div>
     </div>
+  </div>
 
+  <div class="pm-grid pm-grid-donuts">
+    <div class="pm-card pm-donut-card">
+      <div class="pm-card-head">
+        <h3 class="pm-card-title">Projects by Status</h3>
+      </div>
+      <div class="pm-donut-wrap">
+        <div class="pm-donut" style="background: conic-gradient({% for seg in metrics.status.segments %}{{ seg.color }} {{ seg.range }}{% if not loop.last %}, {% endif %}{% endfor %})">
+          <div class="pm-donut-center">
+            <div class="pm-donut-total">{{ metrics.status.total }}</div>
+            <div class="pm-donut-label">Total</div>
+          </div>
+        </div>
+        <div class="pm-legend-list">
+          {% for seg in metrics.status.segments %}
+          <div class="pm-legend-row">
+            <span class="pm-legend-dot" style="background:{{ seg.color }}"></span>
+            <span class="pm-legend-name">{{ seg.label }}</span>
+            <span class="pm-legend-count">{{ seg.count }} <span class="pm-legend-pct">({{ seg.percent }}%)</span></span>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="pm-card pm-donut-card">
+      <div class="pm-card-head">
+        <h3 class="pm-card-title">Projects by Client</h3>
+      </div>
+      <div class="pm-donut-wrap">
+        <div class="pm-donut{{ ' is-empty' if not metrics.clients.total else '' }}"{% if metrics.clients.total %} style="background: conic-gradient({% for seg in metrics.clients.segments %}{{ seg.color }} {{ seg.range }}{% if not loop.last %}, {% endif %}{% endfor %})"{% endif %}>
+          <div class="pm-donut-center">
+            <div class="pm-donut-total">{{ metrics.clients.total }}</div>
+            <div class="pm-donut-label">Total</div>
+          </div>
+        </div>
+        <div class="pm-legend-list">
+          {% for seg in metrics.clients.segments %}
+          <div class="pm-legend-row">
+            <span class="pm-legend-dot" style="background:{{ seg.color }}"></span>
+            <span class="pm-legend-name">{{ seg.label }}</span>
+            <span class="pm-legend-count">{{ seg.count }} <span class="pm-legend-pct">({{ seg.percent }}%)</span></span>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pm-grid pm-grid-kpi-details">
     <div class="pm-card pm-kpi-block">
       <div class="pm-kpi-block-title">Project Completion Rate</div>
       <div class="pm-kpi-block-value">{{ metrics.completion_rate | round | int }}<span class="pm-kpi-block-unit">%</span></div>

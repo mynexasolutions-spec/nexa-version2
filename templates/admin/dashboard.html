@@ -40,14 +40,31 @@
           <a class="{{ 'active' if period == 'year' else '' }}" href="{{ url_for('admin.dashboard', period='year') }}">Year</a>
         </div>
       </div>
-      <div class="bar-chart">
-        {% for month in monthly_revenue %}
-          {% set height = ((month.amount / monthly_revenue_max) * 100) if monthly_revenue_max > 0 else 0 %}
+      <div class="cashflow-kpis" aria-label="Selected period cashflow summary">
+        <div><span>Revenue</span><strong>{{ period_revenue }}</strong></div>
+        <div><span>Expenses</span><strong>{{ period_expenses }}</strong></div>
+        <div><span>Net revenue</span><strong>{{ period_net_revenue }}</strong></div>
+      </div>
+      <div class="cashflow-legend" aria-hidden="true"><span class="revenue-key">Revenue</span><span class="expense-key">Expenses</span></div>
+      <div class="bar-chart bar-chart-single">
+        {% for revenue in monthly_revenue %}
+          {% set expense = monthly_expenses[loop.index0] %}
+          {% set chart_max = [monthly_revenue_max, monthly_expenses_max]|max %}
+          {% set revenue_height = ((revenue.amount / chart_max) * 100) if chart_max > 0 else 0 %}
+          {% set expense_height = ((expense.amount / chart_max) * 100) if chart_max > 0 else 0 %}
           <div class="bar-chart-item">
-            <div class="bar-chart-track">
-              <div class="bar-chart-fill" style="height: {{ height }}%;" title="{{ month.label }}: {{ month.amount_label }}"></div>
+            <div class="bar-chart-track" tabindex="0" aria-label="{{ revenue.label }}. Revenue {{ revenue.amount_label }}. Expenses {{ expense.amount_label }}.">
+              <div class="bar-chart-bars" aria-hidden="true">
+                <div class="bar-chart-fill bar-chart-revenue{{ ' is-zero' if revenue.amount == 0 else '' }}" style="height: {{ revenue_height }}%;"></div>
+                <div class="bar-chart-fill bar-chart-expense{{ ' is-zero' if expense.amount == 0 else '' }}" style="height: {{ expense_height }}%;"></div>
+              </div>
+              <div class="bar-chart-tooltip" role="tooltip">
+                <strong>{{ revenue.label }}</strong>
+                <span>Revenue: {{ revenue.amount_label }}</span>
+                <span>Expenses: {{ expense.amount_label }}</span>
+              </div>
             </div>
-            <span>{{ month.label.split(" ")[0] }}</span>
+            <span>{{ revenue.label.split(" ")[0] }}</span>
           </div>
         {% endfor %}
       </div>

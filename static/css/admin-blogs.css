@@ -222,8 +222,14 @@
   border-spacing: 0;
 }
 
+.bl-th-title { width: 43%; }
+.bl-th-views,
+.bl-views { text-align: center !important; }
+.bl-th-views { width: 64px; }
+.bl-views { color: #475569; font-size: 13px; font-variant-numeric: tabular-nums; font-weight: 600; }
+
 .bl-table thead th {
-  padding: 14px 16px;
+  padding: 14px 10px;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.06em;
@@ -243,13 +249,13 @@
   padding-right: 16px;
 }
 
-.bl-th-actions {
+.bl-table thead th.bl-th-actions {
   text-align: right;
-  min-width: 130px;
+  min-width: 146px;
 }
 
 .bl-table tbody td {
-  padding: 16px;
+  padding: 14px 10px;
   border-bottom: 1px solid #EDF1F6;
   vertical-align: middle;
 }
@@ -274,12 +280,12 @@
 .bl-blog-cell {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
 }
 
 .bl-thumb {
-  width: 100px;
-  height: 72px;
+  width: 84px;
+  height: 62px;
   border-radius: 8px;
   object-fit: cover;
   flex-shrink: 0;
@@ -393,13 +399,20 @@
   white-space: nowrap;
 }
 
-.bl-actions form {
+.bl-actions-inner {
+  display: inline-flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 6px;
+}
+
+.bl-actions-inner form {
   display: inline-flex;
   margin: 0;
   vertical-align: middle;
 }
 
-.bl-actions .bl-icon-btn {
+.bl-actions-inner .bl-icon-btn {
   margin: 0;
   vertical-align: middle;
 }
@@ -422,6 +435,12 @@
 .bl-icon-btn:hover {
   background: #F8FAFC;
   border-color: #D6DEE8;
+}
+
+.bl-icon-btn:focus-visible {
+  outline: 3px solid rgba(22, 166, 106, 0.22);
+  outline-offset: 2px;
+  border-color: #16A66A;
 }
 
 .bl-icon-btn.is-danger {
@@ -535,6 +554,6 @@ a.bl-page-btn:hover {
     grid-template-columns: 1fr;
   }
   .bl-table {
-    min-width: 720px;
+    min-width: 840px;
   }
 }

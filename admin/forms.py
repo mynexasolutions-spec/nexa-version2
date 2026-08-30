@@ -58,6 +58,19 @@ class DeleteForm(FlaskForm):
     pass
 
 
+class ExpenseForm(FlaskForm):
+    description = StringField("Description", validators=[DataRequired(), Length(max=255)])
+    category = StringField("Category", validators=[DataRequired(), Length(max=120)])
+    amount = DecimalField("Amount", places=2, validators=[InputRequired()])
+    incurred_on = DateField("Expense Date", validators=[DataRequired()])
+    notes = TextAreaField("Notes", validators=[Optional(), Length(max=3000)])
+    submit = SubmitField("Save Expense")
+
+    def validate_amount(self, field):
+        if field.data is not None and field.data <= 0:
+            raise ValidationError("Expense amount must be greater than zero.")
+
+
 class ProjectPaymentForm(FlaskForm):
     amount = DecimalField("Payment Amount", places=2, validators=[InputRequired()])
     paid_on = DateField("Payment Date", validators=[DataRequired()])

@@ -23,18 +23,18 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="{{ request.url }}">
 <meta property="og:title" content="{{ self.title()|striptags|trim }}">
-<meta property="og:description" content="Nexa Solutions is a top-tier IT agency providing expert Website Development, SaaS products, comprehensive IT solutions, CRM systems, and AI integration.">
+<meta property="og:description" content="{% block social_description %}Nexa Solutions is a top-tier IT agency providing expert Website Development, SaaS products, comprehensive IT solutions, CRM systems, and AI integration.{% endblock %}">
 <meta property="og:image" content="{{ url_for('static', filename='images/og-image.jpg', _external=True) }}">
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image">
 <meta property="twitter:url" content="{{ request.url }}">
 <meta property="twitter:title" content="{{ self.title()|striptags|trim }}">
-<meta property="twitter:description" content="Nexa Solutions is a top-tier IT agency providing expert Website Development, SaaS products, comprehensive IT solutions, CRM systems, and AI integration.">
+<meta property="twitter:description" content="{{ self.social_description()|striptags|trim }}">
 <meta property="twitter:image" content="{{ url_for('static', filename='images/og-image.jpg', _external=True) }}">
 
 <!-- Canonical URL -->
-<link rel="canonical" href="{{ request.url }}">
+<link rel="canonical" href="{% block canonical_url %}{{ request.url }}{% endblock %}">
 
 <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='images/favicons/apple-touch-icon.png') }}">
 <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicons/favicon-32x32.png') }}">

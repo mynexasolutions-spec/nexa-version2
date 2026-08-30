@@ -23,6 +23,7 @@ from .project import (
     project_status_label,
 )
 from .lead import ContactLead, ensure_contact_leads_table
+from .expense import Expense, ensure_expense_table
 
 __all__ = [
     "db",
@@ -32,6 +33,7 @@ __all__ = [
     "ProjectDocument",
     "ProjectPayment",
     "ContactLead",
+    "Expense",
     "DOCUMENT_TYPE_CHOICES",
     "INITIAL_ADVANCE_NOTE",
     "PROJECT_STATUS_CHOICES",
@@ -40,6 +42,7 @@ __all__ = [
     "payment_status_label",
     "project_status_label",
     "ensure_contact_leads_table",
+    "ensure_expense_table",
     "upload_project_document",
     "signed_project_document_url",
 ]

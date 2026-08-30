@@ -696,6 +696,50 @@ a { color: inherit; }
   padding-top: 1rem;
 }
 
+.cashflow-kpis {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.65rem;
+  margin-bottom: 0.5rem;
+}
+
+.cashflow-kpis > div {
+  display: grid;
+  gap: 0.18rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: #f9fafb;
+}
+
+.cashflow-kpis span,
+.cashflow-legend {
+  color: var(--ink-soft);
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.cashflow-kpis strong { font-size: 0.95rem; }
+
+.cashflow-legend {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.cashflow-legend span::before {
+  content: "";
+  display: inline-block;
+  width: 0.65rem;
+  height: 0.65rem;
+  margin-right: 0.35rem;
+  border-radius: 2px;
+  vertical-align: -0.05rem;
+}
+
+.cashflow-legend .revenue-key::before { background: #2f6fed; }
+.cashflow-legend .expense-key::before { background: #f59e0b; }
+
 .bar-chart-item {
   display: grid;
   gap: 0.55rem;
@@ -704,20 +748,70 @@ a { color: inherit; }
 }
 
 .bar-chart-track {
+  position: relative;
   display: flex;
   align-items: end;
   height: 210px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: linear-gradient(180deg, #f9fafb, #eef2f7);
+}
+
+.bar-chart-track:focus-visible {
+  outline: 3px solid rgba(47, 111, 237, 0.32);
+  outline-offset: 2px;
+}
+
+.bar-chart-bars {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: end;
+  gap: 3px;
+  padding: 0 4px;
   overflow: hidden;
+  border-radius: inherit;
+}
+
+.bar-chart-single .bar-chart-bars {
+  gap: 0;
+  padding: 0;
 }
 
 .bar-chart-fill {
-  width: 100%;
+  flex: 1;
   min-height: 4px;
-  background: linear-gradient(180deg, #21c7a8, #2f6fed);
+  border-radius: 4px 4px 0 0;
 }
+
+.bar-chart-fill.is-zero { min-height: 0; }
+
+.bar-chart-revenue { background: linear-gradient(180deg, #21c7a8, #2f6fed); }
+.bar-chart-expense { background: linear-gradient(180deg, #fbbf24, #f97316); }
+
+.bar-chart-tooltip {
+  position: absolute;
+  z-index: 5;
+  left: 50%;
+  bottom: calc(100% + 0.55rem);
+  display: none;
+  width: max-content;
+  max-width: 190px;
+  padding: 0.55rem 0.65rem;
+  border-radius: 6px;
+  color: #fff;
+  background: #101318;
+  box-shadow: 0 8px 22px rgba(16, 19, 24, 0.24);
+  transform: translateX(-50%);
+  font-size: 0.72rem;
+  line-height: 1.45;
+  pointer-events: none;
+}
+
+.bar-chart-tooltip strong,
+.bar-chart-tooltip span { display: block; color: inherit; text-align: left; }
+.bar-chart-track:hover .bar-chart-tooltip,
+.bar-chart-track:focus .bar-chart-tooltip { display: block; }
 
 .bar-chart-item span {
   color: var(--ink-soft);
@@ -872,6 +966,36 @@ textarea,
   line-height: 1.55;
 }
 
+.password-field {
+  position: relative;
+}
+
+.password-field .input {
+  padding-right: 3.25rem;
+}
+
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 0.35rem;
+  translate: 0 -50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 7px;
+  color: var(--ink-soft);
+  background: transparent;
+  cursor: pointer;
+}
+
+.password-toggle:hover { color: var(--ink); background: #f1f5f9; }
+.password-toggle:focus-visible { outline: 3px solid var(--signal-soft); color: var(--ink); }
+.password-toggle svg[hidden] { display: none; }
+
 select {
   cursor: pointer;
   appearance: none;
@@ -989,6 +1113,11 @@ button[type="submit"] { margin-top: 1.5rem; }
   text-transform: uppercase;
 }
 
+/* Keep the final action heading and controls on the same right edge. */
+.admin-table thead th:last-child {
+  text-align: right;
+}
+
 .admin-table td {
   padding: 0.9rem;
   border-bottom: 1px solid var(--line);
@@ -999,7 +1128,7 @@ button[type="submit"] { margin-top: 1.5rem; }
 .admin-table tr:hover td { background: #fbfcfd; }
 
 .admin-table .actions {
-  text-align: left;
+  text-align: right;
   white-space: nowrap;
 }
 
@@ -1026,6 +1155,91 @@ button[type="submit"] { margin-top: 1.5rem; }
 .lead-message {
   max-width: 340px;
   white-space: pre-wrap;
+}
+
+.lead-status-cell,
+.lead-actions-cell {
+  height: 100%;
+  vertical-align: middle !important;
+}
+
+.lead-control-wrap {
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+  height: 40px;
+}
+
+.lead-control-wrap > form {
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+}
+
+.lead-control-wrap button[type="submit"] {
+  margin-top: 0;
+}
+
+.lead-control-wrap .link-danger {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.lead-actions-cell .lead-control-wrap {
+  justify-content: flex-end;
+}
+
+/* Expense ledger -------------------------------------------------------- */
+.expense-filters {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) repeat(2, minmax(160px, 0.75fr)) auto auto;
+  gap: 0.75rem;
+  align-items: end;
+  margin: 1rem 0;
+}
+
+.expense-filters .input { margin: 0; }
+
+.expense-add-btn {
+  background: #fff;
+  border: 1px solid var(--line);
+  color: var(--ink);
+}
+
+.expense-add-btn:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: var(--ink);
+}
+
+.expense-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+}
+
+.expense-table { min-width: 800px; }
+.expense-table .expense-actions { white-space: nowrap; }
+
+.expense-actions-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.expense-inline-form { display: inline-flex; margin: 0; }
+.expense-inline-form button[type="submit"] { margin: 0; }
+
+@media (max-width: 900px) {
+  .expense-filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 600px) {
+  .expense-filters { grid-template-columns: 1fr; }
+  .expense-filters .btn-secondary { width: 100%; }
 }
 
 .badge {
@@ -1383,6 +1597,8 @@ button[type="submit"] { margin-top: 1.5rem; }
     height: 170px;
   }
 
+  .cashflow-kpis { grid-template-columns: 1fr; }
+
   .period-selector {
     width: 100%;
   }
@@ -1466,7 +1682,7 @@ button[type="submit"] { margin-top: 1.5rem; }
 .pl-table tbody td { padding: 28px 16px; border-bottom: 1px solid #EDF1F6; vertical-align: middle; }
 .pl-table tbody tr:last-child td { border-bottom: 0; }
 .pl-table tbody tr:hover { background: #FAFBFD; }
-.pl-th-actions, .pl-actions { text-align: right; white-space: nowrap; }
+.pl-table thead th.pl-th-actions, .pl-actions { text-align: right; white-space: nowrap; }
 .pl-proj-cell { display: flex; align-items: center; gap: 14px; }
 .pl-avatar { width: 50px; height: 50px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px; color: #fff; flex-shrink: 0; }
 .pl-avatar.av-0 { background: #101827; } .pl-avatar.av-1 { background: #FDBA74; color: #7C2D12; } .pl-avatar.av-2 { background: #34B87C; } .pl-avatar.av-3 { background: #A78BFA; } .pl-avatar.av-4 { background: #60A5FA; }

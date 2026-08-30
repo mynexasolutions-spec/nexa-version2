@@ -43,6 +43,9 @@ migrations/
 # Test output
 htmlcov/
 .coverage
+.pytest_cache/
+.test-tmp*/
+.pytest-tmp*/
 
 # Backup files
 *~

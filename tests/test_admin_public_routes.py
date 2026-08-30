@@ -4,6 +4,29 @@ import sys
 import pytest
 
 
+def make_blog(app_module, *, title, slug, published, views=0):
+    from models import BlogPost, Category
+
+    category = Category.query.filter_by(name="Preview").first()
+    if category is None:
+        category = Category(name="Preview")
+        app_module.db.session.add(category)
+        app_module.db.session.flush()
+    post = BlogPost(
+        title=title,
+        slug=slug,
+        summary=f"Summary for {title}",
+        content=f"<p>Content for {title}</p>",
+        author_name="Nexa",
+        category=category,
+        is_published=published,
+        view_count=views,
+    )
+    app_module.db.session.add(post)
+    app_module.db.session.commit()
+    return post.id
+
+
 @pytest.fixture()
 def client(monkeypatch, tmp_path):
     monkeypatch.setenv("DATABASE_URL", f"sqlite:///{tmp_path / 'test.db'}")
@@ -45,8 +68,97 @@ def test_converter_displays_batch_limit(client):
     assert response.status_code == 200
     html = response.get_data(as_text=True)
     assert "Up to 100 images per batch" in html
-    assert "MAX_IMAGES = 100" in html
-    assert "Conversion runs one image at a time" in html
+    assert "/static/js/converter.js" in html
+    assert "/static/css/converter.css" in html
+    assert "Conversion runs one image at a time" in client.get("/static/js/converter.js").get_data(as_text=True)
+
+
+def test_converter_uses_shared_layout_and_unique_seo(client):
+    response = client.get("/converter")
+    html = response.get_data(as_text=True)
+
+    assert "Nexa Image to WebP Converter" in html
+    assert 'rel="canonical"' in html and "/converter" in html
+    assert '"@type":"WebApplication"' in html
+    assert "Nothing is uploaded to a server" in html
+    assert "Explore web development" in html
+    assert "footer" in html.lower()
+    assert 'id="drop-zone" class="converter-drop-zone" aria-describedby="format-note"' in html
+    assert 'id="drop-zone" class="converter-drop-zone" role="button"' not in html
+    assert 'id="browse-btn" type="button"' in html
+
+
+def test_converter_is_indexable_and_listed_in_sitemap(client):
+    robots = client.get("/robots.txt").get_data(as_text=True)
+    sitemap = client.get("/sitemap.xml").get_data(as_text=True)
+
+    assert "Disallow: /converter" not in robots
+    assert "/converter</loc>" in sitemap
+
+
+@pytest.mark.parametrize("published", [False, True])
+def test_admin_blog_preview_supports_drafts_and_published_without_counting_view(client, published):
+    app_module = importlib.import_module("app")
+    with app_module.app.app_context():
+        blog_id = make_blog(
+            app_module,
+            title="Draft Preview" if not published else "Published Preview",
+            slug="draft-preview" if not published else "published-preview",
+            published=published,
+            views=7,
+        )
+
+    response = client.get(f"/admin/blogs/{blog_id}/preview")
+    assert response.status_code == 200
+    assert ("Draft Preview" if not published else "Published Preview") in response.get_data(as_text=True)
+
+    with app_module.app.app_context():
+        from models import BlogPost
+
+        assert app_module.db.session.get(BlogPost, blog_id).view_count == 7
+
+
+def test_admin_blog_preview_requires_auth_and_returns_404(client):
+    missing = client.get("/admin/blogs/999999/preview")
+    assert missing.status_code == 404
+
+    with client.session_transaction() as session:
+        session.clear()
+    protected = client.get("/admin/blogs/999999/preview")
+    assert protected.status_code in {302, 401}
+
+
+def test_blog_list_has_views_and_accessible_preview_action(client):
+    app_module = importlib.import_module("app")
+    with app_module.app.app_context():
+        blog_id = make_blog(app_module, title="Visible Article", slug="visible-article", published=False, views=23)
+
+    html = client.get("/admin/blogs").get_data(as_text=True)
+
+    assert 'class="bl-th-views">Views' in html
+    assert 'class="bl-views">23' in html
+    assert f'/admin/blogs/{blog_id}/preview' in html
+    assert 'rel="noopener"' in html
+    assert 'aria-label="Preview Visible Article in a new tab"' in html
+
+
+def test_lead_status_and_delete_alignment_hooks_render(client):
+    app_module = importlib.import_module("app")
+    with app_module.app.app_context():
+        app_module.db.session.add(
+            app_module.ContactLead(
+                name="Aligned Lead",
+                email="aligned@example.com",
+                subject="Project",
+                message="A long message should not move the controls out of alignment.",
+            )
+        )
+        app_module.db.session.commit()
+
+    html = client.get("/admin/leads").get_data(as_text=True)
+
+    assert 'class="lead-status-cell"' in html
+    assert 'class="actions lead-actions-cell"' in html
 
 
 def test_admin_blog_form_has_inline_category_creation(client):

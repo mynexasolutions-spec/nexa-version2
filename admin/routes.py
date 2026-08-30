@@ -4,18 +4,20 @@ from models import (
     BlogPost,
     Category,
     ContactLead,
+    Expense,
     INITIAL_ADVANCE_NOTE,
     Project,
     ProjectDocument,
     ProjectPayment,
     ensure_contact_leads_table,
+    ensure_expense_table,
     ensure_project_tables,
     format_money,
     signed_project_document_url,
     upload_project_document,
     upload_blog_image,
 )
-from .forms import AdminLoginForm, BlogForm, DeleteForm, ProjectForm, ProjectPaymentForm
+from .forms import AdminLoginForm, BlogForm, DeleteForm, ExpenseForm, ProjectForm, ProjectPaymentForm
 from .utils import generate_unique_slug
 from security_utils import admin_ip_login_limiter, admin_login_limiter, login_ip_key, login_rate_key
 import re
@@ -172,6 +174,10 @@ def dashboard():
     revenue_collected = sum((project.collected_amount for project in projects), Decimal("0.00"))
     outstanding = sum((project.remaining_amount for project in projects), Decimal("0.00"))
     monthly_revenue = build_monthly_revenue(period, today, projects=projects)
+    monthly_expenses = build_monthly_expenses(period, today)
+    total_period_revenue = sum((item["amount"] for item in monthly_revenue), Decimal("0.00"))
+    total_period_expenses = sum((item["amount"] for item in monthly_expenses), Decimal("0.00"))
+    total_period_net = total_period_revenue - total_period_expenses
     monthly_revenue_by_month = {item["month"]: item["amount"] for item in monthly_revenue}
     revenue_this_month = monthly_revenue_by_month.get(current_month, Decimal("0.00"))
     revenue_last_month = monthly_revenue_by_month.get(previous_month, Decimal("0.00"))
@@ -214,6 +220,11 @@ def dashboard():
         ][:5],
         monthly_revenue=monthly_revenue,
         monthly_revenue_max=max([item["amount"] for item in monthly_revenue] or [Decimal("0.00")]),
+        monthly_expenses=monthly_expenses,
+        monthly_expenses_max=max([item["amount"] for item in monthly_expenses] or [Decimal("0.00")]),
+        period_revenue=format_money(total_period_revenue),
+        period_expenses=format_money(total_period_expenses),
+        period_net_revenue=format_money(total_period_net),
         status_distribution=status_distribution,
         period=period,
     )
@@ -241,6 +252,102 @@ def delete_lead(lead_id):
     db.session.commit()
     flash("Lead deleted.", "success")
     return redirect(url_for("admin.lead_list"))
+
+
+def parse_expense_filter_date(value):
+    if not value:
+        return None
+    try:
+        return date.fromisoformat(value)
+    except ValueError:
+        return None
+
+
+@admin_bp.route("/expenses")
+@login_required
+def expense_list():
+    ensure_expense_table()
+    category = request.args.get("category", "").strip()
+    date_from_raw = request.args.get("date_from", "").strip()
+    date_to_raw = request.args.get("date_to", "").strip()
+    date_from = parse_expense_filter_date(date_from_raw)
+    date_to = parse_expense_filter_date(date_to_raw)
+
+    query = Expense.query
+    if category:
+        query = query.filter(Expense.category == category)
+    if date_from:
+        query = query.filter(Expense.incurred_on >= date_from)
+    if date_to:
+        query = query.filter(Expense.incurred_on <= date_to)
+
+    expenses = query.order_by(Expense.incurred_on.desc(), Expense.created_at.desc()).all()
+    categories = [row[0] for row in db.session.query(Expense.category).distinct().order_by(Expense.category).all()]
+    return render_template(
+        "admin/expense_list.html",
+        expenses=expenses,
+        categories=categories,
+        category_filter=category,
+        date_from_filter=date_from_raw,
+        date_to_filter=date_to_raw,
+        total_amount=format_money(sum((decimal_value(expense.amount) for expense in expenses), Decimal("0.00"))),
+        delete_form=DeleteForm(),
+    )
+
+
+@admin_bp.route("/expenses/new", methods=["GET", "POST"])
+@login_required
+def create_expense():
+    ensure_expense_table()
+    form = ExpenseForm()
+    if request.method == "GET":
+        form.incurred_on.data = date.today()
+    if form.validate_on_submit():
+        expense = Expense(
+            description=form.description.data.strip(),
+            category=form.category.data.strip(),
+            amount=form.amount.data,
+            incurred_on=form.incurred_on.data,
+            notes=(form.notes.data or "").strip() or None,
+        )
+        db.session.add(expense)
+        db.session.commit()
+        flash("Expense added.", "success")
+        return redirect(url_for("admin.expense_list"))
+    return render_template("admin/expense_form.html", form=form, is_edit=False)
+
+
+@admin_bp.route("/expenses/<int:expense_id>/edit", methods=["GET", "POST"])
+@login_required
+def edit_expense(expense_id):
+    ensure_expense_table()
+    expense = Expense.query.get_or_404(expense_id)
+    form = ExpenseForm(obj=expense)
+    if form.validate_on_submit():
+        expense.description = form.description.data.strip()
+        expense.category = form.category.data.strip()
+        expense.amount = form.amount.data
+        expense.incurred_on = form.incurred_on.data
+        expense.notes = (form.notes.data or "").strip() or None
+        db.session.commit()
+        flash("Expense updated.", "success")
+        return redirect(url_for("admin.expense_list"))
+    return render_template("admin/expense_form.html", form=form, expense=expense, is_edit=True)
+
+
+@admin_bp.route("/expenses/<int:expense_id>/delete", methods=["POST"])
+@login_required
+def delete_expense(expense_id):
+    ensure_expense_table()
+    form = DeleteForm()
+    if not form.validate_on_submit():
+        flash("Expense delete action could not be verified. Please try again.", "error")
+        return redirect(url_for("admin.expense_list"))
+    expense = Expense.query.get_or_404(expense_id)
+    db.session.delete(expense)
+    db.session.commit()
+    flash("Expense deleted.", "success")
+    return redirect(url_for("admin.expense_list"))
 
 
 def apply_project_payment_filter(query, payment_filter):
@@ -350,6 +457,35 @@ def build_monthly_revenue(period, today, projects=None):
             "amount_label": format_money(amount),
         }
         for month, amount in revenue_by_month.items()
+    ]
+
+
+def build_monthly_expenses(period, today, expenses=None):
+    months = reporting_months(period, today)
+    expenses_by_month = {month: Decimal("0.00") for month in months}
+    if not months:
+        return []
+
+    if expenses is None:
+        ensure_expense_table()
+        expenses = Expense.query.filter(
+            Expense.incurred_on >= months[0],
+            Expense.incurred_on < add_months(months[-1], 1),
+        ).all()
+
+    for expense in expenses:
+        month = expense.incurred_on.replace(day=1)
+        if month in expenses_by_month:
+            expenses_by_month[month] += decimal_value(expense.amount)
+
+    return [
+        {
+            "month": month,
+            "label": month.strftime("%b %Y"),
+            "amount": amount,
+            "amount_label": format_money(amount),
+        }
+        for month, amount in expenses_by_month.items()
     ]
 
 
@@ -1045,6 +1181,47 @@ def blog_list():
         search_query=q,
         sort=sort,
         stats=stats,
+    )
+
+
+@admin_bp.route("/blogs/<int:blog_id>/preview")
+@login_required
+def blog_preview(blog_id):
+    """Render an admin-only preview without affecting public view analytics."""
+    ensure_admin_content_tables()
+    post = BlogPost.query.options(selectinload(BlogPost.category)).filter_by(id=blog_id).first_or_404()
+    related_posts = (
+        BlogPost.query
+        .filter(
+            BlogPost.category_id == post.category_id,
+            BlogPost.id != post.id,
+            BlogPost.is_published == True,
+        )
+        .order_by(BlogPost.published_at.desc())
+        .limit(3)
+        .all()
+    )
+    popular_posts = (
+        BlogPost.query
+        .filter(BlogPost.is_published == True)
+        .order_by(BlogPost.view_count.desc())
+        .limit(5)
+        .all()
+    )
+    category_counts = (
+        db.session.query(Category, db.func.count(BlogPost.id).label("post_count"))
+        .join(BlogPost)
+        .filter(BlogPost.is_published == True)
+        .group_by(Category.id)
+        .all()
+    )
+    return render_template(
+        "blog_detail.html",
+        post=post,
+        related_posts=related_posts,
+        popular_posts=popular_posts,
+        categories=[{"name": category.name, "post_count": count} for category, count in category_counts],
+        is_preview=True,
     )
 
 # ============================

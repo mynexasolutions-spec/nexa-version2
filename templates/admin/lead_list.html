@@ -40,21 +40,24 @@
             </td>
             <td>{{ lead.subject }}</td>
             <td class="lead-message">{{ lead.message }}</td>
-            <td>
-              {% if lead.email_sent %}
-                <span class="badge published">Sent</span>
-              {% else %}
-                <span class="badge draft" title="{{ lead.email_error or 'Email notification was not sent' }}">Saved</span>
-              {% endif %}
+            <td class="lead-status-cell">
+              <div class="lead-control-wrap">
+                {% if lead.email_sent %}
+                  <span class="badge published">Sent</span>
+                {% else %}
+                  <span class="badge draft" title="{{ lead.email_error or 'Email notification was not sent' }}">Saved</span>
+                {% endif %}
+              </div>
             </td>
-            <td class="actions">
-              <form method="POST"
-                    action="{{ url_for('admin.delete_lead', lead_id=lead.id) }}"
-                    onsubmit="return confirm('Delete this lead?');"
-                    style="display:inline;">
-                {{ delete_form.hidden_tag() }}
-                <button type="submit" class="link-danger">Delete</button>
-              </form>
+            <td class="actions lead-actions-cell">
+              <div class="lead-control-wrap">
+                <form method="POST"
+                      action="{{ url_for('admin.delete_lead', lead_id=lead.id) }}"
+                      onsubmit="return confirm('Delete this lead?');">
+                  {{ delete_form.hidden_tag() }}
+                  <button type="submit" class="link-danger">Delete</button>
+                </form>
+              </div>
             </td>
           </tr>
         {% endfor %}

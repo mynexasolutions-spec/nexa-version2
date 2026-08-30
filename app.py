@@ -564,6 +564,7 @@ def sitemap():
         {"loc": base + "/blog",                             "priority": "0.9", "changefreq": "daily"},
         {"loc": base + "/about",                            "priority": "0.6", "changefreq": "yearly"},
         {"loc": base + "/contact",                          "priority": "0.6", "changefreq": "yearly"},
+        {"loc": base + "/converter",                        "priority": "0.7", "changefreq": "monthly"},
         {"loc": base + "/privacy-policy",                   "priority": "0.3", "changefreq": "yearly"},
         {"loc": base + "/terms-of-service",                 "priority": "0.3", "changefreq": "yearly"},
         {"loc": base + "/refund-policy",                    "priority": "0.3", "changefreq": "yearly"},
@@ -620,7 +621,6 @@ def robots():
         "User-agent: *\n"
         "Allow: /\n"
         "Disallow: /admin/\n"
-        "Disallow: /converter\n"
         "\n"
         f"Sitemap: {base}/sitemap.xml\n"
     )

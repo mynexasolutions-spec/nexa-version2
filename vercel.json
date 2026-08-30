@@ -36,6 +36,7 @@
     }
   ],
   "env": {
-    "PYTHONUNBUFFERED": "1"
+    "PYTHONUNBUFFERED": "1",
+    "ADMIN_AUTO_MIGRATE": "1"
   }
 }
