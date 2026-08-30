@@ -11,3 +11,286 @@
 :root{--ink:#0b0b0b;--muted:#626262;--line:#e4e4e4;--paper:#fff;--wash:#fafafa}.converter-page .converter-eyebrow{font-size:15px!important;line-height:1.4!important;padding:10px 18px!important;gap:14px!important}.converter-page .hero-copy{font-size:19px!important;line-height:1.6!important}.converter-page .hero-benefits{gap:52px!important;margin-top:30px!important}.converter-page .hero-benefits span{font-size:15px!important;gap:10px!important}.converter-page .hero-benefits span:first-letter{font-size:26px!important}.converter-page .faq-list details[open] summary span{transform:rotate(180deg)}.converter-page .faq-list details p{font-size:16px!important;line-height:1.65!important;padding:0 28px 20px 0!important}
 :root{--ink:#0b0b0b;--muted:#626262;--line:#e4e4e4;--paper:#fff;--wash:#fafafa}.converter-page .hero-deco{object-fit:contain;object-position:center;filter:grayscale(1);font-size:0}.converter-page .hero-files{left:-88px;top:108px;width:220px;height:155px;opacity:.24}.converter-page .hero-speed{right:-82px;top:100px;width:245px;height:155px;opacity:.22;transform:none}.converter-page .cta-gauge{width:180px;height:96px;object-fit:contain;object-position:left center;opacity:.5;transform:none;flex:none}.converter-page .faq-list details[open] summary span{transform:none}
 :root{--ink:#0b0b0b;--muted:#626262;--line:#e4e4e4;--paper:#fff;--wash:#fafafa}body.converter-page{overflow-x:hidden}.converter-page .hero-files{opacity:.32}.converter-page .hero-speed{opacity:.3}
+
+/* ── Post-upload tool UI ──────────────────────────────────────
+   Controls, progress, result cards and the ZIP bar. js/converter.js
+   reveals #controls, #progress-wrap and #zip-bar by setting an inline
+   display, so nothing below may set `display` on those three. */
+
+/* Controls */
+/* The revealed blocks all align to the drop zone's edges, i.e. they
+   sit flush inside .converter-tool's own 17px padding. */
+.converter-page .converter-controls {
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px 0 22px;
+  border-top: 1px solid #ededed;
+}
+.converter-page .converter-mode-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.converter-page .mode-toggle {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid #e6e6e6;
+  border-radius: 10px;
+  background: #f7f7f7;
+}
+.converter-page .mode-btn {
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  padding: 9px 16px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.converter-page .mode-btn.active { background: #0b0b0b; color: #fff; }
+.converter-page .mode-btn:not(.active):hover { color: var(--ink); }
+.converter-page #mode-desc { font-size: 12px; color: var(--muted); }
+.converter-page #batch-message {
+  margin: 0;
+  min-height: 17px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Control row — labels and inputs share one baseline */
+.converter-page .controls-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 18px;
+}
+.converter-page .ctrl-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+/* setMode() toggles .hidden on the two mode groups; author display
+   beats the UA [hidden] rule, so restore it explicitly. */
+.converter-page .ctrl-group[hidden] { display: none; }
+.converter-page .ctrl-label {
+  padding: 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+/* "Quality" is a <legend>, which the fieldset lays out as its "rendered
+   legend" — outside the flex flow, so it ignored the column gap and sat
+   off the line the <label>s share. Per the HTML rendering spec a floated
+   legend is not the rendered legend, so this makes it an ordinary first
+   flex item; the float itself is then ignored, as on any flex item. */
+.converter-page #preset-group > .ctrl-label {
+  float: left;
+  width: 100%;
+  margin: 0;
+}
+.converter-page .preset-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+/* Every control in .controls-row is 44px tall. The row is bottom-aligned,
+   so equal heights are what keep the three .ctrl-label texts on one line. */
+.converter-page .preset-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px; /* flexbox drops the markup space before the "92%" span */
+  min-height: 44px;
+  border: 1.5px solid #e1e1e1;
+  border-radius: 99px;
+  background: #fff;
+  padding: 0 16px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  transition: border-color .15s, color .15s, background .15s;
+}
+.converter-page .preset-pill span { font-weight: 400; color: #9a9a9a; }
+.converter-page .preset-pill:hover { border-color: #111; color: var(--ink); }
+.converter-page .preset-pill.active {
+  border-color: #111;
+  background: #f4f4f4;
+  color: var(--ink);
+}
+.converter-page .target-wrap {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid #e1e1e1;
+  border-radius: 8px;
+  background: #fff;
+  overflow: hidden;
+  transition: border-color .15s;
+}
+.converter-page .target-wrap:focus-within { border-color: #111; }
+.converter-page #target-kb {
+  width: 78px;
+  border: 0;
+  background: transparent;
+  padding: 11px 4px 11px 14px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  outline: none;
+}
+.converter-page #target-kb::-webkit-inner-spin-button { -webkit-appearance: none; }
+.converter-page .target-wrap span {
+  padding: 11px 14px 11px 2px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+}
+.converter-page .ctrl-select {
+  min-height: 44px;
+  border: 1.5px solid #e1e1e1;
+  border-radius: 8px;
+  background: #fff;
+  padding: 0 34px 0 12px;
+  font: inherit;
+  font-size: 13px;
+  color: var(--ink);
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23626262' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  transition: border-color .15s;
+}
+.converter-page .ctrl-select:hover, .converter-page .ctrl-select:focus {
+  border-color: #111;
+  outline: none;
+}
+.converter-page .action-btns {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+.converter-page .controls-row .converter-btn { min-height: 44px; }
+.converter-page .info-bar {
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 12px;
+  line-height: 1.55;
+}
+.converter-page .info-bar.green { background: #f1f8f2; border: 1px solid #d6e9d9; color: #2f6b3a; }
+.converter-page .info-bar.yellow { background: #fdf7ec; border: 1px solid #efe0c4; color: #8a6420; }
+
+/* Progress */
+/* .converter-tool has no bottom padding, so each revealed block carries
+   its own trailing space and the card closes correctly whichever is last. */
+.converter-page .converter-progress { margin: 0 0 22px; }
+.converter-page .progress-bar-bg {
+  height: 6px;
+  border-radius: 99px;
+  background: #ededed;
+  overflow: hidden;
+}
+.converter-page #progress-bar {
+  width: 0;
+  height: 100%;
+  border-radius: 99px;
+  background: #0b0b0b;
+  transition: width .25s;
+}
+.converter-page #progress-label {
+  margin: 8px 0 0;
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* Result cards — the grid is what keeps previews aligned */
+.converter-page .converter-image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 16px;
+}
+.converter-page .converter-image-grid:not(:empty) { margin: 0 0 22px; }
+.converter-page .img-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid #e9e9e9;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 11px #0000000b;
+  overflow: hidden;
+}
+.converter-page .img-card.over-target { border-color: #efd7a8; }
+.converter-page .img-preview {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  background: #f4f4f4;
+}
+.converter-page .img-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  min-width: 0;
+  padding: 11px 13px;
+}
+.converter-page .img-name {
+  max-width: 100%;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.converter-page .img-status {
+  border-radius: 20px;
+  padding: 3px 9px;
+  font-size: 10px;
+  font-weight: 700;
+}
+.converter-page .status-pending { background: #f0f0f0; color: #6e6e6e; }
+.converter-page .status-done    { background: #e8f5ea; color: #2f6b3a; }
+.converter-page .status-warn    { background: #fbf1de; color: #8a6420; }
+.converter-page .status-error   { background: #fbe9e9; color: #a33; }
+.converter-page .img-sizes { font-size: 11px; color: var(--muted); }
+.converter-page .img-sizes .after { font-weight: 700; color: #2f6b3a; }
+.converter-page .img-sizes .over  { font-weight: 700; color: #8a6420; }
+.converter-page .img-dim { font-size: 10px; line-height: 1.45; color: #8a8a8a; }
+.converter-page .img-actions { padding: 0 13px 13px; }
+.converter-page .btn-dl { width: 100%; min-height: 38px; }
+.converter-page .btn-dl:hover { transform: none; box-shadow: none; }
+
+/* ZIP bar */
+.converter-page #zip-bar {
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0 0 22px;
+  border: 1px solid #e9e9e9;
+  border-radius: 10px;
+  background: #fafafa;
+  padding: 14px 18px;
+}
+.converter-page #zip-label { font-size: 13px; font-weight: 700; }
+
+@media (max-width: 560px) {
+  .converter-page .controls-row { flex-direction: column; align-items: stretch; }
+  .converter-page .action-btns { margin-left: 0; }
+  .converter-page .action-btns .converter-btn { flex: 1; }
+  .converter-page .converter-image-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+}
