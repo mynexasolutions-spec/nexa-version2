@@ -26,35 +26,6 @@
   padding: 24px 0 22px;
   border-top: 1px solid #ededed;
 }
-.converter-page .converter-mode-row {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  flex-wrap: wrap;
-}
-.converter-page .mode-toggle {
-  display: flex;
-  gap: 4px;
-  padding: 4px;
-  border: 1px solid #e6e6e6;
-  border-radius: 10px;
-  background: #f7f7f7;
-}
-.converter-page .mode-btn {
-  border: 0;
-  border-radius: 7px;
-  background: transparent;
-  padding: 9px 16px;
-  font: inherit;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--muted);
-  cursor: pointer;
-  transition: background .15s, color .15s;
-}
-.converter-page .mode-btn.active { background: #0b0b0b; color: #fff; }
-.converter-page .mode-btn:not(.active):hover { color: var(--ink); }
-.converter-page #mode-desc { font-size: 12px; color: var(--muted); }
 .converter-page #batch-message {
   margin: 0;
   min-height: 17px;
@@ -78,8 +49,7 @@
   padding: 0;
   border: 0;
 }
-/* setMode() toggles .hidden on the two mode groups; author display
-   beats the UA [hidden] rule, so restore it explicitly. */
+/* Author display beats the UA [hidden] rule, so restore it explicitly. */
 .converter-page .ctrl-group[hidden] { display: none; }
 .converter-page .ctrl-label {
   padding: 0;
@@ -89,42 +59,8 @@
   text-transform: uppercase;
   color: var(--muted);
 }
-/* "Quality" is a <legend>, which the fieldset lays out as its "rendered
-   legend" — outside the flex flow, so it ignored the column gap and sat
-   off the line the <label>s share. Per the HTML rendering spec a floated
-   legend is not the rendered legend, so this makes it an ordinary first
-   flex item; the float itself is then ignored, as on any flex item. */
-.converter-page #preset-group > .ctrl-label {
-  float: left;
-  width: 100%;
-  margin: 0;
-}
-.converter-page .preset-pills { display: flex; flex-wrap: wrap; gap: 6px; }
 /* Every control in .controls-row is 44px tall. The row is bottom-aligned,
-   so equal heights are what keep the three .ctrl-label texts on one line. */
-.converter-page .preset-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px; /* flexbox drops the markup space before the "92%" span */
-  min-height: 44px;
-  border: 1.5px solid #e1e1e1;
-  border-radius: 99px;
-  background: #fff;
-  padding: 0 16px;
-  font: inherit;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--muted);
-  cursor: pointer;
-  transition: border-color .15s, color .15s, background .15s;
-}
-.converter-page .preset-pill span { font-weight: 400; color: #9a9a9a; }
-.converter-page .preset-pill:hover { border-color: #111; color: var(--ink); }
-.converter-page .preset-pill.active {
-  border-color: #111;
-  background: #f4f4f4;
-  color: var(--ink);
-}
+   so equal heights are what keep the .ctrl-label texts on one line. */
 .converter-page .target-wrap {
   display: flex;
   align-items: center;
@@ -188,7 +124,6 @@
   line-height: 1.55;
 }
 .converter-page .info-bar.green { background: #f1f8f2; border: 1px solid #d6e9d9; color: #2f6b3a; }
-.converter-page .info-bar.yellow { background: #fdf7ec; border: 1px solid #efe0c4; color: #8a6420; }
 
 /* Progress */
 /* .converter-tool has no bottom padding, so each revealed block carries
