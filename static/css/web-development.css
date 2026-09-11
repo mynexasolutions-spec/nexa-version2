@@ -151,8 +151,8 @@
 
 .wd-hero-title {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(3.2rem, 6vw, 5.6rem);
-    line-height: 0.95;
+    font-size: clamp(2.8rem, 5.5vw, 4.2rem);
+    line-height: 1.0;
     letter-spacing: 0.01em;
     color: #0a0a0a;
     margin-bottom: 1.6rem;
@@ -1482,7 +1482,7 @@
 }
 
 @media (max-width: 640px) {
-    .wd-hero-title { font-size: clamp(3rem, 13vw, 5rem); }
+    /* removed .wd-hero-title font-size override */
     .wd-quality-grid { grid-template-columns: 1fr; }
     .wd-stats-inner { grid-template-columns: 1fr 1fr; }
     .wd-stack-cards { grid-template-columns: 1fr 1fr; }

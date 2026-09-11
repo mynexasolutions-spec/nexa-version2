@@ -55,9 +55,9 @@
   opacity: 1;
 }
 
-/* Call Theme - Matching Nexa Black/Dark */
+/* Call Theme - Blue */
 .btn-call {
-  background: #111;
+  background: #2563EB;
   color: #fff;
 }
 
@@ -65,15 +65,15 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+  background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
   opacity: 0;
   transition: opacity 0.3s ease;
 }
 
 .btn-call:hover {
   transform: translateY(-5px) scale(1.05);
-  background: #000;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+  background: #1D4ED8;
+  box-shadow: 0 15px 30px rgba(37, 99, 235, 0.3);
 }
 
 .btn-call:hover::before {

@@ -20,21 +20,23 @@
 <title>{% block title %}Nexa Solutions — IT Agency &amp; Technology Partner{% endblock %}</title>
 
 <!-- Open Graph / Social Sharing -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="{{ request.url }}">
+<meta property="og:type" content="{% block og_type %}website{% endblock %}">
+<meta property="og:url" content="{% block og_url %}{{ canonical_url() }}{% endblock %}">
 <meta property="og:title" content="{{ self.title()|striptags|trim }}">
 <meta property="og:description" content="{% block social_description %}Nexa Solutions is a top-tier IT agency providing expert Website Development, SaaS products, comprehensive IT solutions, CRM systems, and AI integration.{% endblock %}">
-<meta property="og:image" content="{{ url_for('static', filename='images/og-image.jpg', _external=True) }}">
+<meta property="og:image" content="{% block social_image %}{{ SITE_URL }}{{ url_for('static', filename='images/og-image.jpg') }}{% endblock %}">
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image">
-<meta property="twitter:url" content="{{ request.url }}">
+<meta property="twitter:url" content="{{ self.og_url() }}">
 <meta property="twitter:title" content="{{ self.title()|striptags|trim }}">
 <meta property="twitter:description" content="{{ self.social_description()|striptags|trim }}">
-<meta property="twitter:image" content="{{ url_for('static', filename='images/og-image.jpg', _external=True) }}">
+<meta property="twitter:image" content="{{ self.social_image()|striptags|trim }}">
 
-<!-- Canonical URL -->
-<link rel="canonical" href="{% block canonical_url %}{{ request.url }}{% endblock %}">
+<!-- Canonical URL — always the fixed SITE_URL, never the raw request Host,
+     so it can't drift to www/non-www/preview domains or pick up ad tracking
+     query params. -->
+<link rel="canonical" href="{% block canonical_url %}{{ canonical_url() }}{% endblock %}">
 
 <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='images/favicons/apple-touch-icon.png') }}">
 <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicons/favicon-32x32.png') }}">
@@ -72,12 +74,13 @@
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "Nexa Solutions",
-  "url": "https://nexasolutions.de",
-  "logo": "https://nexasolutions.de/static/images/logo.png",
+  "url": "{{ SITE_URL }}",
+  "logo": "{{ SITE_URL }}{{ url_for('static', filename='images/logo/logo.png') }}",
   "description": "Nexa Solutions is a top-tier IT agency providing expert Website Development, SaaS products, comprehensive IT solutions, CRM systems, and AI integration.",
   "sameAs": [
-    "https://www.linkedin.com/company/nexasolutions",
-    "https://twitter.com/nexasolutions"
+    "https://www.linkedin.com/company/mynexasolutions/",
+    "https://twitter.com/NSolutions5284",
+    "https://www.instagram.com/nexasolutions.in/"
   ]
 }
 </script>

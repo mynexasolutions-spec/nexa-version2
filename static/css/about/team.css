@@ -1,7 +1,3 @@
-.about-team .about-shell {
-  width: min(1400px, calc(100% - 40px));
-}
-
 .about-founder-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

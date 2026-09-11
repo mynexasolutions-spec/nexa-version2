@@ -15,22 +15,16 @@
   margin: 0 auto;
 }
 
-.about-page .sec-eyebrow {
-  color: var(--about-muted);
-  font-size: 0.68rem;
-  line-height: 1.2;
-  margin: 0 0 14px;
-  max-width: none;
-}
-
 .about-hero h1,
 .about-cta h2 {
   margin: 0;
   color: var(--about-black);
   font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.8rem, 5.5vw, 4.2rem);
+  line-height: 1.0;
+  letter-spacing: 0.01em;
   font-weight: 400;
-  letter-spacing: 0;
-  line-height: 0.95;
+  text-transform: uppercase;
 }
 
 .about-page .btn {
@@ -84,15 +78,19 @@
   max-width: 560px;
   margin: 0;
   color: var(--about-black);
-  letter-spacing: 0;
-  line-height: 0.95;
-  font-size: 4rem;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.8rem, 5.5vw, 4.2rem);
+  line-height: 1.0;
+  letter-spacing: 0.01em;
+  font-weight: 400;
+  text-transform: uppercase;
 }
 
 .about-section-heading-center {
   max-width: 720px;
   margin-right: auto;
   margin-left: auto;
+  text-align: center;
 }
 
 .about-section-heading-center h2 {

@@ -1,0 +1,373 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}AI &amp; Automation Company — Custom AI Solutions &amp; Workflow Automation | Nexa Solutions{% endblock %}
+
+{% block meta %}
+<meta name="description" content="Nexa Solutions is an AI and automation company building custom AI models, intelligent chatbots, and RPA-powered workflow automation that cuts operational costs and eliminates repetitive work.">
+<meta name="keywords" content="AI Automation Company, AI Solutions, Workflow Automation, RPA, Machine Learning, AI Integration, Business Process Automation">
+{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/web-development.css') }}">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "AI & Automation Solutions",
+  "provider": {
+    "@type": "Organization",
+    "name": "Nexa Solutions"
+  },
+  "description": "Custom AI models, intelligent automation, and RPA-powered workflows that solve real business problems and reduce operational costs.",
+  "areaServed": "Worldwide",
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "AI & Automation Services",
+    "itemListElement": [
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Custom AI Model Development" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Workflow Automation & RPA" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI Chatbots & Virtual Assistants" } }
+    ]
+  }
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<main class="webdev-page">
+
+    <!-- ═══════════════════════════════════════════
+         1. HERO
+    ═══════════════════════════════════════════ -->
+    <section class="wd-hero">
+        <div class="wd-hero-inner">
+
+            <div class="wd-hero-text">
+                <h1 class="wd-hero-title">AI &amp; Automation<br>Company</h1>
+                <p class="wd-hero-sub">
+                    We are an AI and automation company that builds intelligent systems and streamlined workflows powered by machine learning and RPA — eliminating repetitive processes, reducing operational costs, and solving real business problems.
+                </p>
+                <div class="wd-hero-btns">
+                    <a href="#ai-services" class="wd-btn wd-btn--outline">Learn more</a>
+                    <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Contact us</a>
+                </div>
+            </div>
+
+            <div class="wd-hero-visual">
+                <div class="wd-hero-laptop-wrap">
+                    <img
+                        src="{{ url_for('static', filename='images/services/card-ai-automation.webp') }}"
+                        alt="AI and Automation Solutions by Nexa Solutions"
+                        class="wd-hero-laptop"
+                    >
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         2. WHY AI & AUTOMATION
+    ═══════════════════════════════════════════ -->
+    <section class="wd-certified">
+        <div class="wd-certified-inner">
+
+            <div class="wd-certified-visual wd-reveal-left">
+                <img
+                    src="{{ url_for('static', filename='images/services/stacks.webp') }}"
+                    alt="AI, machine learning, and automation technology stack"
+                    class="wd-certified-img"
+                >
+            </div>
+
+            <div class="wd-certified-text wd-reveal-right">
+                <span class="wd-section-label">Why Automate</span>
+                <h2 class="wd-section-title">Turn Repetitive Work<br>Into Reliable Systems</h2>
+                <p class="wd-certified-desc">
+                    Every business has processes that eat up hours without adding value — manual data entry, repetitive customer replies, disconnected spreadsheets. We identify those processes and replace them with AI models and automated workflows that run consistently, at scale, without getting tired.
+                </p>
+                <p class="wd-certified-desc">
+                    As an AI and automation company, our approach starts with mapping your actual workflow before recommending any tool or model — automation that isn't built around your real process just creates new problems.
+                </p>
+                <div class="wd-certified-btns">
+                    <a href="#ai-services" class="wd-btn wd-btn--primary">Explore Services</a>
+                    <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--outline">Contact Us</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         3. SERVICES
+    ═══════════════════════════════════════════ -->
+    <section class="wd-types" id="ai-services">
+        <div class="wd-types-inner">
+
+            <div class="wd-types-header wd-reveal">
+                <span class="wd-section-label">What We Build</span>
+                <h2 class="wd-section-title">AI &amp; Automation Services</h2>
+                <p class="wd-section-desc" style="margin:0 auto; text-align:center;">
+                    From a single automated workflow to a fully custom AI model — we scope it to what your business actually needs.
+                </p>
+            </div>
+
+            <div class="wd-tab-panels" style="position:static;">
+
+                <div class="wd-tab-panel active" data-panel="0" style="position:static; opacity:1; transform:none;">
+                    <div class="wd-panel-text">
+                        <h3 class="wd-panel-title">Workflow Automation &amp; RPA</h3>
+                        <p class="wd-panel-desc">We automate the repetitive, rule-based tasks that quietly consume your team's time — data entry, report generation, approvals, notifications, and cross-system syncing — using RPA tools and custom automation scripts tied directly into your existing systems.</p>
+                        <div class="wd-panel-tags">
+                            <span class="wd-type-tag">Process Mapping</span>
+                            <span class="wd-type-tag">RPA</span>
+                            <span class="wd-type-tag">Workflow Orchestration</span>
+                            <span class="wd-type-tag">System Integration</span>
+                        </div>
+                        <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Automate My Workflow</a>
+                    </div>
+                    <div class="wd-panel-image">
+                        <img src="{{ url_for('static', filename='images/stock/photo-1611162617474-5b21e879e113.webp') }}" alt="Workflow Automation and RPA" loading="lazy">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="wd-stacks-categories" style="margin-top:2rem;">
+                <div class="wd-stack-category wd-reveal">
+                    <div class="wd-stack-cat-label">More Ways We Help</div>
+                    <div class="wd-stack-cards">
+                        <div class="wd-stack-card">
+                            <div class="wd-stack-name">Custom AI Models</div>
+                            <p class="wd-stack-text">Purpose-built machine learning models trained on your data, for classification, prediction, or recommendation problems specific to your business.</p>
+                        </div>
+                        <div class="wd-stack-card">
+                            <div class="wd-stack-name">AI Chatbots &amp; Virtual Assistants</div>
+                            <p class="wd-stack-text">Conversational AI trained on your product, policies, and support content — connected to your existing helpdesk or website.</p>
+                        </div>
+                        <div class="wd-stack-card">
+                            <div class="wd-stack-name">Predictive Analytics</div>
+                            <p class="wd-stack-text">Turn historical data into forward-looking insight — demand forecasting, churn prediction, and anomaly detection built around your metrics.</p>
+                        </div>
+                        <div class="wd-stack-card">
+                            <div class="wd-stack-name">AI Integration into Existing Software</div>
+                            <p class="wd-stack-text">Adding AI capability into a system you already run — search, summarization, document processing, or smart recommendations — without a rebuild.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         4. CTA BAND
+    ═══════════════════════════════════════════ -->
+    <section class="wd-cta-band">
+        <div class="wd-cta-band-inner wd-reveal">
+            <div class="wd-cta-band-label">Not sure where to start?</div>
+            <h2 class="wd-cta-band-title">Tell Us the Process That's Slowing You Down</h2>
+            <p class="wd-cta-band-desc">
+                Describe the manual task or workflow costing your team the most time. We'll assess it and recommend the right automation or AI approach — no obligation.
+            </p>
+            <div class="wd-cta-band-btns">
+                <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--white">Book a Free Consultation</a>
+                <a href="https://wa.me/918077313241" target="_blank" rel="noopener noreferrer" class="wd-btn wd-btn--ghost-white">Chat on WhatsApp</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         5. WHAT MAKES AUTOMATION ACTUALLY WORK
+    ═══════════════════════════════════════════ -->
+    <section class="wd-quality" id="wd-quality">
+        <div class="wd-quality-inner">
+
+            <div class="wd-quality-left wd-reveal-left">
+                <span class="wd-section-label">The Nexa Standard</span>
+                <h2 class="wd-section-title">What Makes Automation Actually Work?</h2>
+                <p class="wd-section-desc">
+                    Automation that isn't built around your real process creates more problems than it solves. Every system we build is engineered around these non-negotiables.
+                </p>
+                <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary" style="margin-top:2rem;">Build It Right</a>
+            </div>
+
+            <div class="wd-quality-right wd-reveal-right">
+
+                <div class="wd-pillar">
+                    <div class="wd-pillar-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                    </div>
+                    <div class="wd-pillar-body">
+                        <div class="wd-pillar-title">Process Mapped First</div>
+                        <p class="wd-pillar-desc">We document how the work actually happens today before writing a single automation rule — the biggest cause of failed automation is skipping this step.</p>
+                    </div>
+                </div>
+
+                <div class="wd-pillar">
+                    <div class="wd-pillar-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+                    </div>
+                    <div class="wd-pillar-body">
+                        <div class="wd-pillar-title">Measurable ROI</div>
+                        <p class="wd-pillar-desc">We define what "time saved" or "cost reduced" actually means before we build, so you can measure the result — not just trust that it feels faster.</p>
+                    </div>
+                </div>
+
+                <div class="wd-pillar">
+                    <div class="wd-pillar-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <div class="wd-pillar-body">
+                        <div class="wd-pillar-title">Human-in-the-Loop by Design</div>
+                        <p class="wd-pillar-desc">For anything customer-facing or high-stakes, we build in review and override points — AI assists your team, it doesn't replace judgment where judgment matters.</p>
+                    </div>
+                </div>
+
+                <div class="wd-pillar">
+                    <div class="wd-pillar-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <div class="wd-pillar-body">
+                        <div class="wd-pillar-title">Data Privacy &amp; Security</div>
+                        <p class="wd-pillar-desc">Your data stays governed — access controls, encryption, and clear data-handling boundaries are part of the build, not an afterthought.</p>
+                    </div>
+                </div>
+
+                <div class="wd-pillar">
+                    <div class="wd-pillar-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                    </div>
+                    <div class="wd-pillar-body">
+                        <div class="wd-pillar-title">Integration-First</div>
+                        <p class="wd-pillar-desc">Automation connects to the tools you already run — your CRM, spreadsheets, helpdesk, and internal systems — instead of asking you to migrate everything.</p>
+                    </div>
+                </div>
+
+                <div class="wd-pillar">
+                    <div class="wd-pillar-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18.7 8l-5.1 5.1-2.8-2.8L7 14.1"/></svg>
+                    </div>
+                    <div class="wd-pillar-body">
+                        <div class="wd-pillar-title">Built to Scale</div>
+                        <p class="wd-pillar-desc">What starts as one automated workflow is architected so the next ten can plug in without a rebuild.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="wd-pillar-dots" aria-hidden="true">
+                <span class="wd-pillar-dot active"></span>
+                <span class="wd-pillar-dot"></span>
+                <span class="wd-pillar-dot"></span>
+                <span class="wd-pillar-dot"></span>
+                <span class="wd-pillar-dot"></span>
+                <span class="wd-pillar-dot"></span>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         6. TECH STACK
+    ═══════════════════════════════════════════ -->
+    <section class="wd-stacks" id="wd-stacks">
+        <div class="wd-stacks-header wd-reveal">
+            <span class="wd-section-label">Our Technology Arsenal</span>
+            <h2 class="wd-section-title">Built on Proven AI &amp; Automation Tools</h2>
+            <p class="wd-section-desc" style="margin: 0 auto; text-align:center;">
+                We choose the right tool for the job — from off-the-shelf automation platforms to fully custom-trained models.
+            </p>
+        </div>
+
+        <div class="wd-stacks-categories">
+
+            <div class="wd-stack-category wd-reveal wd-delay-1">
+                <div class="wd-stack-cat-label">AI &amp; Machine Learning</div>
+                <div class="wd-stack-cards">
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo"><img src="https://cdn.simpleicons.org/python/3776AB" alt="Python Logo"></div>
+                        <div class="wd-stack-name">Python</div>
+                        <p class="wd-stack-text">The backbone of most modern AI and data pipelines.</p>
+                        <div class="wd-stack-badges"><span class="wd-stack-badge">ML</span><span class="wd-stack-badge">Data</span></div>
+                    </div>
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo"><img src="https://cdn.simpleicons.org/huggingface/FFD21E" alt="Hugging Face Logo"></div>
+                        <div class="wd-stack-name">LLMs &amp; Hugging Face</div>
+                        <p class="wd-stack-text">Language models for chat, summarization, and content workflows.</p>
+                        <div class="wd-stack-badges"><span class="wd-stack-badge">LLM</span><span class="wd-stack-badge">Chatbots</span></div>
+                    </div>
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo"><img src="https://cdn.simpleicons.org/pytorch/EE4C2C" alt="PyTorch Logo"></div>
+                        <div class="wd-stack-name">PyTorch / TensorFlow</div>
+                        <p class="wd-stack-text">Custom model training for classification and prediction tasks.</p>
+                        <div class="wd-stack-badges"><span class="wd-stack-badge">Custom Models</span><span class="wd-stack-badge">Training</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wd-stack-category wd-reveal wd-delay-2">
+                <div class="wd-stack-cat-label">Automation &amp; Integration</div>
+                <div class="wd-stack-cards">
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo"><img src="https://cdn.simpleicons.org/n8n/EA4B71" alt="n8n Logo"></div>
+                        <div class="wd-stack-name">n8n / Zapier</div>
+                        <p class="wd-stack-text">Workflow automation connecting your tools without custom code.</p>
+                        <div class="wd-stack-badges"><span class="wd-stack-badge">No-Code</span><span class="wd-stack-badge">Workflows</span></div>
+                    </div>
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo"><img src="https://cdn.simpleicons.org/nodedotjs/339933" alt="Node.js Logo"></div>
+                        <div class="wd-stack-name">Node.js / Flask APIs</div>
+                        <p class="wd-stack-text">Custom automation services and integration layers.</p>
+                        <div class="wd-stack-badges"><span class="wd-stack-badge">APIs</span><span class="wd-stack-badge">Backend</span></div>
+                    </div>
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo"><img src="https://cdn.simpleicons.org/postgresql/4169E1" alt="PostgreSQL Logo"></div>
+                        <div class="wd-stack-name">PostgreSQL</div>
+                        <p class="wd-stack-text">Reliable storage for the data your models and workflows depend on.</p>
+                        <div class="wd-stack-badges"><span class="wd-stack-badge">Database</span><span class="wd-stack-badge">SQL</span></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         7. FINAL CTA
+    ═══════════════════════════════════════════ -->
+    <section class="wd-cta-band">
+        <div class="wd-cta-band-inner wd-reveal">
+            <div class="wd-cta-band-label">Zero Obligation</div>
+            <h2 class="wd-cta-band-title">Let's Find What's Worth Automating</h2>
+            <p class="wd-cta-band-desc">
+                Tell us about your workflow and get a straight assessment of what's worth automating first — and what isn't.
+            </p>
+            <div class="wd-cta-band-btns">
+                <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--white">Request a Free Assessment</a>
+                <a href="{{ url_for('work') }}" class="wd-btn wd-btn--ghost-white">View Our Work First</a>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<script>
+(function () {
+    const revealEls = document.querySelectorAll('.wd-reveal, .wd-reveal-left, .wd-reveal-right');
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('wd-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+        revealEls.forEach((el) => observer.observe(el));
+    } else {
+        revealEls.forEach((el) => el.classList.add('wd-visible'));
+    }
+})();
+</script>
+{% endblock %}

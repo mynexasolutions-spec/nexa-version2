@@ -2,33 +2,21 @@
 {% block body_class %}blog-detail-page{% endblock %}
 
 {% block title %}{{ post.seo_title or post.title }} | Nexa Solutions{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block social_description %}{{ post.seo_description or post.summary }}{% endblock %}
+{% block social_image %}{% if post.featured_image %}{{ post.featured_image }}{% else %}{{ SITE_URL }}{{ url_for('static', filename='images/og-image.jpg') }}{% endif %}{% endblock %}
 
 {% block extra_head %}
 {# ── Core meta ── #}
 <meta name="description" content="{{ post.seo_description or post.summary }}">
 {% if post.seo_keywords %}<meta name="keywords" content="{{ post.seo_keywords }}">{% endif %}
-<link rel="canonical" href="{{ request.url }}">
 
-{# ── Open Graph (Facebook / LinkedIn / WhatsApp) ── #}
-<meta property="og:type"        content="article">
-<meta property="og:title"       content="{{ post.seo_title or post.title }}">
-<meta property="og:description" content="{{ post.seo_description or post.summary }}">
-<meta property="og:url"         content="{{ request.url }}">
-{% if post.featured_image %}
-<meta property="og:image"       content="{{ post.featured_image }}">
-<meta property="og:image:alt"   content="{{ post.featured_image_alt or post.title }}">
-{% endif %}
+{# ── Article-specific Open Graph (title/description/url/image/type are already
+     emitted once by base.html via the blocks overridden above) ── #}
+<meta property="og:image:alt" content="{{ post.featured_image_alt or post.title }}">
 <meta property="article:published_time" content="{{ post.published_at.isoformat() if post.published_at else '' }}">
 <meta property="article:author" content="{{ post.author_name }}">
-
-{# ── Twitter / X card ── #}
-<meta name="twitter:card"        content="summary_large_image">
-<meta name="twitter:title"       content="{{ post.seo_title or post.title }}">
-<meta name="twitter:description" content="{{ post.seo_description or post.summary }}">
-{% if post.featured_image %}
-<meta name="twitter:image"       content="{{ post.featured_image }}">
-<meta name="twitter:image:alt"   content="{{ post.featured_image_alt or post.title }}">
-{% endif %}
+<meta name="twitter:image:alt" content="{{ post.featured_image_alt or post.title }}">
 {% endblock %}
 
 {% block content %}

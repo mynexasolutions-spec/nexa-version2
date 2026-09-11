@@ -1,4 +1,4 @@
-﻿*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
     --black: #0a0a0a;
@@ -14,3 +14,12 @@
     color: var(--black);
   }
 
+  ::selection {
+    background: #000;
+    color: #fff;
+  }
+
+  /* Global scale down for specific image as requested */
+  img[src*="stacks.webp"] {
+    transform: scale(0.85);
+  }

@@ -47,9 +47,12 @@
   }
   .sec-header h2 {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    line-height: 1.05;
-    margin-bottom: 1rem;
+    font-size: clamp(2.8rem, 5.5vw, 4.2rem);
+    line-height: 1.0;
+    letter-spacing: 0.01em;
+    font-weight: 400;
+    margin-bottom: 1.2rem;
+    text-transform: uppercase;
   }
   .sec-header p {
     font-size: 0.95rem;

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, redirect, url_for, Response, send_from_directory
+from flask import Flask, render_template, request, flash, redirect, url_for, Response, send_from_directory, abort
 from flask_mail import Message
 from extensions import db, mail
 from dotenv import load_dotenv
@@ -9,6 +9,7 @@ from flask_login import (
 )
 from admin.routes import admin_bp
 from models import BlogPost, Category, ContactLead, ensure_contact_leads_table
+from location_pages import LOCATION_PAGES, SERVICES, LOCATIONS, EXTENDED_AREAS
 import mimetypes
 import os
 import math
@@ -67,6 +68,23 @@ app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(hours=8)
 app.config["MAX_CONTENT_LENGTH"] = int(os.getenv("MAX_CONTENT_LENGTH", str(10 * 1024 * 1024)))
 app.config["MAX_FORM_MEMORY_SIZE"] = int(os.getenv("MAX_FORM_MEMORY_SIZE", str(1024 * 1024)))
 app.config["MAX_FORM_PARTS"] = int(os.getenv("MAX_FORM_PARTS", "100"))
+
+# The site's one true canonical domain. Used for canonical/OG/Twitter URLs,
+# the sitemap, robots.txt, and JSON-LD — never derived from the incoming
+# request's Host header, so it can't drift to www/non-www or a preview domain.
+SITE_URL = os.getenv("SITE_URL", "https://nexa-solutions.in").rstrip("/")
+
+
+@app.context_processor
+def inject_canonical_url():
+    def canonical_url():
+        return SITE_URL + request.path
+
+    return {
+        "canonical_url": canonical_url,
+        "SITE_URL": SITE_URL,
+        "current_year": datetime.utcnow().year,
+    }
 
 
 def ttl_cache(seconds=60, maxsize=64):
@@ -213,6 +231,30 @@ def app_development():
 @app.route("/services/performance-marketing")
 def performance_marketing():
     return render_template("pages/performance-marketing.html")
+
+@app.route("/services/ai-automation")
+def ai_automation():
+    return render_template("pages/ai-automation.html")
+
+@app.route("/software-development-company")
+def software_development_company():
+    return render_template("pages/software-development-company.html")
+
+@app.route("/locations")
+def locations():
+    return render_template(
+        "pages/locations.html",
+        services=SERVICES,
+        locations=LOCATIONS,
+        extended_areas=EXTENDED_AREAS,
+    )
+
+@app.route("/<slug>")
+def location_page(slug):
+    page = LOCATION_PAGES.get(slug)
+    if not page:
+        abort(404)
+    return render_template("pages/location_service.html", page=page, slug=slug, LOCATION_PAGES=LOCATION_PAGES)
 
 @app.route("/work")
 def work():
@@ -550,25 +592,39 @@ def best_website_development_agency_india_static(filename):
 # ============================
 @app.route("/sitemap.xml")
 def sitemap():
-    base = os.getenv("SITE_URL", "https://nexasolutions.de").rstrip("/")
+    base = SITE_URL
     today = datetime.utcnow().strftime("%Y-%m-%d")
 
     static_pages = [
-        {"loc": base + "/",                                 "priority": "1.0", "changefreq": "weekly"},
-        {"loc": base + "/services",                         "priority": "0.9", "changefreq": "monthly"},
-        {"loc": base + "/services/web-development",         "priority": "0.85","changefreq": "monthly"},
-        {"loc": base + "/services/app-development",         "priority": "0.85","changefreq": "monthly"},
-        {"loc": base + "/services/performance-marketing",   "priority": "0.85","changefreq": "monthly"},
-        {"loc": base + "/webdesign-agency-germany",         "priority": "0.8", "changefreq": "monthly"},
-        {"loc": base + "/work",                             "priority": "0.7", "changefreq": "monthly"},
-        {"loc": base + "/blog",                             "priority": "0.9", "changefreq": "daily"},
-        {"loc": base + "/about",                            "priority": "0.6", "changefreq": "yearly"},
-        {"loc": base + "/contact",                          "priority": "0.6", "changefreq": "yearly"},
-        {"loc": base + "/converter",                        "priority": "0.7", "changefreq": "monthly"},
-        {"loc": base + "/privacy-policy",                   "priority": "0.3", "changefreq": "yearly"},
-        {"loc": base + "/terms-of-service",                 "priority": "0.3", "changefreq": "yearly"},
-        {"loc": base + "/refund-policy",                    "priority": "0.3", "changefreq": "yearly"},
+        {"loc": base + "/",                                          "priority": "1.0", "changefreq": "weekly"},
+        {"loc": base + "/services",                                  "priority": "0.9", "changefreq": "monthly"},
+        {"loc": base + "/services/web-development",                  "priority": "0.85","changefreq": "monthly"},
+        {"loc": base + "/services/app-development",                  "priority": "0.85","changefreq": "monthly"},
+        {"loc": base + "/services/performance-marketing",            "priority": "0.85","changefreq": "monthly"},
+        {"loc": base + "/services/ai-automation",                    "priority": "0.85","changefreq": "monthly"},
+        {"loc": base + "/software-development-company",              "priority": "0.9", "changefreq": "monthly"},
+        {"loc": base + "/webdesign-agency-germany",                  "priority": "0.8", "changefreq": "monthly"},
+        {"loc": base + "/best-website-development-agency-india/",    "priority": "0.8", "changefreq": "monthly"},
+        {"loc": base + "/locations",                                 "priority": "0.7", "changefreq": "monthly"},
+        {"loc": base + "/work",                                      "priority": "0.7", "changefreq": "monthly"},
+        {"loc": base + "/blog",                                      "priority": "0.9", "changefreq": "daily"},
+        {"loc": base + "/about",                                     "priority": "0.6", "changefreq": "yearly"},
+        {"loc": base + "/contact",                                   "priority": "0.6", "changefreq": "yearly"},
+        {"loc": base + "/converter",                                 "priority": "0.7", "changefreq": "monthly"},
+        {"loc": base + "/privacy-policy",                            "priority": "0.3", "changefreq": "yearly"},
+        {"loc": base + "/terms-of-service",                          "priority": "0.3", "changefreq": "yearly"},
+        {"loc": base + "/refund-policy",                             "priority": "0.3", "changefreq": "yearly"},
     ]
+
+    location_page_entries = [
+        {
+            "loc": base + "/" + slug,
+            "priority": "0.85" if page["location"]["is_hq"] else "0.75",
+            "changefreq": "monthly",
+        }
+        for slug, page in LOCATION_PAGES.items()
+    ]
+    static_pages += location_page_entries
 
     try:
         posts = BlogPost.query.filter_by(is_published=True).order_by(BlogPost.published_at.desc()).all()
@@ -616,7 +672,7 @@ def sitemap():
 
 @app.route("/robots.txt")
 def robots():
-    base = os.getenv("SITE_URL", "https://nexasolutions.de").rstrip("/")
+    base = SITE_URL
     content = (
         "User-agent: *\n"
         "Allow: /\n"

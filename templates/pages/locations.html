@@ -1,0 +1,188 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Locations We Serve | Nexa Solutions{% endblock %}
+
+{% block meta %}
+<meta name="description" content="Nexa Solutions is a website, software, and app development company based in Aligarh, serving businesses across Aligarh, Hathras, Khair, and Atrauli.">
+{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/web-development.css') }}">
+{% endblock %}
+
+{% block content %}
+<main class="webdev-page">
+
+    <section class="wd-hero" style="padding: 6rem 0 2rem 0;">
+        <div class="wd-hero-inner">
+            <div class="wd-hero-text">
+                <h1 class="wd-hero-title">Locations We Serve</h1>
+                <p class="wd-hero-sub">
+                    Nexa Solutions is based in Aligarh — founder-led, not a branch office — and works with businesses
+                    across Aligarh and the surrounding district. Pick your location below to see how we can help.
+                </p>
+            </div>
+            <div class="wd-hero-visual wd-reveal-right">
+                <div class="wd-hero-img-wrap" style="border-radius: 12px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.1); width: 100%; aspect-ratio: 4/3;">
+                    <iframe
+                        src="https://www.openstreetmap.org/export/embed.html?bbox=76.75%2C27.30%2C78.45%2C29.05&amp;layer=mapnik&amp;marker=27.8974%2C78.0880"
+                        title="Map of the Aligarh and Delhi NCR region Nexa Solutions serves"
+                        style="width: 100%; height: 100%; border: 0;"
+                        loading="lazy"
+                    ></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="wd-types" style="background:#fdfdfd; padding: 2rem 0 6rem 0;">
+        <div class="wd-types-inner" style="max-width: 1200px; margin: 0 auto;">
+            
+            <style>
+                .loc-hub-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+                    gap: 2rem;
+                }
+                .loc-hub-card {
+                    background: #ffffff;
+                    border-radius: 16px;
+                    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+                    border: 1px solid rgba(0,0,0,0.03);
+                    padding: 2.5rem;
+                    transition: transform 0.3s ease, box-shadow 0.3s ease;
+                    display: flex;
+                    flex-direction: column;
+                }
+                .loc-hub-card:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+                }
+                .loc-hub-header {
+                    border-bottom: 1px solid rgba(0,0,0,0.05);
+                    padding-bottom: 1.25rem;
+                    margin-bottom: 1.5rem;
+                }
+                .loc-hub-title {
+                    font-family: 'Bebas Neue', sans-serif;
+                    font-size: 2.5rem;
+                    color: #1a1a1a;
+                    line-height: 1.1;
+                    margin: 0;
+                    letter-spacing: 1px;
+                }
+                .loc-hub-subtitle {
+                    font-size: 0.9rem;
+                    color: #888;
+                    margin: 0.5rem 0 0 0;
+                    font-family: 'DM Sans', sans-serif;
+                }
+                .loc-hub-services {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.75rem;
+                }
+                .loc-hub-service-pill {
+                    background: #f8f9fa;
+                    color: #333;
+                    padding: 0.85rem 1.25rem;
+                    border-radius: 8px;
+                    text-decoration: none;
+                    font-weight: 500;
+                    font-size: 0.95rem;
+                    transition: all 0.2s ease;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    border: 1px solid rgba(0,0,0,0.03);
+                }
+                .loc-hub-service-pill::after {
+                    content: '→';
+                    opacity: 0.3;
+                    transition: all 0.3s ease;
+                }
+                .loc-hub-service-pill:hover {
+                    background: #2563EB;
+                    color: #ffffff;
+                    border-color: #2563EB;
+                    transform: translateX(4px);
+                }
+                .loc-hub-service-pill:hover::after {
+                    opacity: 1;
+                    transform: translateX(4px);
+                }
+            </style>
+
+            <div class="loc-hub-grid">
+                {% for loc_key, loc in locations.items() %}
+                <div class="loc-hub-card wd-reveal">
+                    <div class="loc-hub-header">
+                        <h2 class="loc-hub-title">{{ loc.name }}</h2>
+                        {% if loc.is_hq %}
+                        <p class="loc-hub-subtitle">Our Headquarters.</p>
+                        {% endif %}
+                    </div>
+                    <div class="loc-hub-services">
+                        {% for service_key, service in services.items() %}
+                        <a href="{{ url_for('location_page', slug=service_key ~ '-company-' ~ loc_key) }}" class="loc-hub-service-pill">
+                            {{ service.label }}
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="loc-hub-card wd-reveal">
+                    <div class="loc-hub-header">
+                        <h2 class="loc-hub-title">Remote - Worldwide</h2>
+                        <p class="loc-hub-subtitle">Served remotely from our Aligarh office.</p>
+                    </div>
+                    <div class="loc-hub-services">
+                        {% for service_key, service in services.items() %}
+                        <a href="{{ url_for('contact') }}" class="loc-hub-service-pill">
+                            {{ service.label }}
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="wd-cta-band">
+        <div class="wd-cta-band-inner wd-reveal">
+            <div class="wd-cta-band-label">Don't see your area?</div>
+            <h2 class="wd-cta-band-title">We Likely Still Cover It</h2>
+            <p class="wd-cta-band-desc">
+                Most of our work happens remotely regardless of location — get in touch and tell us where you're based.
+                We also regularly work with businesses in and around
+                {% for area in extended_areas %}{{ area }}{% if not loop.last %}, {% endif %}{% endfor %},
+                all served from our Aligarh office.
+            </p>
+            <div class="wd-cta-band-btns">
+                <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--white">Contact Us</a>
+                <a href="https://wa.me/918077313241" target="_blank" rel="noopener noreferrer" class="wd-btn wd-btn--ghost-white">Chat on WhatsApp</a>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<script>
+(function () {
+    const revealEls = document.querySelectorAll('.wd-reveal, .wd-reveal-left, .wd-reveal-right');
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('wd-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+        revealEls.forEach((el) => observer.observe(el));
+    } else {
+        revealEls.forEach((el) => el.classList.add('wd-visible'));
+    }
+})();
+</script>
+{% endblock %}

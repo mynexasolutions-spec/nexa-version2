@@ -1,12 +1,14 @@
 /* About page entry point.
    Keep section styles in static/css/about/ so the page is easier to maintain. */
 
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
 @import 'about/base.css';
 @import 'about/hero.css';
 @import 'about/story.css';
 @import 'about/pillars.css';
 @import 'about/values.css';
-@import 'about/journey.css';
+
 @import 'about/team.css';
 @import 'about/cta.css';
 @import 'about/responsive.css';

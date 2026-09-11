@@ -1,0 +1,365 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Software Development Company in India — Custom Software Solutions | Nexa Solutions{% endblock %}
+
+{% block meta %}
+<meta name="description" content="Nexa Solutions is a software development company in India building custom enterprise software, SaaS products, internal tools, and system integrations engineered for scale and reliability.">
+<meta name="keywords" content="Software Development Company, Software Development Company India, Custom Software Development, Enterprise Software, SaaS Development, System Integration">
+{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/web-development.css') }}">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Custom Software Development",
+  "provider": {
+    "@type": "Organization",
+    "name": "Nexa Solutions"
+  },
+  "description": "Custom software development, enterprise software, SaaS products, internal tools, and system integrations engineered for scale and reliability.",
+  "areaServed": "India",
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Software Development Services",
+    "itemListElement": [
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Custom Software Development" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Enterprise Software Solutions" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "System Integration & APIs" } }
+    ]
+  }
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<main class="webdev-page">
+
+    <!-- ═══════════════════════════════════════════
+         1. HERO
+    ═══════════════════════════════════════════ -->
+    <section class="wd-hero">
+        <div class="wd-hero-inner">
+
+            <div class="wd-hero-text">
+                <h1 class="wd-hero-title">Software Development<br>Company in India</h1>
+                <p class="wd-hero-sub">
+                    Nexa Solutions is a software development company building custom enterprise software, SaaS products, internal tools, and system integrations — engineered for the specific way your business actually operates, not a generic template.
+                </p>
+                <div class="wd-hero-btns">
+                    <a href="#sdc-services" class="wd-btn wd-btn--outline">Learn more</a>
+                    <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Contact us</a>
+                </div>
+            </div>
+
+            <div class="wd-hero-visual">
+                <div class="wd-hero-laptop-wrap">
+                    <img
+                        src="{{ url_for('static', filename='images/services/software-development.webp') }}"
+                        alt="Custom Software Development by Nexa Solutions"
+                        class="wd-hero-laptop"
+                    >
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         2. WHY CUSTOM SOFTWARE
+    ═══════════════════════════════════════════ -->
+    <section class="wd-certified">
+        <div class="wd-certified-inner">
+
+            <div class="wd-certified-visual wd-reveal-left">
+                <img
+                    src="{{ url_for('static', filename='images/services/why-custom-software.webp') }}"
+                    alt="Custom software architecture and system design"
+                    class="wd-certified-img"
+                >
+            </div>
+
+            <div class="wd-certified-text wd-reveal-right">
+                <span class="wd-section-label">Why Custom Software</span>
+                <h2 class="wd-section-title">Software That Fits<br>Your Business Perfectly</h2>
+                <p class="wd-certified-desc">
+                    Generic software forces your team to work around its limitations. As a software development company, we build systems shaped around how your business actually runs — your workflow, your data, your edge cases — instead of the other way around.
+                </p>
+                <p class="wd-certified-desc">
+                    Whether it's a customer-facing SaaS product, an internal operations tool, or a system that needs to talk to three other platforms you already use, we architect it to be maintainable long after launch, not just functional on day one.
+                </p>
+                <div class="wd-certified-btns">
+                    <a href="#sdc-services" class="wd-btn wd-btn--primary">Explore Services</a>
+                    <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--outline">Contact Us</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         3. SERVICES
+    ═══════════════════════════════════════════ -->
+    <section class="wd-types" id="sdc-services">
+        <div class="wd-types-inner">
+
+            <div class="wd-types-header wd-reveal">
+                <span class="wd-section-label">What We Build</span>
+                <h2 class="wd-section-title">Custom Software, Built Around Your Business</h2>
+                <p class="wd-section-desc" style="margin:0 auto; text-align:center;">
+                    From a single internal tool to a full SaaS platform — every engagement starts with understanding what the software actually needs to do.
+                </p>
+            </div>
+
+            <div class="wd-stacks-categories" style="margin-top:1rem;">
+                <div class="wd-stack-category wd-reveal">
+                    <div class="wd-stack-cards" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
+                        <div class="wd-stack-card">
+                            <div class="wd-stack-name">Custom Enterprise Software</div>
+                            <p class="wd-stack-text">Purpose-built systems for operations, inventory, HR, or finance — designed around your existing processes instead of forcing a generic tool to fit.</p>
+                        </div>
+                        <div class="wd-stack-card">
+                            <div class="wd-stack-name">SaaS Product Engineering</div>
+                            <p class="wd-stack-text">From first prototype to a production-grade multi-tenant platform — authentication, billing, dashboards, and the architecture to support real users at scale.</p>
+                        </div>
+                        <div class="wd-stack-card">
+                            <div class="wd-stack-name">System Integration &amp; APIs</div>
+                            <p class="wd-stack-text">Connecting the software you already run — CRM, payment gateways, ERPs, third-party services — through clean, well-documented APIs.</p>
+                        </div>
+                        <div class="wd-stack-card">
+                            <div class="wd-stack-name">Internal Tools &amp; Dashboards</div>
+                            <p class="wd-stack-text">Admin panels, reporting dashboards, and internal operations tools that give your team visibility and control without spreadsheet chaos.</p>
+                        </div>
+                        <div class="wd-stack-card">
+                            <div class="wd-stack-name">Legacy System Modernization</div>
+                            <p class="wd-stack-text">Rebuilding or extending an aging system without a risky full rewrite — migrating data and functionality in stages.</p>
+                        </div>
+                        <div class="wd-stack-card">
+                            <div class="wd-stack-name">Database &amp; Backend Architecture</div>
+                            <p class="wd-stack-text">Schema design, data modeling, and backend systems built to stay reliable and fast as your data grows.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         4. CTA BAND
+    ═══════════════════════════════════════════ -->
+    <section class="wd-cta-band">
+        <div class="wd-cta-band-inner wd-reveal">
+            <div class="wd-cta-band-label">Not sure what you need?</div>
+            <h2 class="wd-cta-band-title">Tell Us the Problem You're Solving</h2>
+            <p class="wd-cta-band-desc">
+                You don't need to know the exact tech stack — describe what's slow, manual, or held together with spreadsheets, and we'll recommend the right software approach.
+            </p>
+            <div class="wd-cta-band-btns">
+                <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--white">Book a Free Consultation</a>
+                <a href="https://wa.me/918077313241" target="_blank" rel="noopener noreferrer" class="wd-btn wd-btn--ghost-white">Chat on WhatsApp</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         5. WHAT MAKES SOFTWARE ACTUALLY LAST
+    ═══════════════════════════════════════════ -->
+    <section class="wd-quality" id="wd-quality">
+        <div class="wd-quality-inner">
+
+            <div class="wd-quality-left wd-reveal-left">
+                <span class="wd-section-label">The Nexa Standard</span>
+                <h2 class="wd-section-title">What Makes Software Actually Last?</h2>
+                <p class="wd-section-desc">
+                    Software that works at launch and software that's still reliable two years later are built differently. Every system we ship is engineered around these pillars.
+                </p>
+                <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary" style="margin-top:2rem;">Build It Right</a>
+            </div>
+
+            <div class="wd-quality-right wd-reveal-right">
+
+                <div class="wd-pillar">
+                    <div class="wd-pillar-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                    </div>
+                    <div class="wd-pillar-body">
+                        <div class="wd-pillar-title">Requirements Before Code</div>
+                        <p class="wd-pillar-desc">We map what the software needs to do — and who needs to use it — before architecture decisions are made, not after.</p>
+                    </div>
+                </div>
+
+                <div class="wd-pillar">
+                    <div class="wd-pillar-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18.7 8l-5.1 5.1-2.8-2.8L7 14.1"/></svg>
+                    </div>
+                    <div class="wd-pillar-body">
+                        <div class="wd-pillar-title">Built to Scale</div>
+                        <p class="wd-pillar-desc">Architecture that handles today's load and doesn't need a rebuild when your user base or data volume grows.</p>
+                    </div>
+                </div>
+
+                <div class="wd-pillar">
+                    <div class="wd-pillar-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <div class="wd-pillar-body">
+                        <div class="wd-pillar-title">Security by Default</div>
+                        <p class="wd-pillar-desc">Input validation, access control, and encryption built into the system from the start — not patched on after an incident.</p>
+                    </div>
+                </div>
+
+                <div class="wd-pillar">
+                    <div class="wd-pillar-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                    </div>
+                    <div class="wd-pillar-body">
+                        <div class="wd-pillar-title">Documented &amp; Maintainable</div>
+                        <p class="wd-pillar-desc">Clean code and real documentation, so the system can be handed off, extended, or maintained by any competent engineer — not just us.</p>
+                    </div>
+                </div>
+
+                <div class="wd-pillar">
+                    <div class="wd-pillar-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    </div>
+                    <div class="wd-pillar-body">
+                        <div class="wd-pillar-title">Performance Engineered In</div>
+                        <p class="wd-pillar-desc">Query optimization, caching, and load testing are part of the build — not an afterthought once users complain.</p>
+                    </div>
+                </div>
+
+                <div class="wd-pillar">
+                    <div class="wd-pillar-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6H9z"/></svg>
+                    </div>
+                    <div class="wd-pillar-body">
+                        <div class="wd-pillar-title">Any Stack, Right Fit</div>
+                        <p class="wd-pillar-desc">No platform bias — we choose the language, framework, and database that fit your problem, not what we'd rather use.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="wd-pillar-dots" aria-hidden="true">
+                <span class="wd-pillar-dot active"></span>
+                <span class="wd-pillar-dot"></span>
+                <span class="wd-pillar-dot"></span>
+                <span class="wd-pillar-dot"></span>
+                <span class="wd-pillar-dot"></span>
+                <span class="wd-pillar-dot"></span>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         6. TECH STACK
+    ═══════════════════════════════════════════ -->
+    <section class="wd-stacks" id="wd-stacks">
+        <div class="wd-stacks-header wd-reveal">
+            <span class="wd-section-label">Our Technology Arsenal</span>
+            <h2 class="wd-section-title">We Work in Every Stack</h2>
+            <p class="wd-section-desc" style="margin: 0 auto; text-align:center;">
+                No platform lock-in — we pick the right tool for your project, from lightweight backend services to full enterprise systems.
+            </p>
+        </div>
+
+        <div class="wd-stacks-categories">
+
+            <div class="wd-stack-category wd-reveal wd-delay-1">
+                <div class="wd-stack-cat-label">Backend &amp; Server Technologies</div>
+                <div class="wd-stack-cards">
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo"><img src="https://cdn.simpleicons.org/python/3776AB" alt="Python Logo"></div>
+                        <div class="wd-stack-name">Python / Flask / Django</div>
+                        <p class="wd-stack-text">Flexible backend for custom apps, APIs, and data-heavy systems.</p>
+                        <div class="wd-stack-badges"><span class="wd-stack-badge">Python</span><span class="wd-stack-badge">Backend</span></div>
+                    </div>
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo"><img src="https://cdn.simpleicons.org/nodedotjs/339933" alt="Node.js Logo"></div>
+                        <div class="wd-stack-name">Node.js / Express</div>
+                        <p class="wd-stack-text">Fast runtime for real-time features and scalable services.</p>
+                        <div class="wd-stack-badges"><span class="wd-stack-badge">Node.js</span><span class="wd-stack-badge">APIs</span></div>
+                    </div>
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo"><img src="https://cdn.simpleicons.org/postgresql/4169E1" alt="PostgreSQL Logo"></div>
+                        <div class="wd-stack-name">PostgreSQL / MySQL</div>
+                        <p class="wd-stack-text">Secure, scalable data storage for enterprise systems.</p>
+                        <div class="wd-stack-badges"><span class="wd-stack-badge">Database</span><span class="wd-stack-badge">SQL</span></div>
+                    </div>
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo"><img src="https://www.vectorlogo.zone/logos/amazon_aws/amazon_aws-icon.svg" alt="AWS Logo"></div>
+                        <div class="wd-stack-name">Cloud Deployment</div>
+                        <p class="wd-stack-text">Reliable, scalable infrastructure for your software.</p>
+                        <div class="wd-stack-badges"><span class="wd-stack-badge">Cloud</span><span class="wd-stack-badge">AWS / GCP</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wd-stack-category wd-reveal wd-delay-2">
+                <div class="wd-stack-cat-label">Frontend &amp; Interfaces</div>
+                <div class="wd-stack-cards">
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo"><img src="https://cdn.simpleicons.org/react/61DAFB" alt="React Logo"></div>
+                        <div class="wd-stack-name">React</div>
+                        <p class="wd-stack-text">Dynamic dashboards and admin interfaces for complex systems.</p>
+                        <div class="wd-stack-badges"><span class="wd-stack-badge">UI</span><span class="wd-stack-badge">Dashboards</span></div>
+                    </div>
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo"><img src="https://cdn.simpleicons.org/nextdotjs/000000" alt="Next.js Logo"></div>
+                        <div class="wd-stack-name">Next.js</div>
+                        <p class="wd-stack-text">Full-stack React framework for SaaS front ends.</p>
+                        <div class="wd-stack-badges"><span class="wd-stack-badge">SSR</span><span class="wd-stack-badge">SaaS</span></div>
+                    </div>
+                    <div class="wd-stack-card">
+                        <div class="wd-stack-logo"><img src="https://cdn.simpleicons.org/tailwindcss/06B6D4" alt="Tailwind CSS Logo"></div>
+                        <div class="wd-stack-name">Tailwind CSS</div>
+                        <p class="wd-stack-text">Utility-first styling for clean, maintainable interfaces.</p>
+                        <div class="wd-stack-badges"><span class="wd-stack-badge">CSS</span><span class="wd-stack-badge">UI</span></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         7. FINAL CTA
+    ═══════════════════════════════════════════ -->
+    <section class="wd-cta-band">
+        <div class="wd-cta-band-inner wd-reveal">
+            <div class="wd-cta-band-label">Zero Obligation</div>
+            <h2 class="wd-cta-band-title">Custom Software, Scoped Honestly</h2>
+            <p class="wd-cta-band-desc">
+                Tell us what you're trying to solve and get a straight answer on approach, timeline, and cost — no inflated proposal.
+            </p>
+            <div class="wd-cta-band-btns">
+                <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--white">Request a Free Proposal</a>
+                <a href="{{ url_for('work') }}" class="wd-btn wd-btn--ghost-white">View Our Work First</a>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<script>
+(function () {
+    const revealEls = document.querySelectorAll('.wd-reveal, .wd-reveal-left, .wd-reveal-right');
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('wd-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+        revealEls.forEach((el) => observer.observe(el));
+    } else {
+        revealEls.forEach((el) => el.classList.add('wd-visible'));
+    }
+})();
+</script>
+{% endblock %}

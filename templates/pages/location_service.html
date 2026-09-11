@@ -1,0 +1,592 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}{{ page.title }}{% endblock %}
+
+{% block meta %}
+<meta name="description" content="{{ page.meta_description }}">
+<meta name="keywords" content="{{ page.service.label }} {{ page.location.name }}, {{ page.service.short }} {{ page.location.name }}, {{ page.service.short }} company in {{ page.location.name }}, best {{ page.service.short }} {{ page.location.name }}, {{ page.service.label|lower }} near {{ page.location.name }}, IT company {{ page.location.name }}, {{ page.service.short }} services {{ page.location.name }}">
+{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/web-development.css') }}">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "{{ page.service.label }}",
+  "provider": {
+    "@type": "Organization",
+    "name": "Nexa Solutions",
+    "url": "{{ SITE_URL }}"
+  },
+  "areaServed": [
+    {"@type": "City", "name": "{{ page.location.name }}"}{% for area in page.extended_areas %},
+    {"@type": "City", "name": "{{ area }}"}{% endfor %}
+  ],
+  "description": "{{ page.meta_description }}"
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Home", "item": "{{ SITE_URL }}/"},
+    {"@type": "ListItem", "position": 2, "name": "Services", "item": "{{ SITE_URL }}/services"},
+    {"@type": "ListItem", "position": 3, "name": "{{ page.h1 }}", "item": "{{ canonical_url() }}"}
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {% for q, a in page.faqs %}
+    {
+      "@type": "Question",
+      "name": {{ q|tojson }},
+      "acceptedAnswer": { "@type": "Answer", "text": {{ a|tojson }} }
+    }{% if not loop.last %},{% endif %}
+    {% endfor %}
+  ]
+}
+</script>
+
+<style>
+/* FAQ Accordion Styles */
+.loc-faq-item {
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    background: #fff;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+}
+.loc-faq-item:hover {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+}
+.loc-faq-item details {
+    width: 100%;
+}
+.loc-faq-item summary {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #0a0a0a;
+    padding: 1.5rem;
+    cursor: pointer;
+    list-style: none;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.loc-faq-item summary::-webkit-details-marker {
+    display: none;
+}
+.loc-faq-item summary::after {
+    content: '+';
+    font-size: 1.8rem;
+    font-weight: 300;
+    line-height: 1;
+    color: #0a0a0a;
+    transition: transform 0.3s ease;
+}
+.loc-faq-item details[open] summary::after {
+    content: '-';
+    transform: rotate(180deg);
+}
+.loc-faq-content {
+    padding: 0 1.5rem 1.5rem 1.5rem;
+    color: rgba(8,8,8,0.7);
+    font-size: 0.98rem;
+    line-height: 1.7;
+    animation: fadeIn 0.4s ease-out;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Other Locations Section */
+.loc-other-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+}
+.loc-other-card {
+    background: #f9f9f7;
+    border-radius: 12px;
+    padding: 2rem;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.loc-other-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    background: #fff;
+    border-color: rgba(0,0,0,0.1);
+}
+.loc-other-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.5rem;
+    color: #0a0a0a;
+}
+.loc-other-card p {
+    font-size: 0.95rem;
+    color: #666;
+    margin: 0;
+    font-weight: 500;
+}
+
+/* Match service breakdown text size to certified desc size */
+.wd-types .wd-stack-text {
+    font-size: 0.97rem;
+    line-height: 1.75;
+    color: #444;
+}
+
+/* Types of Websites Grid */
+.loc-types-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+}
+.loc-type-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+    border: 1px solid rgba(0,0,0,0.03);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+.loc-type-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+}
+.loc-type-img-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: #f4f4f4;
+}
+.loc-type-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+.loc-type-card:hover .loc-type-img-wrap img {
+    transform: scale(1.05);
+}
+.loc-type-bg-num {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.7);
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    z-index: 2;
+}
+.loc-type-content {
+    padding: 1.5rem 1.25rem;
+    background: #fff;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+}
+.loc-type-title {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #1a1a1a;
+    margin: 0 0 0.25rem 0;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+.loc-type-desc {
+    font-size: 0.97rem;
+    line-height: 1.75;
+    color: #666;
+    margin: 0;
+}
+@media (max-width: 992px) {
+    .loc-types-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+    .loc-types-grid { grid-template-columns: 1fr; }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="webdev-page">
+
+    <!-- ═══════════════════════════════════════════
+         1. HERO
+    ═══════════════════════════════════════════ -->
+    <section class="wd-hero">
+        <div class="wd-hero-inner">
+
+            <div class="wd-hero-text">
+                <nav aria-label="Breadcrumb" style="font-size:0.8rem; color:#666; margin-bottom:0.75rem;">
+                    <a href="{{ url_for('home') }}" style="color:#666;">Home</a> /
+                    <a href="{{ url_for('services') }}" style="color:#666;">Services</a> /
+                    <span>{{ page.location.name }}</span>
+                </nav>
+                <h1 class="wd-hero-title">{{ page.service.label }}<br>Serving {{ page.location.name }}</h1>
+                <p class="wd-hero-sub">{{ page.intro }}</p>
+                <div class="wd-hero-btns">
+                    <a href="#faq" class="wd-btn wd-btn--outline">Read FAQs</a>
+                    <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Get a Free Consultation</a>
+                </div>
+            </div>
+
+            <div class="wd-hero-visual">
+                <div class="wd-hero-laptop-wrap">
+                    <img
+                        src="{{ url_for('static', filename=page.image) }}"
+                        alt="{{ page.service.label }} {{ page.location.name }}"
+                        class="wd-hero-laptop"
+                    >
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         2. LOCAL CONTEXT
+    ═══════════════════════════════════════════ -->
+    <section class="wd-certified">
+        <div class="wd-certified-inner">
+            <div class="wd-certified-visual wd-reveal-left">
+                <img
+                    src="{{ url_for('static', filename='images/services/system-domains.webp') }}"
+                    alt="Nexa Solutions serving {{ page.location.name }}"
+                    class="wd-certified-img"
+                >
+            </div>
+            <div class="wd-certified-text wd-reveal-right">
+                <span class="wd-section-label">{{ page.location.name }}{% if not page.location.is_hq %}, {{ page.location.district_note }} District{% endif %}</span>
+                <h2 class="wd-section-title">Built for {{ page.location.name }} Businesses</h2>
+                <p class="wd-certified-desc">{{ page.office_line }}</p>
+                <p class="wd-certified-desc">{{ page.nearby_line }}</p>
+                {% if page.extended_reach_line %}
+                <p class="wd-certified-desc">{{ page.extended_reach_line }}</p>
+                {% endif %}
+                <div class="wd-certified-btns">
+                    <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--primary">Contact Us</a>
+                    <a href="tel:+918077313241" class="wd-btn wd-btn--outline">Call Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         2B. WHY IT MATTERS LOCALLY
+    ═══════════════════════════════════════════ -->
+    <section class="wd-types" style="background:#fdfdfd; padding: 5rem 0; border-top: 1px solid rgba(0,0,0,0.04);">
+        <div class="wd-types-inner" style="max-width: 820px; margin: 0 auto;">
+            <div class="wd-types-header wd-reveal" style="text-align:left; margin-bottom: 1.5rem;">
+                <span class="wd-section-label">Why It Matters Here</span>
+                <h2 class="wd-section-title">{{ page.service.label }} for {{ page.location.name }} Businesses</h2>
+            </div>
+            <p class="wd-reveal" style="font-size:1.02rem; line-height:1.85; color:#333; margin:0;">{{ page.deep_dive }}</p>
+        </div>
+    </section>
+
+    {% if page.service.route_name == 'web_development' %}
+    <!-- ═══════════════════════════════════════════
+         3B. TYPES OF WEBSITES (Location Specific)
+    ═══════════════════════════════════════════ -->
+    <section class="wd-types" style="background:#fdfdfd; padding: 5rem 0; border-top: 1px solid rgba(0,0,0,0.04);">
+        <div class="wd-types-inner" style="max-width: 1200px; margin: 0 auto;">
+            <div class="wd-types-header wd-reveal" style="text-align: center; margin-bottom: 2rem;">
+                <span class="wd-section-label" style="justify-content: center; width: 100%;">Websites We Build</span>
+                <h2 class="wd-section-title">Whatever Your Business Needs</h2>
+            </div>
+            
+            <div class="loc-types-grid wd-reveal">
+                <div class="loc-type-card">
+                    <div class="loc-type-img-wrap">
+                        <img src="{{ url_for('static', filename='images/websites/e commerce.webp') }}" alt="E-Commerce Website Development" loading="lazy">
+                        <span class="loc-type-bg-num">01</span>
+                    </div>
+                    <div class="loc-type-content">
+                        <h3 class="loc-type-title">E-Commerce</h3>
+                        <p class="loc-type-desc">Online stores that sell</p>
+                    </div>
+                </div>
+                <div class="loc-type-card">
+                    <div class="loc-type-img-wrap">
+                        <img src="{{ url_for('static', filename='images/websites/business.webp') }}" alt="Business Website Development" loading="lazy">
+                        <span class="loc-type-bg-num">02</span>
+                    </div>
+                    <div class="loc-type-content">
+                        <h3 class="loc-type-title">Business</h3>
+                        <p class="loc-type-desc">Professional websites for growing brands</p>
+                    </div>
+                </div>
+                <div class="loc-type-card">
+                    <div class="loc-type-img-wrap">
+                        <img src="{{ url_for('static', filename='images/websites/portfolio.webp') }}" alt="Portfolio Website Development" loading="lazy">
+                        <span class="loc-type-bg-num">03</span>
+                    </div>
+                    <div class="loc-type-content">
+                        <h3 class="loc-type-title">Portfolio</h3>
+                        <p class="loc-type-desc">Showcase your work with style</p>
+                    </div>
+                </div>
+                <div class="loc-type-card">
+                    <div class="loc-type-img-wrap">
+                        <img src="{{ url_for('static', filename='images/websites/landing pages.webp') }}" alt="Landing Page Development" loading="lazy">
+                        <span class="loc-type-bg-num">04</span>
+                    </div>
+                    <div class="loc-type-content">
+                        <h3 class="loc-type-title">Landing Pages</h3>
+                        <p class="loc-type-desc">Convert visitors into customers</p>
+                    </div>
+                </div>
+                <div class="loc-type-card">
+                    <div class="loc-type-img-wrap">
+                        <img src="{{ url_for('static', filename='images/websites/restaurant.webp') }}" alt="Restaurant Website Development" loading="lazy">
+                        <span class="loc-type-bg-num">05</span>
+                    </div>
+                    <div class="loc-type-content">
+                        <h3 class="loc-type-title">Restaurant</h3>
+                        <p class="loc-type-desc">Delicious websites for food businesses</p>
+                    </div>
+                </div>
+                <div class="loc-type-card">
+                    <div class="loc-type-img-wrap">
+                        <img src="{{ url_for('static', filename='images/websites/real estate.webp') }}" alt="Real Estate Website Development" loading="lazy">
+                        <span class="loc-type-bg-num">06</span>
+                    </div>
+                    <div class="loc-type-content">
+                        <h3 class="loc-type-title">Real Estate</h3>
+                        <p class="loc-type-desc">Properties that find the right people</p>
+                    </div>
+                </div>
+                <div class="loc-type-card">
+                    <div class="loc-type-img-wrap">
+                        <img src="{{ url_for('static', filename='images/websites/blog.webp') }}" alt="Blog Website Development" loading="lazy">
+                        <span class="loc-type-bg-num">07</span>
+                    </div>
+                    <div class="loc-type-content">
+                        <h3 class="loc-type-title">Blog</h3>
+                        <p class="loc-type-desc">Share your ideas with the world</p>
+                    </div>
+                </div>
+                <div class="loc-type-card">
+                    <div class="loc-type-img-wrap">
+                        <img src="{{ url_for('static', filename='images/websites/others.webp') }}" alt="Other Custom Website Development" loading="lazy">
+                        <span class="loc-type-bg-num">08</span>
+                    </div>
+                    <div class="loc-type-content">
+                        <h3 class="loc-type-title">Others</h3>
+                        <p class="loc-type-desc">Tailored websites for every industry</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- ═══════════════════════════════════════════
+         3. SERVICE BREAKDOWN
+    ═══════════════════════════════════════════ -->
+    <section class="wd-types">
+        <div class="wd-types-inner">
+            <div class="wd-types-header wd-reveal">
+                <span class="wd-section-label">What We Offer</span>
+                <h2 class="wd-section-title">{{ page.service.label }} in {{ page.location.name }}</h2>
+            </div>
+
+            <div class="wd-stacks-categories" style="margin-top:1rem;">
+                <div class="wd-stack-category wd-reveal">
+                    <div class="wd-stack-cards" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+                        {% for heading, text in page.breakdown %}
+                        <div class="wd-stack-card">
+                            <div class="wd-stack-name">{{ heading }}</div>
+                            <p class="wd-stack-text">{{ text }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         4. CTA BAND
+    ═══════════════════════════════════════════ -->
+    <section class="wd-cta-band">
+        <div class="wd-cta-band-inner wd-reveal">
+            <div class="wd-cta-band-label">Serving {{ page.location.name }}</div>
+            <h2 class="wd-cta-band-title">Let's Talk About Your Project</h2>
+            <p class="wd-cta-band-desc">Tell us what you're trying to build. We'll give you a straight answer on approach and cost.</p>
+            <div class="wd-cta-band-btns">
+                <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--white">Get a Free Consultation</a>
+                <a href="https://wa.me/918077313241" target="_blank" rel="noopener noreferrer" class="wd-btn wd-btn--ghost-white">Chat on WhatsApp</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         4B. WHY CHOOSE US (SEO Content)
+    ═══════════════════════════════════════════ -->
+    <section class="wd-types" style="background:#fdfdfd; padding: 5rem 0; border-top: 1px solid rgba(0,0,0,0.04);">
+        <div class="wd-types-inner">
+            <div class="wd-types-header wd-reveal">
+                <span class="wd-section-label">Why Choose Nexa Solutions</span>
+                <h2 class="wd-section-title">Why {{ page.location.name }} Businesses Choose Us for {{ page.service.short|title }}</h2>
+            </div>
+
+            <div class="wd-stacks-categories" style="margin-top:1rem;">
+                <div class="wd-stack-category wd-reveal">
+                    <div class="wd-stack-cards" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+                        {% for heading, text in page.why_choose %}
+                        <div class="wd-stack-card">
+                            <div class="wd-stack-name">{{ heading }}</div>
+                            <p class="wd-stack-text">{{ text }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         4C. OUR PROCESS (SEO Content)
+    ═══════════════════════════════════════════ -->
+    <section class="wd-types" style="background:#fff; padding: 5rem 0; border-top: 1px solid rgba(0,0,0,0.04);">
+        <div class="wd-types-inner" style="max-width: 820px; margin: 0 auto;">
+            <div class="wd-types-header wd-reveal" style="text-align:left; margin-bottom: 2rem;">
+                <span class="wd-section-label">How We Work</span>
+                <h2 class="wd-section-title">Our {{ page.service.short|title }} Process</h2>
+            </div>
+
+            <div class="wd-reveal">
+                {% for step_title, step_desc in page.process_steps %}
+                <div style="display: flex; gap: 1.25rem; margin-bottom: 2rem; align-items: flex-start;">
+                    <div style="flex-shrink: 0; width: 48px; height: 48px; background: #f4f4f4; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; color: #333;">{{ loop.index }}</div>
+                    <div>
+                        <h3 style="font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1.1rem; color: #1a1a1a; margin: 0 0 0.4rem 0;">{{ step_title }}</h3>
+                        <p style="font-size: 0.97rem; line-height: 1.75; color: #444; margin: 0;">{{ step_desc }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         5. FAQ
+    ═══════════════════════════════════════════ -->
+    <section class="wd-types" id="faq" style="background:#fdfdfd; padding: 5rem 0; border-top: 1px solid rgba(0,0,0,0.04);">
+        <div class="wd-types-inner" style="max-width: 860px; margin: 0 auto;">
+            <div class="wd-types-header wd-reveal" style="text-align: center; margin-bottom: 3rem;">
+                <span class="wd-section-label" style="justify-content: center; width: 100%;">Frequently Asked</span>
+                <h2 class="wd-section-title">Questions from {{ page.location.name }} Businesses</h2>
+            </div>
+
+            <div class="wd-reveal">
+                {% for q, a in page.faqs %}
+                <div class="loc-faq-item">
+                    <details open>
+                        <summary>{{ q }}</summary>
+                        <div class="loc-faq-content">
+                            {{ a }}
+                        </div>
+                    </details>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         5B. OTHER LOCATIONS
+    ═══════════════════════════════════════════ -->
+    <section class="wd-types" style="background:#fff; border-top:1px solid rgba(0,0,0,0.04); padding: 5rem 0;">
+        <div class="wd-types-inner">
+            <div class="wd-types-header wd-reveal" style="text-align:center; margin-bottom: 2rem;">
+                <span class="wd-section-label" style="justify-content: center; width: 100%;">Explore More</span>
+                <h2 class="wd-section-title">Other Areas We Serve</h2>
+            </div>
+            <div class="loc-other-grid wd-reveal">
+                {% for loc_slug, loc_page in LOCATION_PAGES.items() %}
+                    {% if loc_slug != slug and loc_page.service.short == page.service.short %}
+                    <a href="{{ url_for('location_page', slug=loc_slug) }}" class="loc-other-card">
+                        <h3>{{ loc_page.location.name }}</h3>
+                        <p>{{ loc_page.service.label }} &rarr;</p>
+                    </a>
+                    {% endif %}
+                {% endfor %}
+                <a href="{{ url_for('contact') }}" class="loc-other-card">
+                    <h3>Remote - Worldwide</h3>
+                    <p>{{ page.service.label }} &rarr;</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         6. FINAL CTA
+    ═══════════════════════════════════════════ -->
+    <section class="wd-cta-band">
+        <div class="wd-cta-band-inner wd-reveal">
+            <div class="wd-cta-band-label">Zero Obligation</div>
+            <h2 class="wd-cta-band-title">Ready to Start?</h2>
+            <p class="wd-cta-band-desc">Get a free, honest assessment of your project, with no pressure and no inflated proposal.</p>
+            <div class="wd-cta-band-btns">
+                <a href="{{ url_for('contact') }}" class="wd-btn wd-btn--white">Request a Free Proposal</a>
+                <a href="{{ url_for(page.service.route_name) }}" class="wd-btn wd-btn--ghost-white">See Our Full {{ page.service.label }} Service</a>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<script>
+(function () {
+    const revealEls = document.querySelectorAll('.wd-reveal, .wd-reveal-left, .wd-reveal-right');
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('wd-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+        revealEls.forEach((el) => observer.observe(el));
+    } else {
+        revealEls.forEach((el) => el.classList.add('wd-visible'));
+    }
+})();
+</script>
+{% endblock %}
