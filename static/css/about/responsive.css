@@ -34,6 +34,7 @@
 
   .about-founder-grid {
     grid-template-columns: 1fr;
+    max-width: 360px;
   }
 
   .about-values-grid,
@@ -124,14 +125,10 @@
     border-bottom: 0;
   }
 
-  .about-founder {
-    min-height: 320px;
-  }
-
   .about-founder-avatar {
-    width: min(200px, calc(100% - 56px));
-    height: 200px;
-    margin-bottom: 104px;
+    width: 160px;
+    height: 160px;
+    margin: 2rem auto 1.2rem;
   }
 
   .about-values-grid,
@@ -181,7 +178,6 @@
   }
 
   .about-pillar,
-  .about-founder,
   .about-value-card {
     padding: 24px;
   }

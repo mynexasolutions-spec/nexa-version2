@@ -5,6 +5,14 @@
     position: relative;
     overflow: hidden;
   }
+
+  .reviews-section .sec-header h2 {
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    text-transform: none;
+    line-height: 1.08;
+  }
   .reviews-bg-text {
     position: absolute;
     font-family: 'Bebas Neue', sans-serif;

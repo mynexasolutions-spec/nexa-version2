@@ -49,9 +49,11 @@
 
 .wd-section-title {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(2.8rem, 5.5vw, 4.2rem);
-    line-height: 1.0;
-    letter-spacing: 0.01em;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    font-weight: 700;
+    text-transform: none;
     color: #0a0a0a;
     margin-bottom: 1.2rem;
 }

@@ -29,6 +29,14 @@
   overflow: hidden;
 }
 
+.social-media-section .sec-header h2 {
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  line-height: 1.08;
+}
+
 .social-media-lottie-bg {
   position: absolute;
   top: var(--social-lottie-offset);
