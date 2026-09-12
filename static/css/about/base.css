@@ -23,8 +23,6 @@
   font-size: clamp(2.8rem, 5.5vw, 4.2rem);
   line-height: 1.0;
   letter-spacing: 0.01em;
-  font-weight: 400;
-  text-transform: uppercase;
 }
 
 .about-page .btn {
@@ -74,16 +72,16 @@
   display: none;
 }
 
-.about-section-heading h2 {
+.about-page .about-section-heading h2 {
   max-width: 560px;
-  margin: 0;
+  margin-bottom: 1.2rem;
   color: var(--about-black);
   font-family: 'Bebas Neue', sans-serif;
   font-size: clamp(2.8rem, 5.5vw, 4.2rem);
   line-height: 1.0;
   letter-spacing: 0.01em;
-  font-weight: 400;
-  text-transform: uppercase;
+  font-weight: 700;
+  text-transform: none;
 }
 
 .about-section-heading-center {
@@ -93,7 +91,7 @@
   text-align: center;
 }
 
-.about-section-heading-center h2 {
+.about-page .about-section-heading-center h2 {
   max-width: none;
 }
 
