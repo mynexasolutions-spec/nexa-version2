@@ -554,13 +554,13 @@
                     {% if loc_slug != slug and loc_page.service.short == page.service.short %}
                     <a href="{{ url_for('location_page', slug=loc_slug) }}" class="loc-other-card">
                         <h3>{{ loc_page.location.name }}</h3>
-                        <p>{{ loc_page.service.label }} &rarr;</p>
+                        <p>{{ loc_page.service.label }}</p>
                     </a>
                     {% endif %}
                 {% endfor %}
                 <a href="{{ url_for('contact') }}" class="loc-other-card">
                     <h3>Remote - Worldwide</h3>
-                    <p>{{ page.service.label }} &rarr;</p>
+                    <p>{{ page.service.label }}</p>
                 </a>
             </div>
         </div>
