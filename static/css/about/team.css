@@ -42,17 +42,14 @@
 }
 
 .about-team-card-body {
-  position: absolute;
-  right: 12px;
-  bottom: 12px;
-  left: 12px;
-  padding: 12px 14px;
-  border: 1px solid rgba(8, 8, 8, 0.08);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 10px 28px rgba(8, 8, 8, 0.1);
+  position: static;
+  padding: 0 14px 1.4rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
   text-align: center;
-  backdrop-filter: blur(10px);
+  backdrop-filter: none;
 }
 
 .about-founder-role {
@@ -91,7 +88,6 @@
 .about-team-card {
   position: relative;
   display: block;
-  min-height: 260px;
   padding: 0;
   border: 1px solid var(--about-line);
   border-radius: 8px;
@@ -106,11 +102,13 @@
 
 .about-team-avatar {
   display: block;
-  width: calc(100% - 16px);
-  height: 188px;
-  margin: 10px auto 60px;
-  background: var(--about-white);
-  object-fit: contain;
+  width: 140px;
+  height: 140px;
+  margin: 1.6rem auto 1rem;
+  border-radius: 50%;
+  background: var(--about-soft);
+  object-fit: cover;
+  object-position: top center;
 }
 
 .about-team-card h3 {

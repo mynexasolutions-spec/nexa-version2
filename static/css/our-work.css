@@ -1,0 +1,333 @@
+/* ── Our Work page ── */
+.ow-page {
+  background: #fff;
+  color: #0b1220;
+}
+
+/* Active state for the current nav item (only loaded on this page) */
+.navbar .nav-links li a.active {
+  background: rgba(0, 0, 0, 0.06);
+  color: #1d6ff2 !important;
+}
+
+/* ── Body / filters / grid ── */
+.ow-body {
+  background: #fff;
+  padding: 0 5vw 4.5rem;
+}
+
+.ow-container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.ow-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  padding: 2.2rem 0 2.4rem;
+}
+
+.ow-filter {
+  border: 1px solid #e5e9f0;
+  background: #fff;
+  color: #0b1220;
+  border-radius: 999px;
+  padding: 0.62rem 1.15rem;
+  font-family: inherit;
+  font-size: 0.86rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.ow-filter:hover {
+  border-color: #c9d3e0;
+}
+
+.ow-filter.is-active {
+  background: #0b1220;
+  border-color: #0b1220;
+  color: #fff;
+}
+
+.ow-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.6rem;
+}
+
+.ow-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid #e5e9f0;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.04);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.ow-card[hidden] {
+  display: none;
+}
+
+.ow-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(16, 24, 40, 0.09);
+}
+
+.ow-card-media {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: #f2f5f9;
+}
+
+.ow-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.ow-card:hover .ow-card-media img {
+  transform: scale(1.04);
+}
+
+.ow-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  flex: 1;
+  padding: 1.25rem 1.35rem 1.4rem;
+}
+
+.ow-badge {
+  align-self: flex-start;
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  background: #eef1f6;
+  color: #46536a;
+}
+
+.ow-badge[data-cat="E-commerce"] { background: #e7f6ee; color: #0f7a4d; }
+.ow-badge[data-cat="Business Website"] { background: #e8f0fe; color: #1d5fd6; }
+.ow-badge[data-cat="Education"] { background: #fdf4e3; color: #9a6b00; }
+.ow-badge[data-cat="Travel & Hospitality"] { background: #e8f0fe; color: #1d5fd6; }
+.ow-badge[data-cat="Health & Fitness"] { background: #fdeaea; color: #c0392b; }
+.ow-badge[data-cat="Real Estate"] { background: #efeafb; color: #6b46c1; }
+.ow-badge[data-cat="Other"] { background: #efeafb; color: #6b46c1; }
+
+.ow-card h3 {
+  font-size: 1.32rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #0b1220;
+}
+
+.ow-card p {
+  font-size: 0.94rem;
+  line-height: 1.6;
+  color: #5b6675;
+}
+
+.ow-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: auto;
+  padding-top: 0.6rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1d6ff2;
+  text-decoration: none;
+  transition: gap 0.2s ease;
+}
+
+.ow-card-link:hover {
+  gap: 0.65rem;
+}
+
+.ow-card-link.is-disabled {
+  color: #98a2b3;
+  cursor: default;
+}
+
+.ow-empty {
+  display: none;
+  padding: 3rem 1rem;
+  text-align: center;
+  color: #5b6675;
+  border: 1px dashed #dbe2ec;
+  border-radius: 16px;
+}
+
+.ow-empty.is-visible {
+  display: block;
+}
+
+/* Reuses the global .page-btn / .page-number styles (blog-page.css) */
+.ow-pagination {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.42rem;
+  margin-top: 2.6rem;
+}
+
+.ow-pagination:empty {
+  display: none;
+}
+
+.ow-pagination .page-btn,
+.ow-pagination .page-number {
+  font-family: inherit;
+  cursor: pointer;
+  background: #fff;
+}
+
+.ow-pagination .page-number.active {
+  background: #111;
+  color: #fff;
+}
+
+/* ── Bottom CTA ── */
+.ow-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2.5rem;
+  margin-top: 3.4rem;
+  padding: 2.8rem 3rem;
+  background: #eef5fd;
+  border-radius: 22px;
+}
+
+.ow-cta-left {
+  max-width: 480px;
+}
+
+.ow-cta-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #5b6675;
+  margin-bottom: 0.7rem;
+}
+
+.ow-cta h2 {
+  font-size: clamp(1.7rem, 3vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.7rem;
+}
+
+.ow-cta-left p {
+  color: #5b6675;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.ow-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #0b1220;
+  color: #fff;
+  text-decoration: none;
+  padding: 0.85rem 1.5rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.94rem;
+  transition: background 0.2s ease, gap 0.2s ease;
+}
+
+.ow-cta-btn:hover {
+  background: #1a2436;
+  gap: 0.75rem;
+}
+
+.ow-stats {
+  display: flex;
+  align-items: stretch;
+}
+
+.ow-stat {
+  position: relative;
+  padding: 0 2rem;
+  text-align: center;
+}
+
+.ow-stat:first-child { padding-left: 0; }
+.ow-stat:last-child { padding-right: 0; }
+
+.ow-stat + .ow-stat::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8%;
+  height: 84%;
+  width: 1px;
+  background: #d6e0ee;
+}
+
+.ow-stat svg {
+  width: 30px;
+  height: 30px;
+  stroke: #0b1220;
+  fill: none;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  margin-bottom: 0.6rem;
+}
+
+.ow-stat-num {
+  font-size: 1.8rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.ow-stat-label {
+  font-size: 0.82rem;
+  color: #5b6675;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .ow-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ow-cta { flex-direction: column; align-items: flex-start; }
+  .ow-stats { width: 100%; }
+  .ow-stat { flex: 1; }
+}
+
+@media (max-width: 768px) {
+  .ow-body { padding: 0 1.2rem 3rem; }
+
+  .ow-filters {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 1.6rem 0 1.6rem;
+  }
+
+  .ow-filters::-webkit-scrollbar { display: none; }
+  .ow-filter { flex: 0 0 auto; }
+
+  .ow-grid { grid-template-columns: 1fr; gap: 1.1rem; }
+
+  .ow-cta { padding: 1.8rem 1.4rem; border-radius: 18px; gap: 1.8rem; }
+  .ow-stats { flex-direction: row; gap: 0; }
+  .ow-stat,
+  .ow-stat:first-child,
+  .ow-stat:last-child { flex: 1; padding: 0 0.4rem; }
+  .ow-stat svg { width: 24px; height: 24px; margin-bottom: 0.45rem; }
+  .ow-stat-num { font-size: 1.5rem; }
+  .ow-stat-label { font-size: 0.74rem; line-height: 1.3; }
+}

@@ -1,0 +1,1080 @@
+/* =====================================================
+   MEAGLE360 — HRMS PRODUCT PAGE
+   Nexa Solutions
+   Built to match the supplied HRMS reference layout.
+   ===================================================== */
+
+.hrms-page {
+    --hr-blue: #2563eb;
+    --hr-blue-dark: #1d4ed8;
+    --hr-blue-soft: #eef4ff;
+    --hr-ink: #0b1526;
+    --hr-body: #5b6b82;
+    --hr-line: #e6edf7;
+    --hr-bg: #f4f8fe;
+    --hr-green: #16a34a;
+    --hr-orange: #ea7a1c;
+    --hr-purple: #7c3aed;
+    --hr-red: #e0524a;
+    --hr-teal: #0d9488;
+    background: #fff;
+    color: var(--hr-ink);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: clip;
+}
+
+.hrms-page *,
+.hrms-page *::before,
+.hrms-page *::after {
+    box-sizing: border-box;
+}
+
+/* Content width matches the rest of the site (footer/navbar use 5vw gutters). */
+.hrms-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* ── SHARED TYPOGRAPHY ─────────────────────────────── */
+.hrms-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--hr-blue);
+    margin-bottom: 1.1rem;
+}
+
+.hrms-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 22px;
+    height: 1.5px;
+    background: currentColor;
+}
+
+.hrms-eyebrow--center {
+    justify-content: center;
+}
+
+.hrms-h1 {
+    font-size: clamp(2.8rem, 5.5vw, 4.4rem);
+    font-weight: 800;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    color: var(--hr-ink);
+    margin-bottom: 1.1rem;
+}
+
+.hrms-h2 {
+    font-size: clamp(1.9rem, 3.6vw, 2.7rem);
+    font-weight: 800;
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    color: var(--hr-ink);
+    margin-bottom: 1rem;
+}
+
+.hrms-h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--hr-ink);
+    margin-bottom: 0.45rem;
+}
+
+.hrms-lead {
+    font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+    font-weight: 600;
+    color: var(--hr-ink);
+    line-height: 1.4;
+    margin-bottom: 1rem;
+}
+
+.hrms-desc {
+    font-size: 0.98rem;
+    line-height: 1.75;
+    color: var(--hr-body);
+}
+
+.hrms-accent {
+    color: var(--hr-blue);
+}
+
+.hrms-section-head {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 3rem;
+}
+
+.hrms-section-head .hrms-desc {
+    margin: 0 auto;
+}
+
+/* ── BUTTONS ───────────────────────────────────────── */
+.hrms-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    padding: 0.8rem 1.6rem;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: background 0.22s ease, color 0.22s ease, border-color 0.22s ease, transform 0.22s ease;
+    white-space: nowrap;
+}
+
+.hrms-btn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+.hrms-btn--primary {
+    background: var(--hr-ink);
+    color: #fff;
+}
+
+.hrms-btn--primary:hover {
+    background: #1c2a44;
+    transform: translateY(-1px);
+}
+
+.hrms-btn--outline {
+    background: #fff;
+    color: var(--hr-ink);
+    border-color: var(--hr-line);
+}
+
+.hrms-btn--outline:hover {
+    border-color: #c9d7ea;
+    transform: translateY(-1px);
+}
+
+.hrms-btn--white {
+    background: #fff;
+    color: var(--hr-ink);
+    border-color: #fff;
+}
+
+.hrms-btn--white:hover {
+    background: #e9eef7;
+    transform: translateY(-1px);
+}
+
+.hrms-btn--ghost-white {
+    background: transparent;
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.35);
+}
+
+.hrms-btn--ghost-white:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #fff;
+    transform: translateY(-1px);
+}
+
+/* =====================================================
+   1. HERO
+   ===================================================== */
+.hrms-hero {
+    position: relative;
+    background: linear-gradient(180deg, #f7fafe 0%, #ffffff 100%);
+    padding: 8.5rem 5vw 3.5rem;
+}
+
+.hrms-hero-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.08fr;
+    grid-template-rows: auto auto;
+    column-gap: 3rem;
+    row-gap: 2.5rem;
+    align-items: center;
+}
+
+.hrms-hero-copy {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.hrms-hero-title {
+    font-size: clamp(2.8rem, 5.6vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--hr-ink);
+    margin-bottom: 0.9rem;
+}
+
+.hrms-hero-title span {
+    color: var(--hr-blue);
+}
+
+.hrms-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 1.8rem;
+}
+
+.hrms-hero-stats {
+    grid-column: 1;
+    grid-row: 2;
+    display: flex;
+    gap: 2.6rem;
+    flex-wrap: wrap;
+    padding-top: 0.5rem;
+}
+
+.hrms-stat-num {
+    font-size: clamp(1.7rem, 2.8vw, 2.1rem);
+    font-weight: 800;
+    line-height: 1;
+    color: var(--hr-ink);
+    letter-spacing: -0.02em;
+}
+
+.hrms-stat-label {
+    font-size: 0.82rem;
+    color: var(--hr-body);
+    margin-top: 0.35rem;
+}
+
+.hrms-hero-visual {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    align-self: center;
+}
+
+.hrms-hero-visual img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Handwritten annotations — sit above the product image, as in the reference */
+.hrms-annot-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 0 0.6rem 0.7rem;
+}
+
+.hrms-annot {
+    font-family: 'Segoe Script', 'Bradley Hand', 'Comic Sans MS', cursive;
+    font-size: 1.2rem;
+    line-height: 1.3;
+    color: #1f3050;
+}
+
+.hrms-annot--progress {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.35rem;
+}
+
+.hrms-annot--progress svg {
+    width: 40px;
+    height: 30px;
+    margin-bottom: 0.3rem;
+}
+
+.hrms-annot--all {
+    text-align: left;
+}
+
+/* =====================================================
+   2. KEY FEATURES
+   ===================================================== */
+.hrms-features {
+    padding: 5rem 5vw;
+}
+
+.hrms-feature-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.1rem;
+}
+
+.hrms-feature-card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid var(--hr-line);
+    border-radius: 14px;
+    padding: 1.5rem 1.4rem;
+    transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+}
+
+.hrms-feature-card:hover {
+    transform: translateY(-4px);
+    border-color: #d6e2f2;
+    box-shadow: 0 16px 32px -18px rgba(15, 40, 90, 0.28);
+}
+
+.hrms-feature-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.1rem;
+}
+
+.hrms-feature-icon svg {
+    width: 22px;
+    height: 22px;
+}
+
+.hrms-feature-desc {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--hr-body);
+    margin-bottom: 1rem;
+}
+
+.hrms-feature-link {
+    display: inline-block;
+    margin-top: auto;
+    align-self: flex-start;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--hr-blue);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.hrms-feature-link:hover {
+    color: var(--hr-blue-dark);
+    text-decoration: underline;
+}
+
+/* Accent variants */
+.hrms-ic-blue   { background: #e8f0ff; color: var(--hr-blue); }
+.hrms-ic-purple { background: #f2ebff; color: var(--hr-purple); }
+.hrms-ic-green  { background: #e6f7ec; color: var(--hr-green); }
+.hrms-ic-orange { background: #fef0e2; color: var(--hr-orange); }
+.hrms-ic-red    { background: #fdeaea; color: var(--hr-red); }
+.hrms-ic-teal   { background: #e2f6f3; color: var(--hr-teal); }
+
+/* =====================================================
+   3. A CLOSER LOOK
+   ===================================================== */
+.hrms-closer {
+    padding: 4.5rem 5vw;
+}
+
+.hrms-closer-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 3.5rem;
+    align-items: center;
+}
+
+.hrms-checklist {
+    list-style: none;
+    display: grid;
+    gap: 0.85rem;
+    margin: 1.6rem 0 2rem;
+}
+
+.hrms-checklist li {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 0.95rem;
+    color: var(--hr-ink);
+    font-weight: 500;
+}
+
+.hrms-check {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--hr-blue-soft);
+    color: var(--hr-blue);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.hrms-check svg {
+    width: 13px;
+    height: 13px;
+}
+
+.hrms-closer-visual img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* =====================================================
+   4. WHY CHOOSE MEAGLE360
+   ===================================================== */
+.hrms-why {
+    background: var(--hr-bg);
+    padding: 4.5rem 5vw;
+}
+
+.hrms-why-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    text-align: center;
+}
+
+.hrms-why-item .hrms-why-icon {
+    width: 46px;
+    height: 46px;
+    margin: 0 auto 1rem;
+    color: var(--hr-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hrms-why-icon svg {
+    width: 34px;
+    height: 34px;
+}
+
+.hrms-why-title {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--hr-ink);
+    margin-bottom: 0.5rem;
+}
+
+.hrms-why-desc {
+    font-size: 0.86rem;
+    line-height: 1.6;
+    color: var(--hr-body);
+}
+
+/* =====================================================
+   5. GROWTH / PARTNERSHIP
+   ===================================================== */
+.hrms-growth {
+    padding: 5rem 5vw;
+}
+
+.hrms-growth-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.hrms-growth-visual {
+    position: relative;
+}
+
+.hrms-growth-photo {
+    position: relative;
+}
+
+.hrms-growth-photo img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 18px;
+    object-fit: cover;
+}
+
+.hrms-growth-stats {
+    position: absolute;
+    top: 50%;
+    right: -1.5rem;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+.hrms-growth-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    background: #fff;
+    border-radius: 12px;
+    padding: 0.7rem 0.9rem;
+    box-shadow: 0 14px 30px -16px rgba(15, 40, 90, 0.35);
+    min-width: 210px;
+}
+
+.hrms-growth-chip-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.hrms-growth-chip-icon svg {
+    width: 18px;
+    height: 18px;
+}
+
+.hrms-growth-chip-num {
+    font-size: 1.05rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--hr-ink);
+}
+
+.hrms-growth-chip-label {
+    font-size: 0.72rem;
+    color: var(--hr-body);
+    margin-top: 0.15rem;
+}
+
+.hrms-growth-note {
+    position: absolute;
+    left: 1.2rem;
+    bottom: 1rem;
+    font-family: 'Segoe Script', 'Bradley Hand', 'Comic Sans MS', cursive;
+    font-size: 1rem;
+    line-height: 1.2;
+    color: #fff;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55);
+    max-width: 190px;
+}
+
+.hrms-growth-copy .hrms-desc {
+    max-width: 440px;
+    margin-bottom: 1.8rem;
+}
+
+/* =====================================================
+   6. TESTIMONIALS
+   ===================================================== */
+.hrms-testimonials {
+    padding: 4rem 5vw 5rem;
+}
+
+.hrms-testi-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 3rem;
+    align-items: stretch;
+}
+
+.hrms-testi-card-wrap {
+    position: relative;
+    padding: 0 3rem;
+}
+
+.hrms-testi-card {
+    background: #fff;
+    border: 1px solid var(--hr-line);
+    border-radius: 16px;
+    padding: 2rem 2.2rem;
+    box-shadow: 0 20px 44px -28px rgba(15, 40, 90, 0.35);
+    text-align: center;
+}
+
+.hrms-quote-mark {
+    font-size: 3.2rem;
+    line-height: 0.6;
+    color: #c9d9f2;
+    font-weight: 800;
+    margin-bottom: 0.6rem;
+}
+
+.hrms-testi-quote {
+    font-size: 0.98rem;
+    line-height: 1.7;
+    color: #34435c;
+    margin-bottom: 1.5rem;
+}
+
+.hrms-testi-author {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+}
+
+.hrms-testi-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--hr-ink);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.hrms-testi-name {
+    display: block;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--hr-ink);
+    text-align: left;
+}
+
+.hrms-testi-role {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--hr-body);
+    text-align: left;
+}
+
+.hrms-testi-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid var(--hr-line);
+    background: #fff;
+    color: var(--hr-ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.hrms-testi-arrow:hover {
+    background: var(--hr-ink);
+    color: #fff;
+    border-color: var(--hr-ink);
+}
+
+.hrms-testi-arrow svg {
+    width: 16px;
+    height: 16px;
+}
+
+.hrms-testi-arrow--prev { left: 0; }
+.hrms-testi-arrow--next { right: 0; }
+
+.hrms-testi-dots {
+    display: flex;
+    justify-content: center;
+    gap: 7px;
+    margin-top: 1.4rem;
+}
+
+.hrms-testi-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+    background: #cdd8e8;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.hrms-testi-dot.active {
+    background: var(--hr-blue);
+    transform: scale(1.25);
+}
+
+.hrms-testi-logos {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hrms-testi-side-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--hr-body);
+    text-align: center;
+    margin-bottom: 1.2rem;
+}
+
+.hrms-logo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 1rem;
+    flex: 1;
+    align-items: center;
+}
+
+.hrms-logo-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 64px;
+    overflow: hidden;
+}
+
+/* Brand assets are white-on-black; invert so they read as dark logos on the light section. */
+.hrms-logo-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transform: scale(1.45);
+    filter: invert(1);
+    opacity: 0.8;
+    transition: opacity 0.25s ease;
+}
+
+.hrms-logo-item:hover img {
+    opacity: 1;
+}
+
+/* =====================================================
+   7. FINAL CTA
+   ===================================================== */
+.hrms-cta {
+    padding: 1rem 5vw 5rem;
+}
+
+.hrms-cta-banner {
+    position: relative;
+    max-width: 1300px;
+    margin: 0 auto;
+    border-radius: 20px;
+    background: radial-gradient(120% 160% at 88% 120%, #16305c 0%, #0b1526 45%, #070e1c 100%);
+    padding: 3.5rem 3.2rem;
+    overflow: hidden;
+}
+
+.hrms-cta-banner::after {
+    content: '';
+    position: absolute;
+    right: -80px;
+    bottom: -120px;
+    width: 420px;
+    height: 420px;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.35) 0%, transparent 68%);
+    pointer-events: none;
+}
+
+.hrms-cta-content {
+    position: relative;
+    z-index: 2;
+    max-width: 620px;
+}
+
+.hrms-cta-eyebrow {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #7fa6e8;
+    margin-bottom: 0.9rem;
+}
+
+.hrms-cta-title {
+    font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 0.9rem;
+}
+
+.hrms-cta-desc {
+    font-size: 0.98rem;
+    color: rgba(255, 255, 255, 0.66);
+    margin-bottom: 1.8rem;
+}
+
+.hrms-cta-btns {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+}
+
+.hrms-cta-annot {
+    position: absolute;
+    right: 4rem;
+    bottom: 2.5rem;
+    transform: rotate(-6deg);
+    z-index: 2;
+    font-family: 'Segoe Script', 'Bradley Hand', 'Comic Sans MS', cursive;
+    font-size: 1.5rem;
+    line-height: 1.3;
+    color: rgba(255, 255, 255, 0.9);
+    text-align: left;
+    pointer-events: none;
+}
+
+/* =====================================================
+   8. FAQ
+   ===================================================== */
+.hrms-faq {
+    padding: 4rem 5vw 5.5rem;
+}
+
+.hrms-faq-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 0.9fr 1.3fr;
+    gap: 3.5rem;
+    align-items: start;
+}
+
+.hrms-faq-copy .hrms-desc {
+    max-width: 380px;
+    margin-bottom: 1.8rem;
+}
+
+.hrms-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+.hrms-faq-item {
+    border: 1px solid var(--hr-line);
+    border-radius: 12px;
+    background: #fff;
+    overflow: hidden;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hrms-faq-item.open {
+    border-color: #cddcf2;
+    box-shadow: 0 14px 30px -22px rgba(15, 40, 90, 0.4);
+}
+
+.hrms-faq-q {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.05rem 1.3rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--hr-ink);
+}
+
+.hrms-faq-icon {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+.hrms-faq-icon::before,
+.hrms-faq-icon::after {
+    content: '';
+    position: absolute;
+    background: var(--hr-ink);
+    border-radius: 2px;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.hrms-faq-icon::before {
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1.8px;
+    transform: translateY(-50%);
+}
+
+.hrms-faq-icon::after {
+    left: 50%;
+    top: 0;
+    width: 1.8px;
+    height: 100%;
+    transform: translateX(-50%);
+}
+
+.hrms-faq-item.open .hrms-faq-icon::after {
+    transform: translateX(-50%) scaleY(0);
+    opacity: 0;
+}
+
+.hrms-faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.hrms-faq-a p {
+    padding: 0 1.3rem 1.2rem;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--hr-body);
+}
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+@media (max-width: 1024px) {
+    .hrms-feature-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .hrms-hero {
+        padding: 7.5rem 5vw 3rem;
+    }
+
+    .hrms-hero-inner {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        row-gap: 2.5rem;
+    }
+
+    .hrms-hero-copy { grid-column: 1; grid-row: 1; }
+    .hrms-hero-stats { grid-column: 1; grid-row: 2; }
+    .hrms-hero-visual { grid-column: 1; grid-row: 3; }
+
+    .hrms-closer-inner,
+    .hrms-growth-inner,
+    .hrms-testi-inner,
+    .hrms-faq-inner {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+
+    .hrms-why-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem 1.5rem;
+    }
+
+    .hrms-growth-visual {
+        order: -1;
+    }
+
+    .hrms-growth-stats {
+        position: absolute;
+        top: 50%;
+        right: 0.5rem;
+        transform: translateY(-50%);
+        flex-direction: column;
+        flex-wrap: nowrap;
+        gap: 0.5rem;
+        width: 56%;
+        max-width: 210px;
+    }
+
+    .hrms-growth-chip {
+        min-width: 0;
+        width: 100%;
+        padding: 0.6rem 0.75rem;
+        gap: 0.55rem;
+    }
+
+    .hrms-growth-chip-icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    .hrms-growth-chip-num {
+        font-size: 0.95rem;
+    }
+
+    .hrms-growth-chip-label {
+        font-size: 0.68rem;
+    }
+
+    .hrms-cta-annot {
+        position: static;
+        transform: rotate(-6deg);
+        display: block;
+        margin-top: 1.6rem;
+        padding-right: 0.5rem;
+        text-align: right;
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .hrms-hero-stats {
+        gap: 1.6rem;
+    }
+
+    .hrms-hero-actions .hrms-btn {
+        flex: 1 1 auto;
+    }
+
+    .hrms-annot {
+        font-size: 1rem;
+    }
+
+    .hrms-feature-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hrms-why-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hrms-testi-card-wrap {
+        padding: 0 2.6rem;
+    }
+
+    .hrms-logo-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem 0.6rem;
+    }
+
+    .hrms-logo-item {
+        height: 44px;
+    }
+
+    .hrms-cta-banner {
+        padding: 2.5rem 1.6rem;
+        border-radius: 16px;
+    }
+
+    .hrms-cta-btns .hrms-btn {
+        flex: 1 1 auto;
+    }
+}
+
+@media (max-width: 400px) {
+    .hrms-hero-stats {
+        flex-direction: column;
+        gap: 1.1rem;
+    }
+
+    .hrms-growth-stats {
+        width: 54%;
+    }
+
+    .hrms-growth-chip-icon {
+        width: 26px;
+        height: 26px;
+    }
+}

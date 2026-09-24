@@ -260,6 +260,14 @@ def location_page(slug):
 def work():
     return render_template("work.html")
 
+@app.route("/our-work")
+def our_work():
+    return render_template("our-work.html")
+
+@app.route("/hrms")
+def hrms():
+    return render_template("pages/hrms.html")
+
 @app.route("/converter")
 def converter():
     return render_template("pages/converter.html")
@@ -603,10 +611,12 @@ def sitemap():
         {"loc": base + "/services/performance-marketing",            "priority": "0.85","changefreq": "monthly"},
         {"loc": base + "/services/ai-automation",                    "priority": "0.85","changefreq": "monthly"},
         {"loc": base + "/software-development-company",              "priority": "0.9", "changefreq": "monthly"},
+        {"loc": base + "/hrms",                                      "priority": "0.9", "changefreq": "monthly"},
         {"loc": base + "/webdesign-agency-germany",                  "priority": "0.8", "changefreq": "monthly"},
         {"loc": base + "/best-website-development-agency-india/",    "priority": "0.8", "changefreq": "monthly"},
         {"loc": base + "/locations",                                 "priority": "0.7", "changefreq": "monthly"},
         {"loc": base + "/work",                                      "priority": "0.7", "changefreq": "monthly"},
+        {"loc": base + "/our-work",                                  "priority": "0.8", "changefreq": "monthly"},
         {"loc": base + "/blog",                                      "priority": "0.9", "changefreq": "daily"},
         {"loc": base + "/about",                                     "priority": "0.6", "changefreq": "yearly"},
         {"loc": base + "/contact",                                   "priority": "0.6", "changefreq": "yearly"},

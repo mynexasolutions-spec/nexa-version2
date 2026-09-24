@@ -1,0 +1,241 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Our Work - Nexa Solutions{% endblock %}
+{% block meta %}
+<meta name="description" content="Explore Nexa Solutions' completed projects — e-commerce stores, business websites, and e-learning platforms built for growing brands.">
+<meta name="keywords" content="Nexa Solutions portfolio, web development projects, e-commerce websites, business websites">
+{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/our-work.css') }}">
+{% endblock %}
+
+{% set projects = [
+  {"name": "For The Win", "category": "E-commerce", "image": "ChatGPT Image Sep 13, 2026, 07_49_27 PM.webp",
+   "description": "A bold gaming apparel store built for a community of players.",
+   "url": "https://ftw8.com/"},
+  {"name": "Zuhraan", "category": "E-commerce", "image": "ChatGPT Image Sep 13, 2026, 07_56_34 PM.webp",
+   "description": "A refined fragrance store with an elegant boutique shopping experience.",
+   "url": "https://zuhraanofficial.com/"},
+  {"name": "Rawflex", "category": "E-commerce", "image": "file_000000001afc82119ef844224cca2799.webp",
+   "description": "A streetwear brand store with a raw, high-energy online presence.",
+   "url": "https://rawflex.in/"},
+  {"name": "Noye Letthe", "category": "E-commerce", "image": "file_0000000024148207ae4f5be796f26d44.webp",
+   "description": "A fashion boutique site crafted to showcase signature styles.",
+   "url": "https://nayeleithe.com/"},
+  {"name": "Chasma Gallery", "category": "E-commerce", "image": "file_00000000253c8211a19160cb29604743.webp",
+   "description": "An eyewear store with a clean catalogue and easy browsing.",
+   "url": "https://chasmagallery.in/"},
+  {"name": "Curve Sports & Nutrition", "category": "E-commerce", "image": "file_0000000031cc82119eb62c21b5ba880e.webp",
+   "description": "A sports nutrition store designed to fuel active lifestyles.",
+   "url": "https://curvesportsnutrition.com/"},
+  {"name": "EasyWayGermany", "category": "Education", "image": "file_00000000329c8206980644a5c9e9aae5.webp",
+   "description": "A study-in-Germany consultancy guiding students through admissions.",
+   "url": "https://easywaygermany.com/"},
+  {"name": "Decor By Pearls", "category": "Other", "image": "file_000000003b988211a51ae62ab295967b.webp",
+   "description": "A wedding and event decor studio showcasing timeless celebrations.",
+   "url": "https://www.decorbypearls.com/"},
+  {"name": "Gulshan Modest", "category": "E-commerce", "image": "file_000000005118821199977001ff2ed899.webp",
+   "description": "A modest fashion store with a graceful, easy-to-shop layout.",
+   "url": "https://www.gulshanmodest.com/"},
+  {"name": "S.M.S Electronics", "category": "Business Website", "image": "file_0000000058dc821193b2fbeddf7cf87e.webp",
+   "description": "A service website for appliance repair with a clear enquiry flow.",
+   "url": "https://www.sms-electronics.com/"},
+  {"name": "Talbeenaa", "category": "E-commerce", "image": "file_00000000653c82118c7b698cdf94f648.webp",
+   "description": "A barley superfood store rooted in natural, wholesome products.",
+   "url": "https://talbeenaa.com/"},
+  {"name": "LUVtale", "category": "E-commerce", "image": "file_0000000065c08211acd04c64f5730b3e.webp",
+   "description": "An ethnic couture store presenting luxury collections online.",
+   "url": "https://luvtaleofficial.com/"},
+  {"name": "Hijabistaa", "category": "E-commerce", "image": "file_0000000068548211973bab26928d8781.webp",
+   "description": "A hijab and scarf store with a soft, modern shopping experience.",
+   "url": "https://www.hijabistaa.com/"},
+  {"name": "Max Vision IPTV", "category": "Business Website", "image": "file_000000006d488207b2a6216bd555b88a.webp",
+   "description": "A streaming service website with clear plans and a simple sign-up flow.",
+   "url": "https://www.maxvisiontv.au/"},
+  {"name": "Eyeconic", "category": "E-commerce", "image": "file_00000000c448821182e7c788317dfe7c.webp",
+   "description": "An eyewear store for glasses and sunglasses with simple checkout.",
+   "url": "https://www.eyeconicofficial.com/"},
+  {"name": "Almanya Kariyer Rehberi", "category": "Education", "image": "file_00000000d8fc82119755bd528274715d.webp",
+   "description": "A study-in-Germany guidance platform for prospective students.",
+   "url": "https://study-in-deutschland.com/"},
+  {"name": "Al-Quran Global Institute", "category": "Education", "image": "file_00000000e9d482118bf90c4e783710be.webp",
+   "description": "An online Quran learning institute with structured courses.",
+   "url": "https://www.alquranglobalinstitute.com/"},
+  {"name": "Dadson", "category": "E-commerce", "image": "IMG-20260913-WA0101.webp",
+   "description": "A jewellery e-commerce store with a premium, polished look.",
+   "url": "https://dadsonjewelry.com/"}
+] %}
+
+{% set categories = ["All Projects", "E-commerce", "Business Website", "Travel & Hospitality", "Health & Fitness", "Education", "Real Estate", "Other"] %}
+
+{% block content %}
+<div class="ow-page">
+
+  <section class="blog-page-hero">
+    <div class="blog-page-hero-inner">
+      <p class="blog-page-eyebrow">Portfolio</p>
+      <h1>Our Work</h1>
+      <p class="blog-page-sub">Explore our latest projects and see how we help businesses build powerful digital experiences.</p>
+    </div>
+  </section>
+
+  <div class="ow-body">
+    <div class="ow-container">
+
+      <div class="ow-filters" id="owFilters" role="tablist" aria-label="Project categories">
+        {% for category in categories %}
+        <button type="button" class="ow-filter{% if loop.first %} is-active{% endif %}"
+          data-filter="{{ category }}" role="tab" aria-selected="{{ 'true' if loop.first else 'false' }}">{{ category }}</button>
+        {% endfor %}
+      </div>
+
+      <div class="ow-grid" id="owGrid">
+        {% for project in projects %}
+        <article class="ow-card" data-category="{{ project.category }}">
+          <div class="ow-card-media">
+            <img src="{{ url_for('static', filename='images/our-work/' ~ project.image) }}"
+              alt="{{ project.name }} website preview" loading="lazy" decoding="async">
+          </div>
+          <div class="ow-card-body">
+            <span class="ow-badge" data-cat="{{ project.category }}">{{ project.category }}</span>
+            <h3>{{ project.name }}</h3>
+            <p>{{ project.description }}</p>
+            {% if project.url %}
+            <a class="ow-card-link" href="{{ project.url }}" target="_blank" rel="noopener noreferrer">Visit Website <span aria-hidden="true">&rarr;</span></a>
+            {% else %}
+            <span class="ow-card-link is-disabled">Visit Website <span aria-hidden="true">&rarr;</span></span>
+            {% endif %}
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+
+      <div class="ow-empty" id="owEmpty">No projects in this category yet. Check back soon.</div>
+
+      <div class="ow-pagination" id="owPager"></div>
+
+      <section class="ow-cta">
+        <div class="ow-cta-left">
+          <p class="ow-cta-eyebrow">Let's Build Something Great</p>
+          <h2>Have a project in mind?</h2>
+          <p>We'd love to hear about it and create something amazing together.</p>
+          <a class="ow-cta-btn" href="{{ url_for('contact') }}">Get in Touch <span aria-hidden="true">&rarr;</span></a>
+        </div>
+        <div class="ow-stats">
+          <div class="ow-stat">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            <div class="ow-stat-text">
+              <div class="ow-stat-num">50+</div>
+              <div class="ow-stat-label">Projects Completed</div>
+            </div>
+          </div>
+          <div class="ow-stat">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <div class="ow-stat-text">
+              <div class="ow-stat-num">30+</div>
+              <div class="ow-stat-label">Happy Clients</div>
+            </div>
+          </div>
+          <div class="ow-stat">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <div class="ow-stat-text">
+              <div class="ow-stat-num">5+</div>
+              <div class="ow-stat-label">Years of Experience</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+(function () {
+  var PER_PAGE = 9;
+  var filters = document.querySelectorAll('.ow-filter');
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.ow-card'));
+  var grid = document.getElementById('owGrid');
+  var empty = document.getElementById('owEmpty');
+  var pager = document.getElementById('owPager');
+  if (!filters.length || !cards.length) return;
+
+  var category = 'All Projects';
+  var page = 1;
+
+  function matches(card) {
+    return category === 'All Projects' || card.dataset.category === category;
+  }
+
+  function renderPager(pageCount) {
+    if (!pager) return;
+    pager.innerHTML = '';
+    if (pageCount <= 1) return;
+
+    var prev = document.createElement('button');
+    prev.type = 'button';
+    prev.className = 'page-btn' + (page === 1 ? ' disabled' : '');
+    prev.textContent = '\u2039 Prev';
+    prev.addEventListener('click', function () { if (page > 1) go(page - 1); });
+    pager.appendChild(prev);
+
+    for (var i = 1; i <= pageCount; i++) {
+      (function (n) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'page-number' + (n === page ? ' active' : '');
+        b.textContent = n;
+        b.addEventListener('click', function () { go(n); });
+        pager.appendChild(b);
+      })(i);
+    }
+
+    var next = document.createElement('button');
+    next.type = 'button';
+    next.className = 'page-btn' + (page === pageCount ? ' disabled' : '');
+    next.textContent = 'Next \u203a';
+    next.addEventListener('click', function () { if (page < pageCount) go(page + 1); });
+    pager.appendChild(next);
+  }
+
+  function render(scroll) {
+    var list = cards.filter(matches);
+    var pageCount = Math.max(1, Math.ceil(list.length / PER_PAGE));
+    if (page > pageCount) page = pageCount;
+    var start = (page - 1) * PER_PAGE;
+
+    cards.forEach(function (c) { c.hidden = true; });
+    list.slice(start, start + PER_PAGE).forEach(function (c) { c.hidden = false; });
+    if (empty) empty.classList.toggle('is-visible', list.length === 0);
+    renderPager(pageCount);
+
+    if (scroll && grid) {
+      var top = grid.getBoundingClientRect().top + window.pageYOffset - 110;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    }
+  }
+
+  function go(n) { page = n; render(true); }
+
+  filters.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      filters.forEach(function (b) {
+        b.classList.remove('is-active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      btn.classList.add('is-active');
+      btn.setAttribute('aria-selected', 'true');
+      category = btn.dataset.filter;
+      page = 1;
+      render(false);
+    });
+  });
+
+  render(false);
+})();
+</script>
+{% endblock %}

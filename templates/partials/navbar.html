@@ -31,7 +31,8 @@
         </li>
       </ul>
     </li>
-    {# <li><a href="{{ url_for('work') }}">Work</a></li> #}
+    <li><a href="{{ url_for('hrms') }}"{% if request.endpoint == 'hrms' %} class="active"{% endif %}>HRMS</a></li>
+    <li><a href="{{ url_for('our_work') }}"{% if request.endpoint == 'our_work' %} class="active"{% endif %}>Our Work</a></li>
     <li><a href="{{ url_for('blog') }}">Our Blogs</a></li>
     <li><a href="{{ url_for('about') }}">About</a></li>
     <li class="has-dropdown tools-dropdown">

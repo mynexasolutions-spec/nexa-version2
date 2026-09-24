@@ -1,0 +1,554 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Meagle360 — All-in-One HRMS by Nexa Solutions{% endblock %}
+
+{% block meta %}
+<meta name="description" content="Meagle360 is a modern, all-in-one HRMS by Nexa Solutions that simplifies HR operations — employee management, attendance, payroll, recruitment, performance and analytics in one place.">
+<meta name="keywords" content="HRMS, HR software, Employee Management, Payroll, Attendance, Recruitment ATS, Performance Management, Meagle360">
+{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/hrms.css') }}">
+{% endblock %}
+
+{% block content %}
+<main class="hrms-page">
+
+    <!-- ═══════════════════════════════════════════
+         1. HERO
+    ═══════════════════════════════════════════ -->
+    <section class="hrms-hero">
+        <div class="hrms-hero-inner">
+
+            <div class="hrms-hero-copy">
+                <span class="hrms-eyebrow">Our Product</span>
+                <h1 class="hrms-hero-title">Meagle<span>360</span></h1>
+                <p class="hrms-lead">A Smarter Way to Manage Your People</p>
+                <p class="hrms-desc">
+                    Meagle360 is a modern, all-in-one HRMS designed to simplify HR operations, improve employee experience, and help businesses build stronger, more productive teams.
+                </p>
+                <div class="hrms-hero-actions">
+                    <a href="https://www.meagle360.com/" target="_blank" rel="noopener noreferrer" class="hrms-btn hrms-btn--primary">
+                        Request a Demo
+                    </a>
+                    <a href="#hrms-closer" class="hrms-btn hrms-btn--outline">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polygon points="10 8.5 16 12 10 15.5 10 8.5" fill="currentColor" stroke="none"/></svg>
+                        Watch Video
+                    </a>
+                </div>
+            </div>
+
+            <div class="hrms-hero-stats">
+                <div class="hrms-stat">
+                    <div class="hrms-stat-num">500+</div>
+                    <div class="hrms-stat-label">Happy Users</div>
+                </div>
+                <div class="hrms-stat">
+                    <div class="hrms-stat-num">99%</div>
+                    <div class="hrms-stat-label">Uptime</div>
+                </div>
+                <div class="hrms-stat">
+                    <div class="hrms-stat-num">4.9/5</div>
+                    <div class="hrms-stat-label">Customer Rating</div>
+                </div>
+            </div>
+
+            <div class="hrms-hero-visual">
+                <div class="hrms-annot-row">
+                    <div class="hrms-annot hrms-annot--progress">
+                        <span>People<br>Processes<br>Progress</span>
+                        <svg viewBox="0 0 40 28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M2 21 C 10 5, 26 5, 34 15"/>
+                            <path d="M27 13 l7 2 -3 6"/>
+                        </svg>
+                    </div>
+                    <div class="hrms-annot hrms-annot--all">All Your<br>HR Operations<br>in One Place</div>
+                </div>
+                <img
+                    src="{{ url_for('static', filename='images/hrms-laptop-image.webp') }}"
+                    alt="Meagle360 HRMS dashboard on a laptop"
+                >
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         2. KEY FEATURES
+    ═══════════════════════════════════════════ -->
+    <section class="hrms-features">
+        <div class="hrms-container">
+            <div class="hrms-section-head">
+                <span class="hrms-eyebrow hrms-eyebrow--center">Key Features</span>
+                <h2 class="hrms-h2">Everything You Need in One HRMS</h2>
+                <p class="hrms-desc">From hiring to retirement, Meagle360 brings all your HR functions together.</p>
+            </div>
+
+            <div class="hrms-feature-grid">
+
+                <div class="hrms-feature-card">
+                    <div class="hrms-feature-icon hrms-ic-blue">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <h3 class="hrms-h3">Employee Management</h3>
+                    <p class="hrms-feature-desc">Maintain complete employee records, organizational structure, and roles with ease.</p>
+                    <a href="https://www.meagle360.com/features/employee-database-software" target="_blank" rel="noopener noreferrer" class="hrms-feature-link">Know More</a>
+                </div>
+
+                <div class="hrms-feature-card">
+                    <div class="hrms-feature-icon hrms-ic-purple">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    </div>
+                    <h3 class="hrms-h3">Attendance &amp; Leave</h3>
+                    <p class="hrms-feature-desc">Track attendance, manage leave policies, and automate approvals.</p>
+                    <a href="https://www.meagle360.com/features/attendance-management-software" target="_blank" rel="noopener noreferrer" class="hrms-feature-link">Know More</a>
+                </div>
+
+                <div class="hrms-feature-card">
+                    <div class="hrms-feature-icon hrms-ic-green">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20"/><path d="M16 15h2"/></svg>
+                    </div>
+                    <h3 class="hrms-h3">Payroll Management</h3>
+                    <p class="hrms-feature-desc">Automatically process, generate tax calculations, and generate payslips.</p>
+                    <a href="https://www.meagle360.com/features/payroll-software" target="_blank" rel="noopener noreferrer" class="hrms-feature-link">Know More</a>
+                </div>
+
+                <div class="hrms-feature-card">
+                    <div class="hrms-feature-icon hrms-ic-orange">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+                    </div>
+                    <h3 class="hrms-h3">Recruitment (ATS)</h3>
+                    <p class="hrms-feature-desc">Streamline your hiring process, from job posting to onboarding.</p>
+                    <a href="https://www.meagle360.com/features/hiring-management-software" target="_blank" rel="noopener noreferrer" class="hrms-feature-link">Know More</a>
+                </div>
+
+                <div class="hrms-feature-card">
+                    <div class="hrms-feature-icon hrms-ic-red">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                    </div>
+                    <h3 class="hrms-h3">Performance Management</h3>
+                    <p class="hrms-feature-desc">Set goals, conduct reviews, and track employee growth.</p>
+                    <a href="https://www.meagle360.com/features" target="_blank" rel="noopener noreferrer" class="hrms-feature-link">Know More</a>
+                </div>
+
+                <div class="hrms-feature-card">
+                    <div class="hrms-feature-icon hrms-ic-blue">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h16v20l-3-2-2 2-3-2-3 2-2-2-3 2z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="16" y2="11"/><line x1="8" y1="15" x2="13" y2="15"/></svg>
+                    </div>
+                    <h3 class="hrms-h3">Expense Management</h3>
+                    <p class="hrms-feature-desc">Manage reimbursements and employee expenses hassle-free.</p>
+                    <a href="https://www.meagle360.com/features/expense-management" target="_blank" rel="noopener noreferrer" class="hrms-feature-link">Know More</a>
+                </div>
+
+                <div class="hrms-feature-card">
+                    <div class="hrms-feature-icon hrms-ic-teal">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+                    </div>
+                    <h3 class="hrms-h3">Documents &amp; Compliance</h3>
+                    <p class="hrms-feature-desc">Securely store and manage important documents with compliance tracking.</p>
+                    <a href="https://www.meagle360.com/features" target="_blank" rel="noopener noreferrer" class="hrms-feature-link">Know More</a>
+                </div>
+
+                <div class="hrms-feature-card">
+                    <div class="hrms-feature-icon hrms-ic-purple">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                    </div>
+                    <h3 class="hrms-h3">Reports &amp; Analytics</h3>
+                    <p class="hrms-feature-desc">Get real-time insights with powerful reports and dashboards.</p>
+                    <a href="https://www.meagle360.com/features/hr-reports-analytics" target="_blank" rel="noopener noreferrer" class="hrms-feature-link">Know More</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         3. A CLOSER LOOK
+    ═══════════════════════════════════════════ -->
+    <section class="hrms-closer" id="hrms-closer">
+        <div class="hrms-closer-inner">
+
+            <div class="hrms-closer-copy">
+                <span class="hrms-eyebrow">A Closer Look</span>
+                <h2 class="hrms-h2">Simple. <span class="hrms-accent">Powerful.</span><br>Made for Growing Teams.</h2>
+                <p class="hrms-desc">
+                    Meagle360 is designed to be easy to use, highly customizable, and accessible from anywhere — so you can focus on what really matters: your people.
+                </p>
+                <ul class="hrms-checklist">
+                    <li>
+                        <span class="hrms-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                        Clean and intuitive interface
+                    </li>
+                    <li>
+                        <span class="hrms-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                        Accessible on web and mobile
+                    </li>
+                    <li>
+                        <span class="hrms-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                        Secure and reliable
+                    </li>
+                    <li>
+                        <span class="hrms-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                        Customizable to your workflow
+                    </li>
+                </ul>
+                <a href="{{ url_for('contact') }}" class="hrms-btn hrms-btn--primary">
+                    See Meagle360 in Action
+                </a>
+            </div>
+
+            <div class="hrms-closer-visual">
+                <img
+                    src="{{ url_for('static', filename='images/hrms-laptop-phone-image.webp') }}"
+                    alt="Meagle360 HRMS on desktop and mobile"
+                >
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         4. WHY CHOOSE MEAGLE360
+    ═══════════════════════════════════════════ -->
+    <section class="hrms-why">
+        <div class="hrms-container">
+            <div class="hrms-section-head">
+                <span class="hrms-eyebrow hrms-eyebrow--center">Why Choose Meagle360</span>
+                <h2 class="hrms-h2">Built for Businesses Like Yours</h2>
+                <p class="hrms-desc">Whether you're a startup or an established enterprise, Meagle360 adapts to your needs.</p>
+            </div>
+
+            <div class="hrms-why-grid">
+
+                <div class="hrms-why-item">
+                    <div class="hrms-why-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/></svg>
+                    </div>
+                    <h3 class="hrms-why-title">Increase<br>Productivity</h3>
+                    <p class="hrms-why-desc">Automate repetitive tasks and save time.</p>
+                </div>
+
+                <div class="hrms-why-item">
+                    <div class="hrms-why-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <h3 class="hrms-why-title">Better<br>Employee Experience</h3>
+                    <p class="hrms-why-desc">Keep your team engaged and informed.</p>
+                </div>
+
+                <div class="hrms-why-item">
+                    <div class="hrms-why-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+                    </div>
+                    <h3 class="hrms-why-title">Stay<br>Compliant</h3>
+                    <p class="hrms-why-desc">Meet regulatory requirements with ease.</p>
+                </div>
+
+                <div class="hrms-why-item">
+                    <div class="hrms-why-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                    </div>
+                    <h3 class="hrms-why-title">Data-Driven<br>Decisions</h3>
+                    <p class="hrms-why-desc">Make smarter decisions with real-time insights.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         5. GROWTH / PARTNERSHIP
+    ═══════════════════════════════════════════ -->
+    <section class="hrms-growth">
+        <div class="hrms-growth-inner">
+
+            <div class="hrms-growth-visual">
+                <div class="hrms-growth-photo">
+                    <img
+                        src="{{ url_for('static', filename='images/hrms-lady photo.webp') }}"
+                        alt="HR professional using Meagle360"
+                    >
+                    <div class="hrms-growth-note">Happy Teams<br>Build Great Businesses</div>
+                </div>
+                <div class="hrms-growth-stats">
+                    <div class="hrms-growth-chip">
+                        <span class="hrms-growth-chip-icon hrms-ic-green">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+                        </span>
+                        <span>
+                            <span class="hrms-growth-chip-num">85%</span>
+                            <span class="hrms-growth-chip-label">Higher HR Productivity</span>
+                        </span>
+                    </div>
+                    <div class="hrms-growth-chip">
+                        <span class="hrms-growth-chip-icon hrms-ic-blue">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg>
+                        </span>
+                        <span>
+                            <span class="hrms-growth-chip-num">60%</span>
+                            <span class="hrms-growth-chip-label">Less Administrative Work</span>
+                        </span>
+                    </div>
+                    <div class="hrms-growth-chip">
+                        <span class="hrms-growth-chip-icon hrms-ic-purple">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 14.5s1.3 2 3.5 2 3.5-2 3.5-2"/><line x1="9" y1="9.5" x2="9.01" y2="9.5"/><line x1="15" y1="9.5" x2="15.01" y2="9.5"/></svg>
+                        </span>
+                        <span>
+                            <span class="hrms-growth-chip-num">95%</span>
+                            <span class="hrms-growth-chip-label">Employee Satisfaction</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hrms-growth-copy">
+                <span class="hrms-eyebrow">More Than Just Software</span>
+                <h2 class="hrms-h2">A Partner in Your<br>Growth Journey</h2>
+                <p class="hrms-desc">
+                    At Nexa Solutions, we built Meagle360 to solve real business challenges. It's not just a tool — it's a partner that helps you create a better workplace.
+                </p>
+                <a href="https://www.meagle360.com/" target="_blank" rel="noopener noreferrer" class="hrms-btn hrms-btn--primary">
+                    Request a Demo
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         6. TESTIMONIALS + TRUSTED BUSINESSES
+    ═══════════════════════════════════════════ -->
+    <section class="hrms-testimonials">
+        <div class="hrms-container">
+            <div class="hrms-section-head">
+                <span class="hrms-eyebrow hrms-eyebrow--center">What Our Clients Say</span>
+                <h2 class="hrms-h2">Trusted by Growing Businesses</h2>
+                <p class="hrms-desc">Join hundreds of companies that trust Meagle360 to manage their most valuable asset — their people.</p>
+            </div>
+
+            <div class="hrms-testi-inner">
+
+                <div class="hrms-testi-card-wrap">
+                    <button class="hrms-testi-arrow hrms-testi-arrow--prev" aria-label="Previous testimonial">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                    </button>
+                    <button class="hrms-testi-arrow hrms-testi-arrow--next" aria-label="Next testimonial">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    </button>
+
+                    {# ponytail: demo placeholder quotes — the first is verbatim from the supplied reference. Swap for real, consented client quotes before launch. #}
+                    <div class="hrms-testi-card">
+                        <div class="hrms-quote-mark">&ldquo;</div>
+
+                        <div class="hrms-testi-slide">
+                            <p class="hrms-testi-quote">Meagle360 has completely transformed the way we manage our HR operations. It's simple, powerful, and our employees love it!</p>
+                            <div class="hrms-testi-author">
+                                <div class="hrms-testi-avatar">AD</div>
+                                <div>
+                                    <span class="hrms-testi-name">Arjun Deshmukh</span>
+                                    <span class="hrms-testi-role">HR Head, TechNova</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="hrms-testi-slide" hidden>
+                            <p class="hrms-testi-quote">Our payroll used to take three days every month. With Meagle360 it's done in an afternoon, and the tax calculations are spot on.</p>
+                            <div class="hrms-testi-author">
+                                <div class="hrms-testi-avatar">PS</div>
+                                <div>
+                                    <span class="hrms-testi-name">Priya Sharma</span>
+                                    <span class="hrms-testi-role">People Ops Manager, GrowFast</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="hrms-testi-slide" hidden>
+                            <p class="hrms-testi-quote">Attendance, leave, and approvals all live in one place now. My team finally stopped chasing spreadsheets.</p>
+                            <div class="hrms-testi-author">
+                                <div class="hrms-testi-avatar">RV</div>
+                                <div>
+                                    <span class="hrms-testi-name">Rahul Verma</span>
+                                    <span class="hrms-testi-role">HR Manager, RealSpace</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="hrms-testi-slide" hidden>
+                            <p class="hrms-testi-quote">The analytics dashboard gives us a clear view of headcount and attrition. It has genuinely changed how we plan hiring.</p>
+                            <div class="hrms-testi-author">
+                                <div class="hrms-testi-avatar">NK</div>
+                                <div>
+                                    <span class="hrms-testi-name">Neha Kapoor</span>
+                                    <span class="hrms-testi-role">HR Director, HealthPlus</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hrms-testi-dots">
+                        <button class="hrms-testi-dot active" aria-label="Testimonial 1"></button>
+                        <button class="hrms-testi-dot" aria-label="Testimonial 2"></button>
+                        <button class="hrms-testi-dot" aria-label="Testimonial 3"></button>
+                        <button class="hrms-testi-dot" aria-label="Testimonial 4"></button>
+                    </div>
+                </div>
+
+                <div class="hrms-testi-logos">
+                    <div class="hrms-testi-side-label">Trusted by Businesses Like</div>
+                    <div class="hrms-logo-grid">
+                        <div class="hrms-logo-item"><img src="{{ url_for('static', filename='images/brands/enchant.webp') }}" alt="Enchant" loading="lazy"></div>
+                        <div class="hrms-logo-item"><img src="{{ url_for('static', filename='images/brands/hallmark.webp') }}" alt="Hallmark" loading="lazy"></div>
+                        <div class="hrms-logo-item"><img src="{{ url_for('static', filename='images/brands/hireberth.webp') }}" alt="Hireberth" loading="lazy"></div>
+                        <div class="hrms-logo-item"><img src="{{ url_for('static', filename='images/brands/mphasis.webp') }}" alt="Mphasis" loading="lazy"></div>
+                        <div class="hrms-logo-item"><img src="{{ url_for('static', filename='images/brands/paradox.webp') }}" alt="Paradox" loading="lazy"></div>
+                        <div class="hrms-logo-item"><img src="{{ url_for('static', filename='images/brands/tridentgroup_logo_smaller_centered.webp') }}" alt="Trident Group" loading="lazy"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         7. FINAL CTA
+    ═══════════════════════════════════════════ -->
+    <section class="hrms-cta">
+        <div class="hrms-cta-banner">
+            <div class="hrms-cta-content">
+                <div class="hrms-cta-eyebrow">Ready to Transform Your HR Operations?</div>
+                <h2 class="hrms-cta-title">Get Started with Meagle360 Today</h2>
+                <p class="hrms-cta-desc">Let's build a happier, more productive workplace together.</p>
+                <div class="hrms-cta-btns">
+                    <a href="https://www.meagle360.com/" target="_blank" rel="noopener noreferrer" class="hrms-btn hrms-btn--white">
+                        Request a Demo
+                    </a>
+                    <a href="{{ url_for('contact') }}" class="hrms-btn hrms-btn--ghost-white">Contact Sales</a>
+                </div>
+            </div>
+            <div class="hrms-cta-annot" aria-hidden="true">People<br>Processes<br>Progress</div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         8. FAQ
+    ═══════════════════════════════════════════ -->
+    <section class="hrms-faq">
+        <div class="hrms-faq-inner">
+
+            <div class="hrms-faq-copy">
+                <span class="hrms-eyebrow">Frequently Asked Questions</span>
+                <h2 class="hrms-h2">Got Questions?<br>We've Got Answers.</h2>
+                <p class="hrms-desc">Find answers to common questions about Meagle360.</p>
+                <a href="{{ url_for('contact') }}" class="hrms-btn hrms-btn--primary">
+                    View All FAQs
+                </a>
+            </div>
+
+            <div class="hrms-accordion">
+
+                <div class="hrms-faq-item">
+                    <button class="hrms-faq-q" aria-expanded="false">
+                        What is Meagle360?
+                        <span class="hrms-faq-icon" aria-hidden="true"></span>
+                    </button>
+                    <div class="hrms-faq-a">
+                        <p>Meagle360 is an all-in-one HRMS from Nexa Solutions that brings employee records, attendance, leave, payroll, recruitment, performance, and analytics together on a single platform.</p>
+                    </div>
+                </div>
+
+                <div class="hrms-faq-item">
+                    <button class="hrms-faq-q" aria-expanded="false">
+                        Is Meagle360 suitable for small businesses?
+                        <span class="hrms-faq-icon" aria-hidden="true"></span>
+                    </button>
+                    <div class="hrms-faq-a">
+                        <p>Yes. Meagle360 scales from small teams to growing enterprises, so you can start with the modules you need and add more as your business grows.</p>
+                    </div>
+                </div>
+
+                <div class="hrms-faq-item">
+                    <button class="hrms-faq-q" aria-expanded="false">
+                        Can I try Meagle360 before purchasing?
+                        <span class="hrms-faq-icon" aria-hidden="true"></span>
+                    </button>
+                    <div class="hrms-faq-a">
+                        <p>Yes. You can request a guided demo and explore a trial workspace with your own data before making a decision.</p>
+                    </div>
+                </div>
+
+                <div class="hrms-faq-item">
+                    <button class="hrms-faq-q" aria-expanded="false">
+                        Is my data secure?
+                        <span class="hrms-faq-icon" aria-hidden="true"></span>
+                    </button>
+                    <div class="hrms-faq-a">
+                        <p>Security is built in — encrypted storage, role-based access control, and regular backups keep your HR data protected.</p>
+                    </div>
+                </div>
+
+                <div class="hrms-faq-item">
+                    <button class="hrms-faq-q" aria-expanded="false">
+                        Do you offer customer support?
+                        <span class="hrms-faq-icon" aria-hidden="true"></span>
+                    </button>
+                    <div class="hrms-faq-a">
+                        <p>Yes. Our team provides onboarding help and ongoing support to make sure Meagle360 keeps working the way your business does.</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+<script>
+(function () {
+    /* FAQ accordion — one item open at a time */
+    var items = document.querySelectorAll('.hrms-faq-item');
+    items.forEach(function (item) {
+        var btn = item.querySelector('.hrms-faq-q');
+        var panel = item.querySelector('.hrms-faq-a');
+        btn.addEventListener('click', function () {
+            var wasOpen = item.classList.contains('open');
+            items.forEach(function (other) {
+                other.classList.remove('open');
+                other.querySelector('.hrms-faq-a').style.maxHeight = null;
+                other.querySelector('.hrms-faq-q').setAttribute('aria-expanded', 'false');
+            });
+            if (!wasOpen) {
+                item.classList.add('open');
+                panel.style.maxHeight = panel.scrollHeight + 'px';
+                btn.setAttribute('aria-expanded', 'true');
+            }
+        });
+    });
+
+    /* Testimonial carousel — supports any number of slides */
+    var slides = Array.prototype.slice.call(document.querySelectorAll('.hrms-testi-slide'));
+    var dots = Array.prototype.slice.call(document.querySelectorAll('.hrms-testi-dot'));
+    var index = 0;
+
+    function render() {
+        slides.forEach(function (slide, i) { slide.hidden = i !== index; });
+        dots.forEach(function (dot, i) { dot.classList.toggle('active', i === index); });
+    }
+
+    function go(step) {
+        if (!slides.length) return;
+        index = (step + slides.length) % slides.length;
+        render();
+    }
+
+    var prev = document.querySelector('.hrms-testi-arrow--prev');
+    var next = document.querySelector('.hrms-testi-arrow--next');
+    if (prev) prev.addEventListener('click', function () { go(index - 1); });
+    if (next) next.addEventListener('click', function () { go(index + 1); });
+    dots.forEach(function (dot, i) {
+        dot.addEventListener('click', function () { index = i; render(); });
+    });
+    render();
+})();
+</script>
+{% endblock %}
