@@ -1022,6 +1022,8 @@
 @media (max-width: 640px) {
     .hrms-hero-stats {
         gap: 1.6rem;
+        justify-content: center;
+        text-align: center;
     }
 
     .hrms-hero-actions .hrms-btn {

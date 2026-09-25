@@ -46,6 +46,17 @@ def env_flag(name, default=False):
     return value.lower() in {"1", "true", "yes", "on"}
 
 
+@app.template_global()
+def static_url(filename):
+    """url_for('static') with a cache-busting version so long-cached assets
+    refresh when their content changes (see vercel.json / proxy Cache-Control)."""
+    try:
+        version = int(os.path.getmtime(os.path.join(app.static_folder, filename)))
+    except OSError:
+        version = 0
+    return url_for("static", filename=filename, v=version)
+
+
 secret_key = os.getenv("SECRET_KEY")
 if is_production() and not secret_key:
     raise RuntimeError("SECRET_KEY must be set in production.")
