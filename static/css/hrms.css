@@ -1067,8 +1067,7 @@
 
 @media (max-width: 400px) {
     .hrms-hero-stats {
-        flex-direction: column;
-        gap: 1.1rem;
+        gap: 1rem;
     }
 
     .hrms-growth-stats {
