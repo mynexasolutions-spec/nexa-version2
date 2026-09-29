@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, redirect, url_for, Response, send_from_directory, abort
+from flask import Flask, render_template, request, flash, redirect, url_for, Response, send_from_directory, abort, get_flashed_messages
 from flask_mail import Message
 from extensions import db, mail
 from dotenv import load_dotenv
@@ -422,10 +422,10 @@ def newsletter_subscribe():
 
     if not email or "@" not in email:
         flash("Please enter a valid email address.", "error")
-    else:
-        flash("Thanks for subscribing. We'll share fresh insights soon.", "success")
+        return redirect(url_for("blog"))
 
-    return redirect(url_for("blog"))
+    flash("Thanks for subscribing. We'll share fresh insights soon.", "success")
+    return redirect(url_for("thank_you"))
 
 @app.route("/blog/<slug>")
 def blog_detail(slug):
@@ -572,10 +572,16 @@ def contact():
 
         flash("Your message has been received. We'll get back to you soon!", "success")
 
-        return redirect(url_for("contact"))
+        return redirect(url_for("thank_you"))
 
     return render_template("contact.html")
-    
+
+
+@app.route("/thank-you")
+def thank_you():
+    get_flashed_messages()  # consume the contact-success flash; this page renders its own confirmation
+    return render_template("thank-you.html")
+
 
 @app.route("/about")
 def about():

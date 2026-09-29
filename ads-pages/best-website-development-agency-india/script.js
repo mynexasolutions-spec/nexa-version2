@@ -15,7 +15,8 @@ function submitToSheets(formEl, source) {
     message: d.get('message') || '',
     source: source
   };
-  fetch(SHEETS_URL, { method: 'POST', body: JSON.stringify(payload) }).catch(() => {});
+  fetch(SHEETS_URL, { method: 'POST', mode: 'no-cors', keepalive: true, body: JSON.stringify(payload) }).catch(() => {});
+  window.location.href = '/thank-you';
 }
 
 /* Hero form */

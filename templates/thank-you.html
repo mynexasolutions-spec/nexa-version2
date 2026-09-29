@@ -1,0 +1,106 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Thank You for Reaching Out | Nexa Solutions{% endblock %}
+
+{% block meta %}
+<meta name="robots" content="noindex, follow">
+<meta name="description" content="Thank you for contacting Nexa Solutions. We've received your message and our team will get back to you within 1 business day.">
+{% endblock %}
+
+{% block content %}
+<section class="ty-hero">
+  <div class="ty-hero-decor" aria-hidden="true">
+    <span class="ty-grid"></span>
+    <span class="ty-word ty-word-top">THANK YOU</span>
+    <span class="ty-word ty-word-bottom">THANK YOU</span>
+    <span class="ty-bar"></span>
+    <span class="ty-cross"></span>
+    <img class="ty-arch" src="{{ url_for('static', filename='images/side for thanku.webp') }}" alt="" aria-hidden="true">
+    <span class="ty-note ty-note-left">
+      <span>Ideas</span>
+      <span>Technology</span>
+      <span>Impact</span>
+    </span>
+    <span class="ty-note ty-note-right">
+      <span>Nexa Solutions</span>
+      <span>Building</span>
+      <span>Better Digital</span>
+      <span>Experiences</span>
+    </span>
+  </div>
+
+  <div class="ty-hero-inner">
+    <span class="ty-check" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="4.5 12.5 9.5 17.5 19.5 6.5"></polyline>
+      </svg>
+    </span>
+    <p class="ty-eyebrow">Message Received</p>
+    <h1 class="ty-title">Thank You for Reaching Out</h1>
+    <p class="ty-sub">We've received your message and our team will get back to you as soon as possible.</p>
+    <p class="ty-sub-note">Usually within 1 business day.</p>
+
+    <div class="ty-actions">
+      <a class="ty-btn ty-btn-dark" href="{{ url_for('home') }}">
+        Back to Home
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+      </a>
+      <a class="ty-btn ty-btn-light" href="{{ url_for('our_work') }}">
+        Explore Our Work
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="ty-steps" aria-labelledby="ty-steps-title">
+  <div class="ty-steps-inner">
+    <p class="ty-steps-eyebrow">Next Steps</p>
+    <div class="ty-steps-head">
+      <h2 class="ty-steps-title" id="ty-steps-title">While You Wait</h2>
+      <p class="ty-steps-tagline"><span aria-hidden="true"></span>Explore. Learn. Stay Connected.</p>
+    </div>
+
+    <div class="ty-steps-grid">
+      <a class="ty-step" href="{{ url_for('our_work') }}">
+        <span class="ty-step-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+        </span>
+        <span class="ty-step-body">
+          <span class="ty-step-title">
+            Explore Our Work
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </span>
+          <span class="ty-step-desc">See the projects we've built for brands across industries.</span>
+        </span>
+      </a>
+
+      <a class="ty-step" href="{{ url_for('home') }}#services">
+        <span class="ty-step-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+        </span>
+        <span class="ty-step-body">
+          <span class="ty-step-title">
+            Discover Our Services
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </span>
+          <span class="ty-step-desc">From web &amp; mobile apps to AI solutions, explore what we do.</span>
+        </span>
+      </a>
+
+      <a class="ty-step" href="{{ url_for('blog') }}">
+        <span class="ty-step-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+        </span>
+        <span class="ty-step-body">
+          <span class="ty-step-title">
+            Read Our Blogs
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </span>
+          <span class="ty-step-desc">Insights, ideas and latest trends from our team.</span>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+{% endblock %}

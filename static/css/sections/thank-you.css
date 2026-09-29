@@ -1,0 +1,539 @@
+/* ── Thank You Page ─────────────────────────────────────── */
+
+.ty-hero {
+  position: relative;
+  overflow: hidden;
+  background: #f6f6f4;
+  padding: 7.2rem 5vw 4.6rem;
+  min-height: clamp(560px, 64vh, 700px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  isolation: isolate;
+}
+
+.ty-hero-decor {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Thin editorial grid */
+.ty-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(10,10,10,0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(10,10,10,0.045) 1px, transparent 1px);
+  background-size: 25% 100%, 100% 34%;
+}
+
+/* Oversized outlined background words */
+.ty-word {
+  position: absolute;
+  left: 50%;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(8rem, 26vw, 24rem);
+  line-height: 1;
+  letter-spacing: 0.16em;
+  white-space: nowrap;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(10,10,10,0.13);
+  text-stroke: 1px rgba(10,10,10,0.13);
+  user-select: none;
+}
+
+.ty-word-top {
+  top: -7%;
+  transform: translateX(-50%);
+}
+
+.ty-word-bottom {
+  top: 58%;
+  transform: translateX(-46%);
+  -webkit-text-stroke-color: rgba(10,10,10,0.06);
+  text-stroke: 1px rgba(10,10,10,0.06);
+}
+
+/* Small black decorative bar */
+.ty-bar {
+  position: absolute;
+  left: 7%;
+  top: 29%;
+  width: 64px;
+  height: 13px;
+  background: #0a0a0a;
+}
+
+/* Thin plus mark */
+.ty-cross {
+  position: absolute;
+  left: 7%;
+  bottom: 31%;
+  width: 24px;
+  height: 24px;
+}
+
+.ty-cross::before,
+.ty-cross::after {
+  content: "";
+  position: absolute;
+  background: rgba(10,10,10,0.5);
+}
+
+.ty-cross::before {
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  transform: translateX(-50%);
+}
+
+.ty-cross::after {
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  transform: translateY(-50%);
+}
+
+/* Architectural graphic, bottom right */
+.ty-arch {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: min(27vw, 420px);
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Small editorial labels */
+.ty-note {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(10,10,10,0.45);
+}
+
+.ty-note-left {
+  left: 7%;
+  bottom: 14%;
+}
+
+.ty-note-right {
+  right: 6.5%;
+  top: 33%;
+  padding-left: 1.1rem;
+  border-left: 1px solid rgba(10,10,10,0.16);
+}
+
+/* Hero content */
+.ty-hero-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ty-check {
+  width: clamp(62px, 6.4vw, 96px);
+  height: clamp(62px, 6.4vw, 96px);
+  border-radius: 50%;
+  background: #0a0a0a;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.7rem;
+}
+
+.ty-check svg {
+  width: 46%;
+  height: 46%;
+}
+
+.ty-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: rgba(10,10,10,0.72);
+  margin-bottom: 0.7rem;
+}
+
+.ty-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: 400;
+  font-size: clamp(2.35rem, 5.1vw, 5rem);
+  line-height: 0.98;
+  letter-spacing: 0.015em;
+  color: #0a0a0a;
+  margin-bottom: 1.1rem;
+}
+
+.ty-sub {
+  font-size: clamp(0.98rem, 1.05vw, 1.08rem);
+  line-height: 1.6;
+  color: rgba(10,10,10,0.78);
+  max-width: 720px;
+}
+
+.ty-sub-note {
+  font-size: 0.88rem;
+  color: rgba(10,10,10,0.5);
+  margin-top: 0.45rem;
+}
+
+.ty-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2.3rem;
+}
+
+.ty-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.95rem 1.75rem;
+  border: 1px solid #0a0a0a;
+  border-radius: 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.98rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+
+.ty-btn svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.ty-btn-dark {
+  background: #0a0a0a;
+  color: #fff;
+}
+
+.ty-btn-dark:hover {
+  background: #2a2a2a;
+  transform: translateY(-2px);
+}
+
+.ty-btn-light {
+  background: #fff;
+  color: #0a0a0a;
+}
+
+.ty-btn-light:hover {
+  background: #0a0a0a;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.ty-btn:focus-visible {
+  outline: 2px solid #0a0a0a;
+  outline-offset: 3px;
+}
+
+.ty-step:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+/* ── Next steps (black section) ─────────────────────────── */
+.ty-steps {
+  background: #0a0a0a;
+  color: #fff;
+  padding: 4.5rem 5vw 5rem;
+}
+
+.ty-steps-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.ty-steps-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 0.7rem;
+}
+
+.ty-steps-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  padding-bottom: 1.6rem;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+
+.ty-steps-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: 400;
+  font-size: clamp(2.4rem, 5vw, 4.4rem);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: #fff;
+}
+
+.ty-steps-tagline {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  white-space: nowrap;
+}
+
+.ty-steps-tagline span {
+  display: block;
+  width: 120px;
+  height: 1px;
+  background: rgba(255,255,255,0.35);
+}
+
+.ty-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 2.8rem;
+}
+
+.ty-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.3rem;
+  padding: 0.4rem 2.2rem;
+  color: #fff;
+  text-decoration: none;
+}
+
+.ty-step:first-child {
+  padding-left: 0;
+}
+
+.ty-step + .ty-step {
+  border-left: 1px solid rgba(255,255,255,0.12);
+}
+
+.ty-step-icon {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  border-radius: 16px;
+  background: #161616;
+  border: 1px solid rgba(255,255,255,0.09);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.ty-step-icon svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ty-step-body {
+  display: block;
+  min-width: 0;
+}
+
+.ty-step-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+}
+
+.ty-step-title svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.25s ease;
+}
+
+.ty-step-desc {
+  display: block;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: rgba(255,255,255,0.68);
+  max-width: 270px;
+}
+
+.ty-step:hover .ty-step-icon {
+  background: #1f1f1f;
+  border-color: rgba(255,255,255,0.2);
+}
+
+.ty-step:hover .ty-step-title svg {
+  transform: translateX(4px);
+}
+
+/* ── Subtle entrance ────────────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes ty-pop {
+    from { opacity: 0; transform: scale(0.7); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes ty-fade {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .ty-check { animation: ty-pop 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+  .ty-eyebrow { animation: ty-fade 0.6s ease 0.1s both; }
+  .ty-title { animation: ty-fade 0.6s ease 0.18s both; }
+  .ty-sub { animation: ty-fade 0.6s ease 0.26s both; }
+  .ty-sub-note { animation: ty-fade 0.6s ease 0.26s both; }
+  .ty-actions { animation: ty-fade 0.6s ease 0.34s both; }
+}
+
+/* ── Responsive ─────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .ty-step {
+    padding: 0.4rem 1.4rem;
+  }
+
+  .ty-word {
+    font-size: 26vw;
+  }
+}
+
+@media (max-width: 900px) {
+  .ty-hero {
+    min-height: 0;
+    padding: 7.6rem 1.4rem 8.4rem;
+  }
+
+  .ty-grid {
+    background-size: 50% 100%, 100% 25%;
+  }
+
+  .ty-word-top {
+    top: 6%;
+    font-size: 40vw;
+  }
+
+  .ty-word-bottom {
+    top: 52%;
+    font-size: 40vw;
+  }
+
+  .ty-bar {
+    left: 1.4rem;
+    top: 8.5rem;
+    width: 48px;
+    height: 10px;
+  }
+
+  .ty-cross {
+    left: 1.4rem;
+    top: 10.5rem;
+    bottom: auto;
+  }
+
+  .ty-note-left {
+    left: 1.4rem;
+    bottom: 2.4rem;
+  }
+
+  .ty-note-right {
+    right: 1.4rem;
+    top: auto;
+    bottom: 2.4rem;
+  }
+
+  .ty-arch {
+    display: none;
+  }
+
+  .ty-steps {
+    padding: 3.4rem 1.4rem 3.8rem;
+  }
+
+  .ty-steps-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.1rem;
+  }
+
+  .ty-steps-tagline {
+    white-space: normal;
+  }
+
+  .ty-steps-tagline span {
+    width: 60px;
+  }
+
+  .ty-steps-grid {
+    grid-template-columns: 1fr;
+    margin-top: 0.8rem;
+  }
+
+  .ty-step {
+    padding: 1.5rem 0;
+  }
+
+  .ty-step + .ty-step {
+    border-left: none;
+    border-top: 1px solid rgba(255,255,255,0.12);
+  }
+
+  .ty-step-desc {
+    max-width: 420px;
+  }
+}
+
+@media (max-width: 600px) {
+  .ty-title {
+    font-size: clamp(2rem, 11vw, 2.9rem);
+  }
+
+  .ty-steps-tagline span {
+    display: none;
+  }
+
+  .ty-actions {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .ty-btn {
+    justify-content: space-between;
+    width: 100%;
+  }
+}
